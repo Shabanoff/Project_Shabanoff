@@ -37,6 +37,9 @@ public class Tariff {
             return tariff;
         }
     }
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
 
     public long getTariffNumber() {
