@@ -1,8 +1,35 @@
 package entity;
 
+import java.math.BigDecimal;
+
 public class IncludedService {
     private long includedServiceNumber;
     private String definition;
+
+    public static class Builder{
+        private final IncludedService includedService;
+
+        public Builder() {
+            includedService = new IncludedService();
+        }
+
+        public Builder addId(long id) {
+            includedService.setIncludedServiceNumber(id);
+            return this;
+        }
+
+        public Builder addDefinition(String definition) {
+            includedService.setDefinition(definition);
+            return this;
+        }
+
+        public IncludedService build() {
+            return includedService;
+        }
+    }
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
     public long getIncludedServiceNumber() {
         return includedServiceNumber;

@@ -6,7 +6,7 @@ import entity.User;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public interface UserDao<T extends User> extends GenericDao<T, Long>{
+public interface UserDao extends GenericDao<User, Long>{
 
     /**
      * Retrieve user from database identified by login.
@@ -40,10 +40,10 @@ public interface UserDao<T extends User> extends GenericDao<T, Long>{
     void decreaseBalance(User user, BigDecimal amount);
 
     /**
-     * Updates certain account status.
+     * Updates certain user status.
      *
      * @param user user which status will be updated.
-     * @param status new status of user to update
+     * @param statusId new status of user to update
      */
-    void updateAccountStatus(T user, Status status);
+    void updateUserStatus(User user, int statusId);
 }

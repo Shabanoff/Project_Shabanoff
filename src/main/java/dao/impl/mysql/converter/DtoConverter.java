@@ -22,7 +22,7 @@ public interface DtoConverter <T>{
      * @return list of converted objects
      * @throws SQLException
      */
-    default List<T> convertToObjectList (ResultSet resultSet, String tablePrefix)
+    default List<T> convertToObjectList (ResultSet resultSet)
             throws SQLException {
         List<T> convertedObjects = new ArrayList<T>();
 

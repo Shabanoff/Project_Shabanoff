@@ -45,6 +45,9 @@ public class IncludedPackage {
             return includedPackage;
         }
     }
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
     public long getPackageNumber() {
         return packageNumber;
