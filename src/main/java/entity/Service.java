@@ -23,6 +23,9 @@ public class Service {
 
         public Service build(){return service;}
     }
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
     public long getServiceNumber() {
         return serviceNumber;
