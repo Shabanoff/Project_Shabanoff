@@ -1,7 +1,7 @@
 package entity;
 
 public class Service {
-    private long serviceNumber;
+    private long id;
     private String serviceName;
 
     public static class Builder {

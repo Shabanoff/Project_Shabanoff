@@ -3,14 +3,17 @@ package dao.factory;
 import dao.abstraction.*;
 import dao.exception.DaoException;
 import dao.factory.connection.DaoConnection;
-import org.apache.log4j.Logger;
+
 
 import java.util.ResourceBundle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public abstract class DaoFactory{
         private static final String DB_BUNDLE = "database";
         private static final String DB_CLASS = "factory.class";
-        private final static Logger logger = Logger.getLogger(DaoFactory.class);
+        private final static Logger logger = LogManager.getLogger(DaoFactory.class);//TODO: https://mkyong.com/logging/apache-log4j-2-tutorials/
 
         private static DaoFactory instance;
 
@@ -40,7 +43,7 @@ public abstract class DaoFactory{
 
         public abstract UserDao getUserDao(DaoConnection connection);
 
-        public abstract IncludedPackageDao getCreditAccountDao(DaoConnection connection);
+        public abstract IncludedPackageDao getIncludedPackageDao(DaoConnection connection);
 
         public abstract IncludedOptionToTariffDao getIncludedOptionToTariffDao(DaoConnection connection);
 

@@ -3,7 +3,7 @@ package entity;
 import java.math.BigDecimal;
 
 public class Tariff {
-    private long tariffNumber;
+    private long id;
     private String tariffName;
     private BigDecimal cost;
     private long serviceId;
