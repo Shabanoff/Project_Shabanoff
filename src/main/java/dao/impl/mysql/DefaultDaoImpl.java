@@ -2,7 +2,8 @@ package dao.impl.mysql;
 
 import dao.exception.DaoException;
 import dao.impl.mysql.converter.DtoConverter;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.List;
@@ -14,7 +15,7 @@ public class DefaultDaoImpl <T> {
             "Can't retrieve generated key";
     private final static String SQL_LIMIT_ONE = " LIMIT 1";
 
-    private final Logger logger = Logger.getLogger(DefaultDaoImpl.class);
+    private final Logger logger = LogManager.getLogger(DefaultDaoImpl.class);
 
     /** Connection to database */
     private Connection connection;

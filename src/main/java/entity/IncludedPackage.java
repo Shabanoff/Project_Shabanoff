@@ -48,7 +48,7 @@ public class IncludedPackage {
             return includedPackage;
         }
     }
-    public static IncludedPackage.Builder newBuilder() {
+    public static Builder newBuilder() {
         return new IncludedPackage.Builder();
     }
 
@@ -99,7 +99,7 @@ public class IncludedPackage {
                 ", userId=" + userId.toString() +
                 ", subscriptionDate=" + subscriptionDate +
                 ", service=" + serviceId +
-                ", service=" + serviceId +
+                ", tariff=" + tariffId +
                 '}';
     }
 

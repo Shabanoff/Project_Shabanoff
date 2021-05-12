@@ -18,8 +18,9 @@ public class IncludedPackageDtoConverter implements DtoConverter<IncludedPackage
 
     @Override
     public IncludedPackage convertToObject(ResultSet resultSet) throws SQLException {
-        IncludedPackage includedPackage = IncludedPackage.newBuilder().
-                addSubscriptionDate(resultSet.getTimestamp(SUBSCRIPTION_DATE).toLocalDateTime().toLocalDate())
+        IncludedPackage includedPackage = IncludedPackage.newBuilder()
+                .addId(resultSet.getLong(ID_FIELD))
+                .addSubscriptionDate(resultSet.getTimestamp(SUBSCRIPTION_DATE).toLocalDateTime().toLocalDate())
                 .addUserId(resultSet.getLong(USER_ID))
                 .addTariffId(resultSet.getLong(TARIFF_ID))
                 .addServiceId(resultSet.getLong(SERVICE_ID))
