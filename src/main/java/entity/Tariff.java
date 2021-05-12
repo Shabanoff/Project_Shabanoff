@@ -6,7 +6,7 @@ public class Tariff {
     private long tariffNumber;
     private String tariffName;
     private BigDecimal cost;
-    private Service service;
+    private long serviceId;
 
     public static class Builder{
         private final Tariff tariff;
@@ -14,7 +14,7 @@ public class Tariff {
         public Builder(){tariff = new Tariff();}
 
         public Builder addTariffNumber(long id) {
-            tariff.setTariffNumber(id);
+            tariff.setId(id);
             return this;
         }
 
@@ -28,8 +28,8 @@ public class Tariff {
             return this;
         }
 
-        public Builder addService(Service service) {
-            tariff.setService(service);
+        public Builder addServiceId(Long serviceId) {
+            tariff.setServiceId(serviceId);
             return this;
         }
 
@@ -42,12 +42,12 @@ public class Tariff {
     }
 
 
-    public long getTariffNumber() {
-        return tariffNumber;
+    public long getId() {
+        return id;
     }
 
-    public void setTariffNumber(long tariffNumber) {
-        this.tariffNumber = tariffNumber;
+    public void setId(long tariffNumber) {
+        this.id = tariffNumber;
     }
 
     public String getTariffName() {
@@ -66,21 +66,21 @@ public class Tariff {
         this.cost = cost;
     }
 
-    public Service getService() {
-        return service;
+    public long getServiceId() {
+        return serviceId;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
     }
 
     @Override
     public String toString() {
         return "Tariff{" +
-                "TariffNumber=" + tariffNumber +
+                "TariffNumber=" + id +
                 ", tariffName=" + tariffName +
                 ", cost=" + cost +
-                ", service=" + getService() +
+                ", serviceId=" + serviceId +
                 '}';
     }
 
@@ -91,6 +91,6 @@ public class Tariff {
 
         Tariff tariff = (Tariff) o;
 
-        return this.tariffNumber == tariff.tariffNumber;
+        return this.id == tariff.id;
     }
 }

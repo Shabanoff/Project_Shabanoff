@@ -1,6 +1,7 @@
 package entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class User {
     private final static BigDecimal DEFAULT_BALANCE = BigDecimal.ZERO;
@@ -17,8 +18,10 @@ public class User {
     private String login;
     private String password;
     private BigDecimal balance;
+    private List<IncludedPackage> includedPackages;
     private Status status;
     private Role role;
+
 
     public static class Builder{
         private final User user;
@@ -54,6 +57,10 @@ public class User {
 
         public Builder addRole(Role role) {
             user.setRole(role);
+            return this;
+        }
+        public Builder addIncludedPackage(List<IncludedPackage> includedPackages) {
+            user.setIncludedPackages(includedPackages);
             return this;
         }
 
@@ -95,6 +102,13 @@ public class User {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public void setIncludedPackages(List<IncludedPackage> includedPackages) {
+        this.includedPackages = includedPackages;
+    }
+    public List<IncludedPackage> getIncludedPackages(){
+        return includedPackages;
     }
 
     public Status getStatus() {
@@ -147,6 +161,7 @@ public class User {
                 "login='" + login + '\'' +
                 ", password=" + password  +
                 ", balance='" + balance + '\'' +
+                ", includedPackages='" + includedPackages + '\'' +
                 ", status=" + status +
                 ", role=" + role  +
                 '}';
@@ -161,4 +176,6 @@ public class User {
 
         return (login.equals(user.login));
     }
+
+
 }

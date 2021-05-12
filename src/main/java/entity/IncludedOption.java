@@ -1,42 +1,40 @@
 package entity;
 
-import java.math.BigDecimal;
-
-public class IncludedService {
-    private long includedServiceNumber;
+public class IncludedOption {
+    private long id;
     private String definition;
 
     public static class Builder{
-        private final IncludedService includedService;
+        private final IncludedOption includedOption;
 
         public Builder() {
-            includedService = new IncludedService();
+            includedOption = new IncludedOption();
         }
 
         public Builder addId(long id) {
-            includedService.setIncludedServiceNumber(id);
+            includedOption.setId(id);
             return this;
         }
 
         public Builder addDefinition(String definition) {
-            includedService.setDefinition(definition);
+            includedOption.setDefinition(definition);
             return this;
         }
 
-        public IncludedService build() {
-            return includedService;
+        public IncludedOption build() {
+            return includedOption;
         }
     }
     public static Builder newBuilder() {
         return new Builder();
     }
 
-    public long getIncludedServiceNumber() {
-        return includedServiceNumber;
+    public long getId() {
+        return id;
     }
 
-    public void setIncludedServiceNumber(long includedServiceNumber) {
-        this.includedServiceNumber = includedServiceNumber;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getDefinition() {
@@ -50,7 +48,7 @@ public class IncludedService {
     @Override
     public String toString() {
         return "IncludedService{" +
-                "includedServiceNumber=" + includedServiceNumber +
+                "includedServiceNumber=" + id +
                 ", definition=" + definition +
                 '}';
     }
@@ -60,8 +58,8 @@ public class IncludedService {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        IncludedService includedService = (IncludedService) o;
+        IncludedOption includedOption = (IncludedOption) o;
 
-        return includedServiceNumber == includedService.includedServiceNumber;
+        return id == includedOption.id;
     }
 }

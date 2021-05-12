@@ -10,24 +10,15 @@ public class TariffDtoConverter implements DtoConverter<Tariff> {
     private final static String ID_FIELD = "id";
     private final static String TARIFF_NAME = "name";
     private final static String COST = "cost";
-    private final DtoConverter<Service> serviceConverter;
-
-    public TariffDtoConverter() {
-        this(new ServiceDtoConverter());
-    }
-
-    public TariffDtoConverter(DtoConverter<Service> serviceConverter) {
-        this.serviceConverter = serviceConverter;
-    }
+    private final static String SERVICE_ID = "service_id";;
 
     @Override
     public Tariff convertToObject(ResultSet resultSet) throws SQLException {
-        Service service = serviceConverter.convertToObject(resultSet);
         Tariff tariff = Tariff.newBuilder().addTariffNumber(resultSet.getLong(ID_FIELD))
                 .addTariffName(resultSet.getString(TARIFF_NAME))
                 .addCost(resultSet.getBigDecimal(COST))
-                .addService(service)
+                .addServiceId(resultSet.getLong(SERVICE_ID))
                 .build();
-        return null;
+        return tariff;
     }
 }

@@ -21,11 +21,4 @@ public interface TariffDao extends GenericDao<Tariff, Long>{
      */
     void increaseBalance(Tariff tariff, BigDecimal cost);
 
-    /**
-     * decrease cost of certain amount.
-     *
-     * @param tariff tariff to decrease
-     * @param cost cost of decreasing
-     */
-    void decreaseBalance(Tariff tariff, BigDecimal cost);
 }

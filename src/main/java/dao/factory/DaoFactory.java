@@ -42,13 +42,13 @@ public abstract class DaoFactory{
 
         public abstract IncludedPackageDao getCreditAccountDao(DaoConnection connection);
 
-        public abstract IncludedOptionDao getDepositAccountDao(DaoConnection connection);
+        public abstract IncludedOptionToTariffDao getIncludedOptionToTariffDao(DaoConnection connection);
 
-        public abstract IncludedServiceDao getDebitAccountDao(DaoConnection connection);
+        public abstract IncludedOptionDao getIncludedOptionDao(DaoConnection connection);
 
-        public abstract ServiceDao getAccountsDao(DaoConnection connection);
+        public abstract ServiceDao getServicesDao(DaoConnection connection);
 
-        public abstract TariffDao getAccountTypeDao(DaoConnection connection);
+        public abstract TariffDao getTariffDao(DaoConnection connection);
 
         public abstract StatusDao getStatusDao(DaoConnection connection);
 

@@ -1,10 +1,12 @@
 package dao.impl.mysql;
 
 import dao.abstraction.UserDao;
+import dao.datasource.PooledConnection;
 import dao.impl.mysql.converter.DtoConverter;
 import dao.impl.mysql.converter.UserDtoConverter;
 import entity.User;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
@@ -22,10 +24,10 @@ public class MySqlUserDao implements UserDao {
                     "FROM user JOIN role ON user.role_id = role.id ";
 
     private final static String WHERE_ID =
-            "WHERE user.id = ? ";
+            "WHERE tariff.id = ? ";
 
     private final static String WHERE_LOGIN =
-            "WHERE user.login = ? ";
+            "WHERE tariff.name = ? ";
 
     private final static String INSERT =
             "INSERT into user (login, password, balance," +
@@ -33,7 +35,7 @@ public class MySqlUserDao implements UserDao {
                     "VALUES(?, ?, ?, ?, ?) ";
 
     private final static String UPDATE_STATUS =
-            "UPDATE account SET " +
+            "UPDATE user SET " +
                     "status_id = ? ";
 
     private final static String UPDATE =
@@ -45,11 +47,11 @@ public class MySqlUserDao implements UserDao {
                     "role_id = ?, ";
 
     private final static String INCREASE_BALANCE =
-            "UPDATE account SET " +
+            "UPDATE user SET " +
                     "balance = balance + ? ";
 
     private final static String DECREASE_BALANCE =
-            "UPDATE account SET " +
+            "UPDATE user SET " +
                     "balance = balance - ? ";
 
     private final static String DELETE =
@@ -161,6 +163,9 @@ public class MySqlUserDao implements UserDao {
                 statusId,
                 user.getId()
         );
-
     }
+    public static void main(String[] args) {
+        DataSource dataSource = PooledConnection.getInstance();
+
+        System.out.println("Find all:");}
 }

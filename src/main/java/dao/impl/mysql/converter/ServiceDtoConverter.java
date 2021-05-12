@@ -12,7 +12,7 @@ public class ServiceDtoConverter implements DtoConverter<Service> {
     @Override
     public Service convertToObject(ResultSet resultSet) throws SQLException {
         Service service = Service.newBuilder()
-                .addServiceNumber(resultSet.getLong(ID_FIELD))
+                .addId(resultSet.getLong(ID_FIELD))
                 .addServiceName(resultSet.getString(NAME_FIELD))
                 .build();
         return service;

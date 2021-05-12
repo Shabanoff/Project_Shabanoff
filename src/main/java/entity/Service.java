@@ -11,8 +11,8 @@ public class Service {
             service = new Service();
         }
 
-        public Builder addServiceNumber(long id) {
-            service.setServiceNumber(id);
+        public Builder addId(long id) {
+            service.setId(id);
             return this;
         }
 
@@ -27,12 +27,12 @@ public class Service {
         return new Builder();
     }
 
-    public long getServiceNumber() {
-        return serviceNumber;
+    public long getId() {
+        return id;
     }
 
-    public void setServiceNumber(long serviceNumber) {
-        this.serviceNumber = serviceNumber;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getServiceName() {
@@ -46,7 +46,7 @@ public class Service {
     @Override
     public String toString() {
         return "Service{" +
-                "serviceNumber=" + serviceNumber +
+                "serviceNumber=" + id +
                 ", serviceName=" + serviceName +
                 '}';
     }
@@ -58,6 +58,6 @@ public class Service {
 
         Service service = (Service) o;
 
-        return serviceNumber == service.serviceNumber;
+        return id == service.id;
     }
 }

@@ -1,5 +1,8 @@
 package dao.abstraction;
 
-public interface IncludedOptionDao {
+
+import entity.IncludedOption;
+
+public interface IncludedOptionDao extends GenericDao<IncludedOption, Long>{
 
 }

@@ -1,13 +1,15 @@
 package entity;
 
+
 import java.time.LocalDate;
+import java.util.List;
 
 public class IncludedPackage {
-    private long packageNumber;
-    private User packageHolder;
+    private long id;
+    private List<Long> userId;
     private LocalDate subscriptionDate;
-    private Service service;
-    private Tariff tariff;
+    private long serviceId;
+    private long tariffId;
 
     public static class Builder {
         private final IncludedPackage includedPackage;
@@ -16,53 +18,54 @@ public class IncludedPackage {
             includedPackage = new IncludedPackage();
         }
 
-        public Builder addPackageNumber(long cardNumber) {
-            includedPackage.setPackageNumber(cardNumber);
+        public IncludedPackage.Builder addId(long id) {
+            includedPackage.setId(id);
             return this;
         }
-
-        public Builder addPackageHolder(User user) {
-            includedPackage.setPackageHolder(user);
-            return this;
-        }
-
-        public Builder addSubscriptionDate(LocalDate date) {
+        public IncludedPackage.Builder addSubscriptionDate(LocalDate date) {
             includedPackage.setSubscriptionDate(date);
             return this;
         }
 
-        public Builder addService(Service service) {
-            includedPackage.setService(service);
+        public IncludedPackage.Builder addUserId(long userId) {
+            includedPackage.setUserId(userId);
             return this;
         }
 
-        public Builder addTariff(Tariff tariff) {
-            includedPackage.setTariff(tariff);
+
+        public IncludedPackage.Builder addServiceId(long service) {
+            includedPackage.setServiceId(service);
             return this;
         }
+
+        public IncludedPackage.Builder addTariffId(long tariff) {
+            includedPackage.setTariffId(tariff);
+            return this;
+        }
+
 
         public IncludedPackage build() {
             return includedPackage;
         }
     }
-    public static Builder newBuilder() {
-        return new Builder();
+    public static IncludedPackage.Builder newBuilder() {
+        return new IncludedPackage.Builder();
     }
 
-    public long getPackageNumber() {
-        return packageNumber;
+    public long getId() {
+        return id;
     }
 
-    public void setPackageNumber(long packageNumber) {
-        this.packageNumber = packageNumber;
+    public void setId(long packageNumber) {
+        this.id = packageNumber;
     }
 
-    public User getPackageHolder() {
-        return packageHolder;
+    public List<Long> getUserId() {
+        return userId;
     }
 
-    public void setPackageHolder(User packageHolder) {
-        this.packageHolder = packageHolder;
+    public void setUserId(long userId) {
+        this.userId.add(userId);
     }
 
     public LocalDate getSubscriptionDate() {
@@ -73,30 +76,30 @@ public class IncludedPackage {
         this.subscriptionDate = subscriptionDate;
     }
 
-    public Service getService() {
-        return service;
+    public long getServiceId() {
+        return serviceId;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setServiceId(long serviceId) {
+        this.serviceId=serviceId;
     }
 
-    public Tariff getTariff() {
-        return tariff;
+    public long getTariffId() {
+        return tariffId;
     }
 
-    public void setTariff(Tariff tariff) {
-        this.tariff = tariff;
+    public void setTariffId(long tariffId) {
+        this.tariffId=tariffId;
     }
 
     @Override
     public String toString() {
         return "IncludedPackage{" +
-                "packageNumber=" + packageNumber +
-                ", packageHolder=" + packageHolder +
+                "id=" + id +
+                ", userId=" + userId.toString() +
                 ", subscriptionDate=" + subscriptionDate +
-                ", service=" + service +
-                ", service=" + service +
+                ", service=" + serviceId +
+                ", service=" + serviceId +
                 '}';
     }
 
@@ -111,7 +114,7 @@ public class IncludedPackage {
 
         IncludedPackage includedPackage = (IncludedPackage) o;
 
-        return this.packageNumber == includedPackage.packageNumber;
+        return this.id == includedPackage.id;
     }
 
 
