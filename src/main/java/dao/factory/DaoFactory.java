@@ -49,7 +49,7 @@ public abstract class DaoFactory{
 
         public abstract IncludedOptionDao getIncludedOptionDao(DaoConnection connection);
 
-        public abstract ServiceDao getServicesDao(DaoConnection connection);
+        public abstract ServiceDao getServiceDao(DaoConnection connection);
 
         public abstract TariffDao getTariffDao(DaoConnection connection);
 
