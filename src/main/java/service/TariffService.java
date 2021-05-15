@@ -7,7 +7,13 @@ import entity.Tariff;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * Intermediate layer between command layer and dao layer.
+ * Implements operations of finding, creating, deleting entities.
+ * Tariff dao layer.
+ *
+ * @author Shabanoff
+ */
 public class TariffService {
     private final DaoFactory daoFactory = DaoFactory.getInstance();
 

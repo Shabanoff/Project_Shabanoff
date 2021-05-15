@@ -7,7 +7,13 @@ import entity.IncludedOption;
 
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * Intermediate layer between command layer and dao layer.
+ * Implements operations of finding, creating, deleting entities.
+ * Option dao layer.
+ *
+ * @author Shabanoff
+ */
 public class IncludedOptionService {
     private final DaoFactory daoFactory = DaoFactory.getInstance();
 

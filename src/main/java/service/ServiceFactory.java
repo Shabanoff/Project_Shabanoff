@@ -1,15 +1,17 @@
 package service;
+
 /**
  * Intermediate layer between command layer and dao layer.
  * Implements operations of finding, creating, deleting entities.
- * Account dao layer.
+ * Uses dao layer.
  *
  * @author Shabanoff
  */
 public class ServiceFactory {
     private static volatile ServiceFactory instance;
 
-    private ServiceFactory() {}
+    private ServiceFactory() {
+    }
 
     public static ServiceFactory getInstance() {
         ServiceFactory localInstance = instance;
@@ -25,14 +27,29 @@ public class ServiceFactory {
     }
 
 
-
-
-
     public static UserService getUserService() {
         return UserService.getInstance();
     }
 
+    public static TariffService getTariffService() {
+        return TariffService.getInstance();
+    }
 
+    public static ServiceService getServiceService() {
+        return ServiceService.getInstance();
+    }
+
+    public static IncludedOptionService getIncludedOptionService() {
+        return IncludedOptionService.getInstance();
+    }
+
+    public static IncludedPackageService getIncludedPackageService() {
+        return IncludedPackageService.getInstance();
+    }
+
+    public static IncludedOptionToTariffService getIncludedOptionToTariffService() {
+        return IncludedOptionToTariffService.getInstance();
+    }
 
 
 }
