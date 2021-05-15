@@ -64,7 +64,7 @@ public class UserService {
         }
     }
 
-    public void updateAccountStatus(User user, int statusId) {
+    public void updateUserStatus(User user, int statusId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
             UserDao userDao = daoFactory.getUserDao(connection);

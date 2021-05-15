@@ -56,8 +56,6 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
         this.defaultDao = new DefaultDaoImpl<>(connection, converter);
     }
 
-
-    @Override
     public Optional<IncludedOptionToTariff> findOne(Long tariffId, Long includedOptionId) {
         return defaultDao.findOne(SELECT_ALL + WHERE_TARIFFID_OPTIONID, tariffId, includedOptionId);
     }
@@ -102,8 +100,11 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
         defaultDao.executeUpdate(
                 DELETE + WHERE_TARIFFID, id);
     }
+
     public void deleteTariffOptional(Long tariffId, Long optionalId) {
         defaultDao.executeUpdate(
                 DELETE + WHERE_TARIFFID_OPTIONID, tariffId, optionalId);
     }
+
+
 }
