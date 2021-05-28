@@ -46,8 +46,7 @@ public class IncludedOptionService {
     public IncludedOption createIncludedOption(IncludedOption includedOption) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             IncludedOptionDao includedOptionDao = daoFactory.getIncludedOptionDao(connection);
-            IncludedOption inserted = includedOptionDao.insert(includedOption);
-            return inserted;
+            return includedOptionDao.insert(includedOption);
         }
     }
 

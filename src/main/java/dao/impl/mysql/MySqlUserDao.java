@@ -4,11 +4,14 @@ import dao.abstraction.UserDao;
 import dao.datasource.PooledConnection;
 import dao.impl.mysql.converter.DtoConverter;
 import dao.impl.mysql.converter.UserDtoConverter;
+import entity.Role;
+import entity.Status;
 import entity.User;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -166,6 +169,55 @@ public class MySqlUserDao implements UserDao {
     }
     public static void main(String[] args) {
         DataSource dataSource = PooledConnection.getInstance();
+        UserDao mySqlUserDao;
 
-        System.out.println("Find all:");}
+
+        try {
+            mySqlUserDao = new MySqlUserDao(dataSource.getConnection());
+            int random = (int)(Math.random()*100);
+            ((MySqlUserDao) mySqlUserDao).
+                    printAll(mySqlUserDao.findAll());
+            System.out.println();
+
+            System.out.println("Find one with id 1:");
+            System.out.println(mySqlUserDao.findOne((long)1));
+
+            System.out.println("Find one by name Login:");
+            System.out.println(mySqlUserDao.findOneByLogin("123"));
+
+            System.out.println("Insert test:");
+            User accountType = mySqlUserDao.insert(User.newBuilder().addLogin("first"+random).
+                    addStatus(new Status(Status.StatusIdentifier.ACTIVE_STATUS
+                            .getId(),"USER")).
+                    addPassword("123").
+                    addBalance(BigDecimal.TEN).
+                    addRole(new Role(Role.RoleIdentifier.
+                            USER_ROLE.getId(),"USER")).
+                    build()
+            );
+            ((MySqlUserDao) mySqlUserDao).
+                    printAll(mySqlUserDao.findAll());
+
+            System.out.println("Update:");
+            accountType.setDefaultBalance();
+            mySqlUserDao.update(accountType);
+            ((MySqlUserDao) mySqlUserDao).
+                    printAll(mySqlUserDao.findAll());
+
+            System.out.println("Delete:");
+            mySqlUserDao.delete(accountType.getId());
+            ((MySqlUserDao) mySqlUserDao).
+                    printAll(mySqlUserDao.findAll());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void printAll(List<User> list) {
+        System.out.println("Find all:");
+        for (User type : list) {
+            System.out.println(type);
+        }
+    }
 }

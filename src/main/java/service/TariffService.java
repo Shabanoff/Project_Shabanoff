@@ -53,8 +53,7 @@ public class TariffService {
     public Tariff createTariff(Tariff tariff) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             TariffDao tariffDao = daoFactory.getTariffDao(connection);
-            Tariff inserted = tariffDao.insert(tariff);
-            return inserted;
+            return tariffDao.insert(tariff);
         }
     }
 

@@ -19,11 +19,11 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
                     "JOIN included_options_to_tariff ON included_options_to_tariff.tariff_id = tariff.id " +
                     "JOIN included_option ON included_options_to_tariff.included_option_id = included_option.id";
 
-    private final static String WHERE_TARIFFID_OPTIONID =
+    private final static String WHERE_TARIFF_OPTION =
             "WHERE tariff.id = ? " +
                     "AND included_option_id = ?";
 
-    private final static String WHERE_TARIFFID =
+    private final static String WHERE_TARIFF =
             "WHERE tariff.id = ? ";
 
 
@@ -57,12 +57,12 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
     }
 
     public Optional<IncludedOptionToTariff> findOne(Long tariffId, Long includedOptionId) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_TARIFFID_OPTIONID, tariffId, includedOptionId);
+        return defaultDao.findOne(SELECT_ALL + WHERE_TARIFF_OPTION, tariffId, includedOptionId);
     }
 
     @Override
     public Optional<IncludedOptionToTariff> findOne(Long tariffId) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_TARIFFID, tariffId);
+        return defaultDao.findOne(SELECT_ALL + WHERE_TARIFF, tariffId);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
         Objects.requireNonNull(obj);
 
         defaultDao.executeUpdate(
-                UPDATE + WHERE_TARIFFID_OPTIONID,
+                UPDATE + WHERE_TARIFF_OPTION,
                 obj.getTariffId(),
                 obj.getOptionId()
         );
@@ -98,12 +98,12 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
     @Override
     public void delete(Long id) {
         defaultDao.executeUpdate(
-                DELETE + WHERE_TARIFFID, id);
+                DELETE + WHERE_TARIFF, id);
     }
 
     public void deleteTariffOptional(Long tariffId, Long optionalId) {
         defaultDao.executeUpdate(
-                DELETE + WHERE_TARIFFID_OPTIONID, tariffId, optionalId);
+                DELETE + WHERE_TARIFF_OPTION, tariffId, optionalId);
     }
 
 
