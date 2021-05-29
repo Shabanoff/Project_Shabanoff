@@ -4,6 +4,10 @@ import controller.command.DefaultCommand;
 import controller.command.HomeCommand;
 import controller.command.ICommand;
 import controller.command.authorization.GetLoginCommand;
+import controller.command.authorization.LogoutCommand;
+import controller.command.authorization.PostLoginCommand;
+import controller.command.authorization.PostSignupCommand;
+import controller.command.user.GetReplenishCommand;
 import controller.util.constants.Views;
 
 import java.util.HashMap;
@@ -28,6 +32,14 @@ public class ControllerHelper {
                 new HomeCommand());
         commands.put(buildKey(bundle.getString("login.path"), null),
                 new GetLoginCommand());
+        commands.put(buildKey(bundle.getString("login.path"), "login.post"),
+                new PostLoginCommand());
+        commands.put(buildKey(bundle.getString("signup.path"), "signup.post"),
+                new PostSignupCommand());
+        commands.put(buildKey(bundle.getString("logout.path"), "logout"),
+                new LogoutCommand());
+        commands.put(buildKey(bundle.getString("user.replenish"), "replenish"),
+                new GetReplenishCommand());
     }
 
     public ICommand getCommand(String path, String command) {

@@ -7,4 +7,5 @@ public interface Attributes {
     String AMOUNT = "amount";
     String USER = "user";
     String USER_LIST  ="activeUserList";
+    String REFILLABLE_USER = "refillableUser";
 }

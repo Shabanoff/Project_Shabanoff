@@ -88,6 +88,18 @@ public class UserService {
             connection.commit();
         }
     }
+    public boolean isCredentialsValid(String login, String password) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            UserDao userDao = daoFactory.getUserDao(connection);
+            Optional<User> user = userDao.findOneByLogin(login);
+
+            return user
+                    .filter(u -> PasswordStorage.checkSecurePassword(
+                            password, u.getPassword()))
+                    .isPresent();
+        }
+
+    }
     public boolean isUserExists(User user) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
