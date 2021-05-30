@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDtoConverter implements DtoConverter<User> {
-    private final static String ID_FIELD = "id";
+    private final static String ID_FIELD = "user_id";
     private final static String LOGIN = "login";
     private final static String PASSWORD = "password";
     private final static String BALANCE = "balance";

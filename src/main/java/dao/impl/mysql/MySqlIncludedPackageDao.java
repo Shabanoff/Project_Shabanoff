@@ -6,7 +6,6 @@ import dao.impl.mysql.converter.IncludedPackageDtoConverter;
 import entity.IncludedPackage;
 
 import java.sql.Connection;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,19 +13,21 @@ import java.util.Optional;
 public class MySqlIncludedPackageDao implements IncludedPackageDao {
     private final static String SELECT_ALL =
             "SELECT included_package.id, included_package.subscription_date, " +
+                    "service.id AS service_id, " +
                     "service.name AS service_name, " +
-                    "tariff.name AS tariff_name, tariff.cost, " +
-                    "GROUP_CONCAT(included_option.definition) AS tariff_definition " +
+                    "tariff.id AS tariff_id, "+
+                    "tariff.name AS tariff_name, tariff.cost AS tariff_cost, " +
+                    "GROUP_CONCAT(included_option.definition) AS included_options " +
                     "FROM included_package " +
                     "JOIN service ON included_package.service_id = service.id " +
                     "JOIN tariff ON included_package.tariff_id = tariff.id " +
                     "JOIN included_options_to_tariff ON tariff.id = included_options_to_tariff.tariff_id " +
-                    "JOIN included_option ON included_option.id = included_options_to_tariff.included_option_id";
+                    "JOIN included_option ON included_option.id = included_options_to_tariff.included_option_id ";
     private final static String WHERE_ID =
             "included_package.id = ? ";
 
-    private final static String WHERE_SERVICE_ID=
-            "included_package.service_id = ? ";
+    private final static String WHERE_USER_ID =
+            "WHERE included_package.user_id = ? ";
     private final static String WHERE_DATE=
             "included_package.subscription_date = ? ";
 
@@ -74,10 +75,8 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
         int id = (int) defaultDao.executeInsertWithGeneratedPrimaryKey(
                 INSERT,
                 obj.getSubscriptionDate(),
-                obj.getServiceId(),
-                obj.getTariffId(),
-                obj.getUserId()
-
+                obj.getService().getId(),
+                obj.getTariff().getId()
         );
 
         obj.setId(id);
@@ -91,9 +90,8 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
         defaultDao.executeUpdate(
                 UPDATE + WHERE_ID,
                 obj.getSubscriptionDate(),
-                obj.getServiceId(),
-                obj.getTariffId(),
-                obj.getUserId()
+                obj.getService().getId(),
+                obj.getTariff().getId()
         );
 
     }
@@ -101,11 +99,10 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
         Objects.requireNonNull(obj);
 
         defaultDao.executeUpdate(
-                UPDATE + WHERE_SERVICE_ID,
+                UPDATE + WHERE_USER_ID,
                 obj.getSubscriptionDate(),
-                obj.getServiceId(),
-                obj.getTariffId(),
-                obj.getUserId()
+                obj.getService(),
+                obj.getTariff()
         );
 
     }
@@ -117,7 +114,7 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
     }
 
     @Override
-    public Optional<IncludedPackage> findOneByDate(LocalDate date) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_DATE,date);
+    public List<IncludedPackage> findByUser(long userId) {
+        return defaultDao.findAll(SELECT_ALL + WHERE_USER_ID,userId);
     }
 }

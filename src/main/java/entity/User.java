@@ -54,6 +54,10 @@ public class User {
             user.setBalance(balance);
             return this;
         }
+        public Builder addDefaultBalance() {
+            user.setBalance(DEFAULT_BALANCE);
+            return this;
+        }
 
         public Builder addRole(Role role) {
             user.setRole(role);
@@ -153,6 +157,9 @@ public class User {
 
     public void setDefaultBalance(){
         this.balance = DEFAULT_BALANCE;
+    }
+    public BigDecimal getDefaultBalance(){
+        return DEFAULT_BALANCE;
     }
 
     @Override

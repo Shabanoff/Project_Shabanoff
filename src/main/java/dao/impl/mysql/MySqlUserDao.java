@@ -18,19 +18,20 @@ import java.util.Optional;
 
 public class MySqlUserDao implements UserDao {
     private final static String SELECT_ALL =
-            "SELECT user.id AS user_id, " +
-                    "user.login, user.password, user.balance" +
-                    "user.status_id, user.role_id," +
-                    "status.id AS status_id, status.name AS status_name " +
-                    "FROM user JOIN status ON user.status_id = status.id" +
-                    "role.id AS role_id, role.name AS role_name " +
-                    "FROM user JOIN role ON user.role_id = role.id ";
+            "SELECT user.id AS user_id,\n" +
+                    "                    user.login, user.password, user.balance,\n" +
+                    "                    user.status_id, user.role_id,\n" +
+                    "                    status.id AS status_id, status.name AS status_name,\n" +
+                    "                    role.id AS role_id, role.name AS role_name\n" +
+                    "                    FROM user\n" +
+                    "                    JOIN status ON user.status_id = status.id\n" +
+                    "                    JOIN role ON user.role_id = role.id\n";
 
     private final static String WHERE_ID =
-            "WHERE tariff.id = ? ";
+            "WHERE user.id = ? ";
 
     private final static String WHERE_LOGIN =
-            "WHERE tariff.name = ? ";
+            "WHERE user.login = ? ";
 
     private final static String INSERT =
             "INSERT into user (login, password, balance," +

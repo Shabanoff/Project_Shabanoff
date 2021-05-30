@@ -1,19 +1,37 @@
 package entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Tariff {
     private long id;
     private String tariffName;
     private BigDecimal cost;
-    private long serviceId;
+    private Service service;
+    private List<IncludedOption> includedOptions;
+
+    public List<IncludedOption> getIncludedOptions() {
+        return includedOptions;
+    }
+
+    public void setIncludedOptions(List<IncludedOption> includedOptions) {
+        this.includedOptions = includedOptions;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
 
     public static class Builder{
         private final Tariff tariff;
 
         public Builder(){tariff = new Tariff();}
 
-        public Builder addTariffNumber(long id) {
+        public Builder addTariffId(long id) {
             tariff.setId(id);
             return this;
         }
@@ -22,14 +40,18 @@ public class Tariff {
             tariff.setTariffName(tariffName);
             return this;
         }
+        public Builder addIncludedOptions(List<IncludedOption> includedOptions) {
+            tariff.setIncludedOptions(includedOptions);
+            return this;
+        }
 
         public Builder addCost(BigDecimal cost) {
             tariff.setCost(cost);
             return this;
         }
 
-        public Builder addServiceId(Long serviceId) {
-            tariff.setServiceId(serviceId);
+        public Builder addService(Service service) {
+            tariff.setService(service);
             return this;
         }
 
@@ -66,13 +88,6 @@ public class Tariff {
         this.cost = cost;
     }
 
-    public long getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(Long serviceId) {
-        this.serviceId = serviceId;
-    }
 
     @Override
     public String toString() {
@@ -80,7 +95,7 @@ public class Tariff {
                 "TariffNumber=" + id +
                 ", tariffName=" + tariffName +
                 ", cost=" + cost +
-                ", serviceId=" + serviceId +
+                ", serviceId=" + service.getId() +
                 '}';
     }
 

@@ -6,10 +6,28 @@ import java.util.List;
 
 public class IncludedPackage {
     private long id;
-    private List<Long> userId;
     private LocalDate subscriptionDate;
-    private long serviceId;
-    private long tariffId;
+    private Service service;
+    private Tariff tariff;
+
+    public IncludedPackage() {
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    public Tariff getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(Tariff tariff) {
+        this.tariff = tariff;
+    }
 
     public static class Builder {
         private final IncludedPackage includedPackage;
@@ -27,19 +45,15 @@ public class IncludedPackage {
             return this;
         }
 
-        public IncludedPackage.Builder addUserId(long userId) {
-            includedPackage.setUserId(userId);
+
+
+        public IncludedPackage.Builder addService(Service service) {
+            includedPackage.setService(service);
             return this;
         }
 
-
-        public IncludedPackage.Builder addServiceId(long service) {
-            includedPackage.setServiceId(service);
-            return this;
-        }
-
-        public IncludedPackage.Builder addTariffId(long tariff) {
-            includedPackage.setTariffId(tariff);
+        public IncludedPackage.Builder addTariff(Tariff tariff) {
+            includedPackage.setTariff(tariff);
             return this;
         }
 
@@ -60,13 +74,6 @@ public class IncludedPackage {
         this.id = packageNumber;
     }
 
-    public List<Long> getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId.add(userId);
-    }
 
     public LocalDate getSubscriptionDate() {
         return subscriptionDate;
@@ -76,30 +83,15 @@ public class IncludedPackage {
         this.subscriptionDate = subscriptionDate;
     }
 
-    public long getServiceId() {
-        return serviceId;
-    }
 
-    public void setServiceId(long serviceId) {
-        this.serviceId=serviceId;
-    }
-
-    public long getTariffId() {
-        return tariffId;
-    }
-
-    public void setTariffId(long tariffId) {
-        this.tariffId=tariffId;
-    }
 
     @Override
     public String toString() {
         return "IncludedPackage{" +
                 "id=" + id +
-                ", userId=" + userId.toString() +
                 ", subscriptionDate=" + subscriptionDate +
-                ", service=" + serviceId +
-                ", tariff=" + tariffId +
+                ", service=" + service.toString() +
+                ", tariff=" + tariff.toString() +
                 '}';
     }
 

@@ -3,6 +3,7 @@ package dao.impl.mysql;
 import dao.abstraction.TariffDao;
 import dao.impl.mysql.converter.DtoConverter;
 import dao.impl.mysql.converter.TariffDtoConverter;
+import entity.Service;
 import entity.Tariff;
 
 import java.math.BigDecimal;
@@ -14,9 +15,11 @@ import java.util.Optional;
 
 public class MySqlTariffDao implements TariffDao {
     private final static String SELECT_ALL =
-            "SELECT tariff.id,service.name AS service_name, " +
-                    "tariff.name AS tariff_name,tariff.cost , " +
-                    "GROUP_CONCAT(included_option.definition) AS tariff_definition " +
+            "SELECT tariff.id AS tariff_id ," +
+                    "tariff.name AS tariff_name,tariff.cost AS tariff_cost , " +
+                    "service.id AS service_id, " +
+                    "service.name AS service_name, " +
+                    "GROUP_CONCAT(included_option.definition) AS included_options " +
                     "FROM tariff " +
                     "JOIN service on tariff.service_id = service.id " +
                     "JOIN included_options_to_tariff ON included_options_to_tariff.tariff_id = tariff.id " +
@@ -25,8 +28,8 @@ public class MySqlTariffDao implements TariffDao {
     private final static String WHERE_ID =
             "WHERE tariff.id = ? ";
 
-    private final static String WHERE_NAME =
-            "WHERE tariff.NAME = ? ";
+    private final static String WHERE_SERVICE_ID =
+            "WHERE tariff.service_id = ? ";
 
     private final static String INSERT =
             "INSERT into tariff (login, password, balance," +
@@ -86,7 +89,7 @@ public class MySqlTariffDao implements TariffDao {
                 INSERT,
                 obj.getTariffName(),
                 obj.getCost(),
-                obj.getServiceId()
+                obj.getService()
 
         );
 
@@ -102,7 +105,7 @@ public class MySqlTariffDao implements TariffDao {
                 UPDATE + WHERE_ID,
                 obj.getTariffName(),
                 obj.getCost(),
-                obj.getServiceId()
+                obj.getService()
         );
     }
 
@@ -113,8 +116,8 @@ public class MySqlTariffDao implements TariffDao {
     }
 
     @Override
-    public Optional<Tariff> findOneByName(String name) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_NAME, name);
+    public List<Tariff> findByService(Service service) {
+        return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE_ID, service.getId());
     }
 
     @Override

@@ -53,10 +53,10 @@ public class IncludedPackageService {
         }
     }
 
-    public Optional<IncludedPackage> findOneByDate(LocalDate date) {
+    public List<IncludedPackage> findByUser(long userId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
-            return includedPackage.findOneByDate(date);
+            return includedPackage.findByUser(userId);
         }
     }
 

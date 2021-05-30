@@ -4,21 +4,3 @@
 
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
       rel="stylesheet">
-
-<link href="${pageContext.request.contextPath}/resources/css/jumbotron.css"
-      rel="stylesheet">
-
-<link href="${pageContext.request.contextPath}/resources/css/login.css"
-      rel="stylesheet">
-
-<link href="${pageContext.request.contextPath}/resources/css/signup.css"
-      rel="stylesheet">
-
-<link href="${pageContext.request.contextPath}/resources/css/fa-solid.min.css"
-      rel="stylesheet">
-
-<link href="${pageContext.request.contextPath}/resources/css/custom.css"
-      rel="stylesheet">
-
-<link href="${pageContext.request.contextPath}/resources/css/navbar-default.css"
-      rel="stylesheet">

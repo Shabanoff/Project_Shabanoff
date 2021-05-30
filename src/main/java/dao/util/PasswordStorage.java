@@ -31,7 +31,7 @@ public class PasswordStorage {
     }
 
     public static void main(String[] args) {
-        System.out.println(PasswordStorage.getSecurePassword("admin"));
+        System.out.println(PasswordStorage.getSecurePassword("admin123"));
     }
 
 }

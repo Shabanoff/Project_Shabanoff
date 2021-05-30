@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ServiceDtoConverter implements DtoConverter<Service> {
-    private final static String ID_FIELD = "id";
-    private final static String NAME_FIELD = "name";
+    private final static String ID_FIELD = "service_id";
+    private final static String NAME_FIELD = "service_name";
 
     @Override
     public Service convertToObject(ResultSet resultSet) throws SQLException {

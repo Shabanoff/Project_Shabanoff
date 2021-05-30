@@ -34,7 +34,7 @@ public class PostLoginCommand implements ICommand {
 
         if(Util.isAlreadyLoggedIn(request.getSession())) {
             Util.redirectTo(request, response, bundle.
-                    getString("home.path"));
+                    getString("account.path"));
             return REDIRECTED;
         }
 

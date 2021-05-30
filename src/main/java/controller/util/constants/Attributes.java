@@ -6,6 +6,9 @@ public interface Attributes {
     String MESSAGES = "messages";
     String AMOUNT = "amount";
     String USER = "user";
+    String INCLUDED_PACKAGES = "includedPackages";
     String USER_LIST  ="activeUserList";
     String REFILLABLE_USER = "refillableUser";
+    String TARIFFS = "tariffs";
+    String SERVICES = "services";
 }

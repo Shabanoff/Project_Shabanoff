@@ -13,7 +13,7 @@
 <jsp:include page="/WEB-INF/views/snippets/navbar.jsp"/>
 
 <div class="panel-title text-center row col-md-12">
-    <h1 class="title"><fmt:message key="user.replenish"/></h1>
+    <h1 class="title"><fmt:message key="replenish"/></h1>
     <hr/>
 </div>
 
@@ -29,7 +29,7 @@
 
         <c:if test="${not empty requestScope.warning and not empty requestScope.amount}">
             <div class="alert alert-warning">
-                <fmt:message key="${requestScope.warning}"/>&nbsp${requestScope.amount}<fmt:message key="currency"/><br>
+                <fmt:message key="${requestScope.warning}"/>${requestScope.amount}<fmt:message key="currency"/><br>
             </div>
         </c:if>
 
@@ -49,14 +49,10 @@
 <div class="container">
     <div class="row col-md-5">
         <c:if test="${empty requestScope.messages}">
-        <c:choose>
-        <c:when test="${not empty sessionScope.user and sessionScope.user.isManager()}">
-        <form class="form-inline" action="${pageContext.request.contextPath}/site/manager/replenish" method="post">
-            </c:when>
+
             <c:when test="${not empty sessionScope.user and sessionScope.user.isUser()}">
-            <form class="form-inline" action="${pageContext.request.contextPath}/site/user/replenish" method="post">
+            <form class="form-inline" action="${pageContext.request.contextPath}/site/replenish" method="post">
                 </c:when>
-                </c:choose>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <label for="refillableUser">

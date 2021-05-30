@@ -25,7 +25,73 @@
     <customTag:currPage/>
 </c:set>
 
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Internet Provider</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/service" role="button"><fmt:message key="service"/></a>
+                    <a class="btn btn-link" href="${pageContext.request.contextPath}/site/service" role="button"><fmt:message key="services"/></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarCollapse2">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+            <c:if test="${not empty sessionScope.user}">
+                <li>
+                    <a class="nav-link" href="#"><fmt:message key="welcome"/> </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false"><c:out value="${sessionScope.user.getLogin()}"/></a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                        <li><a class="dropdown-item" ><fmt:message key="user.my.balance"/> <c:out value="${sessionScope.user.getBalance()}"/> <fmt:message key="currency"/></a></li>
+                        <li><a class="btn btn-link" href="${pageContext.request.contextPath}/site/replenish" role="button"><fmt:message key="replenish"/></a></li>
+                    </ul>
+                </li>
+
+            </c:if>
+        </ul>
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+            <c:if test="${empty sessionScope.user}">
+                <c:choose>
+                    <c:when test="${loginPage.equals(currPage)}">
+                        <li class="active">
+                    </c:when>
+                    <c:otherwise>
+                        <li>
+                    </c:otherwise>
+                </c:choose>
+                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/login" role="button"><fmt:message key="login"/></a>
+                </li>
+            </c:if>
+            <c:if test="${not empty sessionScope.user}">
+                <li>
+                    <a class="btn btn-outline-danger" href="${pageContext.request.contextPath}/site/logout?command=logout" role="button"><fmt:message key="logout"/></a>
+                </li>
+            </c:if>
+        </ul>
+        <ul class = "navbar-nav ms-auto mb-2 mb-md-1">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">${sessionScope.locale.getLanguage().toUpperCase()}</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown03">
+                    <c:forEach items="${applicationScope.supportedLocales}" var="lang">
+                        <li><a class="dropdown-item" href="?lang=${lang}">${lang.toUpperCase()}</a></li>
+                    </c:forEach>
+                </ul>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+
+<!--<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand fas fa-credit-card" href="${pageContext.request.contextPath}/site/home">&nbspBPS</a>
@@ -184,7 +250,7 @@
                     </c:otherwise>
                 </c:choose>
                 <a>
-                    <fmt:message key="account.replenish"/>
+                    <fmt:message key="user.replenish"/>
                 </a>
                 </li>
 
@@ -217,18 +283,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <c:if test="${empty sessionScope.user}">
-                <c:choose>
-                    <c:when test="${signUpPage.equals(currPage)}">
-                        <li class="active">
-                    </c:when>
-                    <c:otherwise>
-                        <li>
-                    </c:otherwise>
-                </c:choose>
-                    <a href="${pageContext.request.contextPath}/site/signup">
-                        <fmt:message key="signup"/>
-                    </a>
-                </li>
+
                 <c:choose>
                     <c:when test="${loginPage.equals(currPage)}">
                         <li class="active">
@@ -257,3 +312,7 @@
         </ul>
     </div>
 </nav>
+<li class="nav-item">
+<a class="nav-link active" aria-current="page" href="#"><fmt:message key="login"/></a>
+</li>
+-->

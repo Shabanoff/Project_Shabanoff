@@ -3,6 +3,7 @@ package service;
 import dao.abstraction.TariffDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
+import entity.Service;
 import entity.Tariff;
 import java.math.BigDecimal;
 import java.util.List;
@@ -42,10 +43,10 @@ public class TariffService {
         }
     }
 
-    public Optional<Tariff> findByName(String name) {
+    public List<Tariff> findByService(Service service) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             TariffDao tariffDao = daoFactory.getTariffDao(connection);
-            return tariffDao.findOneByName(name);
+            return tariffDao.findByService(service);
         }
     }
 

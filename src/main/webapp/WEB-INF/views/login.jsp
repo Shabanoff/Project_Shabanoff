@@ -5,36 +5,36 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="i18n.lang"/>
 
-<html>
 <head>
     <jsp:include page="/WEB-INF/views/snippets/header.jsp"/>
+    <link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet">
 </head>
-<body>
-<jsp:include page="/WEB-INF/views/snippets/navbar.jsp"/>
-<c:if test="${not empty requestScope.errors}">
-    <div class="alert alert-danger">
-        <c:forEach items="${requestScope.errors}" var="error">
-            <strong><fmt:message key="error"/></strong> <fmt:message key="${error}"/><br>
-        </c:forEach>
-    </div>
-</c:if>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <h1 class="text-center login-title"><fmt:message key="login"/></h1>
-            <div class="account-wall">
-                <img class="profile-img" src="${pageContext.request.contextPath}/resources/someone.png" alt="">
-                <form class="form-signin" method="post">
-                    <input type="hidden" name="command" value="login.post"/>
-                    <input type="text" class="form-control" name="login" placeholder="<fmt:message key="enter.login"/>"
-                           value="<c:out value="${requestScope.user.getLogin()}" />" required autofocus>
-                    <input type="password" class="form-control" name="password" placeholder="<fmt:message key="enter.password"/>" required>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="login" /></button>
-                </form>
-            </div>
+<body class="text-center">
+<main class="form-signin">
+    <c:if test="${not empty requestScope.errors}">
+        <div class="alert alert-danger">
+            <c:forEach items="${requestScope.errors}" var="error">
+                <strong><fmt:message key="error"/></strong> <fmt:message key="${error}"/><br>
+            </c:forEach>
         </div>
-    </div>
-</div>
+    </c:if>
+    <form class="form-signin" method="post">
+        <input type="hidden" name="command" value="login.post"/>
+        <div class="form-floating">
+            <input type="email" class="form-control" name="login" id="login" placeholder="<fmt:message key="enter.login"/>"
+                   value="<c:out value="${requestScope.user.getLogin()}" />" required autofocus>
+            <label for="login"><fmt:message key="enter.login"/></label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" class="form-control" name="password" id="password" placeholder="<fmt:message key="enter.password"/>" required>
+            <label for="password"><fmt:message key="enter.password"/></label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="login" /></button>
+    </form>
+</main>
+
 <jsp:include page="/WEB-INF/views/snippets/footer.jsp"/>
 </body>
 </html>
