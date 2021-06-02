@@ -10,5 +10,6 @@ public interface Attributes {
     String USER_LIST  ="activeUserList";
     String REFILLABLE_USER = "refillableUser";
     String TARIFFS = "tariffs";
+    String USERS = "users";
     String SERVICES = "services";
 }

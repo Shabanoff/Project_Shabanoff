@@ -63,6 +63,14 @@ public class User {
             user.setRole(role);
             return this;
         }
+        public Builder addDefaultRole() {
+            user.setDefaultRole();
+            return this;
+        }
+        public Builder addDefaultStatus() {
+            user.setDefaultStatus();
+            return this;
+        }
         public Builder addIncludedPackage(List<IncludedPackage> includedPackages) {
             user.setIncludedPackages(includedPackages);
             return this;

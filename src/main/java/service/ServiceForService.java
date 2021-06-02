@@ -15,22 +15,28 @@ import java.util.Optional;
  *
  * @author Shabanoff
  */
-public class ServiceService {
+public class ServiceForService {
     private final DaoFactory daoFactory = DaoFactory.getInstance();
+    private TariffService tariffService = ServiceFactory.getTariffService();
 
-    private ServiceService() {
+
+    private ServiceForService() {
     }
     private static class Singleton {
-        private final static ServiceService INSTANCE = new ServiceService();
+        private final static ServiceForService INSTANCE = new ServiceForService();
     }
 
-    public static ServiceService getInstance() {
+    public static ServiceForService getInstance() {
         return Singleton.INSTANCE;
     }
     public List<Service> findAllService() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            return serviceDao.findAll();
+            List<Service> services = serviceDao.findAll();
+            for (Service service: services) {
+                service.setTariffs(tariffService.findByService(service));
+            }
+            return services;
         }
     }
 

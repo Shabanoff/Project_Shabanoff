@@ -18,7 +18,7 @@ import java.util.List;
 import static controller.util.constants.Views.ACCOUNT_VIEW;
 import static controller.util.constants.Views.HOME_VIEW;
 
-public class AccountCommand implements ICommand {
+public class GetAccountCommand implements ICommand {
 
     private final IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
 
@@ -27,8 +27,9 @@ public class AccountCommand implements ICommand {
             throws ServletException, IOException {
         User currentUser = getUserFromSession(request.getSession());
         List<IncludedPackage> includedPackages = includedPackageService.findByUser(currentUser.getId());
-
+        currentUser.setIncludedPackages(includedPackages);
         request.setAttribute(Attributes.INCLUDED_PACKAGES, includedPackages);
+
 
         return ACCOUNT_VIEW;
     }

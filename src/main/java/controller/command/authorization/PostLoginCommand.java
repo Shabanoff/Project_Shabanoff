@@ -7,6 +7,8 @@ import controller.util.constants.Views;
 import controller.util.validator.LoginValidator;
 import controller.util.validator.PasswordValidator;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import service.ServiceFactory;
 import service.UserService;
 
@@ -17,6 +19,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class PostLoginCommand implements ICommand {
+    private final static Logger logger = LogManager.getLogger(PostLoginCommand.class);
+
     private final static String LOGIN_PARAM = "login";
     private final static String PASSWORD_PARAM = "password";
     private final static String INVALID_CREDENTIALS =
@@ -32,7 +36,7 @@ public class PostLoginCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        if(Util.isAlreadyLoggedIn(request.getSession())) {
+        if (Util.isAlreadyLoggedIn(request.getSession())) {
             Util.redirectTo(request, response, bundle.
                     getString("account.path"));
             return REDIRECTED;
@@ -42,18 +46,19 @@ public class PostLoginCommand implements ICommand {
 
         List<String> errors = validateData(userDto);
         errors.addAll(
-                validateUniquenessActiveUser(request.getSession(),userDto));
+                validateUniquenessActiveUser(request.getSession(), userDto));
 
-        if(errors.isEmpty()) {
+        if (errors.isEmpty()) {
+            logger.info("LOGGIN WITHOUT ERRORS!");
             User user = loadUserFromDatabase(userDto.getLogin());
-            addUserToContext(request.getSession(),user);
+            addUserToContext(request.getSession(), user);
             addUserToSession(request.getSession(), user);
-            Util.redirectTo(request, response,  bundle.
-                    getString("home.path"));
+            Util.redirectTo(request, response, bundle.
+                    getString("account.path"));
 
             return REDIRECTED;
         }
-
+        logger.info("LOGGIN HAS ERRORS!");
         addInvalidDataToRequest(request, userDto, errors);
 
         return Views.LOGIN_VIEW;
@@ -75,7 +80,7 @@ public class PostLoginCommand implements ICommand {
         /* Check if entered password matches with user password only in case,
             when email and password is valid
         */
-        if(errors.isEmpty() && !userService.
+        if (errors.isEmpty() && !userService.
                 isCredentialsValid(user.getLogin(), user.getPassword())) {
             errors.add(INVALID_CREDENTIALS);
         }
@@ -83,7 +88,7 @@ public class PostLoginCommand implements ICommand {
         return errors;
     }
 
-    public List<String> validateUniquenessActiveUser(HttpSession session, User user){
+    public List<String> validateUniquenessActiveUser(HttpSession session, User user) {
         List<String> errors = new ArrayList<>();
         @SuppressWarnings("unchecked")
         Map<String, User> activeUserList = (Map<String, User>) session.getServletContext().

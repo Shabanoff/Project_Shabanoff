@@ -23,10 +23,12 @@ public class MySqlTariffDao implements TariffDao {
                     "FROM tariff " +
                     "JOIN service on tariff.service_id = service.id " +
                     "JOIN included_options_to_tariff ON included_options_to_tariff.tariff_id = tariff.id " +
-                    "JOIN included_option ON included_options_to_tariff.included_option_id = included_option.id";
+                    "JOIN included_option ON included_options_to_tariff.included_option_id = included_option.id ";
 
     private final static String WHERE_ID =
             "WHERE tariff.id = ? ";
+    private final static String GROUP_BY=
+            "GROUP BY tariff.id ";
 
     private final static String WHERE_SERVICE_ID =
             "WHERE tariff.service_id = ? ";
@@ -117,7 +119,7 @@ public class MySqlTariffDao implements TariffDao {
 
     @Override
     public List<Tariff> findByService(Service service) {
-        return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE_ID, service.getId());
+        return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE_ID+ GROUP_BY, service.getId());
     }
 
     @Override

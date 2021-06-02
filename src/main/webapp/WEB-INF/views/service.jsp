@@ -10,6 +10,13 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/snippets/navbar.jsp"/>
+<c:if test="${not empty requestScope.errors}">
+  <div class="alert alert-danger">
+    <c:forEach items="${requestScope.errors}" var="error">
+      <strong><fmt:message key="error"/></strong> <fmt:message key="${error}"/><br>
+    </c:forEach>
+  </div>
+</c:if>
   <c:forEach var="service" items="${requestScope.services}">
     <div class="jumbotron">
       <div class="container">
@@ -25,7 +32,7 @@
       </tr>
       </thead>
       <tbody>
-    <c:forEach var="tariff" items="${requestScope.tariffs}">
+    <c:forEach var="tariff" items="${service.tariffs}">
       <tr>
         <td><c:out value="${tariff.tariffName}"/></td>
         <td>
@@ -36,6 +43,16 @@
           </ul>
         </td>
         <td><c:out value="${tariff.cost}"/></td>
+        <c:if test="${not empty sessionScope.user}">
+        <td><form action="${pageContext.request.contextPath}/site/service" method="post" >
+          <input type="hidden" name="command" value="plug"/>
+          <input type="hidden" name="tariffId"
+                 value="${tariff.id}"/>
+          <button type="submit" class="btn btn-info"><fmt:message
+                  key="tariff.plug"/></button>
+        </form>
+        </td>
+        </c:if>
       </tr>
     </c:forEach>
       </tbody>

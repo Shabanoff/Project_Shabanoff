@@ -4,11 +4,11 @@ import dao.abstraction.IncludedPackageDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 import entity.IncludedPackage;
+import entity.Tariff;
 
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 /**
  * Intermediate layer between command layer and dao layer.
  * Implements operations of finding, creating, deleting entities.
@@ -21,7 +21,6 @@ public class IncludedPackageService {
 
     private IncludedPackageService() {
     }
-
     private static class Singleton {
         private final static IncludedPackageService INSTANCE = new IncludedPackageService();
     }
@@ -44,11 +43,24 @@ public class IncludedPackageService {
         }
     }
 
+    public Optional<IncludedPackage> findIncludedPackageByService(long serviceId) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
+            return includedPackage.findByService(serviceId);
+        }
+    }
+
+    public Optional<IncludedPackage> findIncludedPackageByTariff(long tariffId) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
+            return includedPackage.findByTariff(tariffId);
+        }
+    }
 
     public IncludedPackage createIncludedPackage(IncludedPackage includedPackage) {
         try (DaoConnection connection = daoFactory.getConnection()) {
-            IncludedPackageDao accountsDao = daoFactory.getIncludedPackageDao(connection);
-            IncludedPackage inserted = accountsDao.insert(includedPackage);
+            IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
+            IncludedPackage inserted = includedPackageDao.insert(includedPackage);
             return inserted;
         }
     }
@@ -59,5 +71,20 @@ public class IncludedPackageService {
             return includedPackage.findByUser(userId);
         }
     }
+
+    public void updateIncludePackage(IncludedPackage includedPackage, Tariff tariff, DaoConnection connection) {
+        IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
+        includedPackageDao.updateIncludedPackage(includedPackage, tariff);
+    }
+    public void deleteIncludedPackage(long id){
+        try (DaoConnection connection = daoFactory.getConnection()) {
+
+            IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
+            includedPackageDao.delete(id);
+
+        }
+
+    }
+
 
 }

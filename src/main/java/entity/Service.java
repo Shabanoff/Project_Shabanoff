@@ -1,8 +1,19 @@
 package entity;
 
+import java.util.List;
+
 public class Service {
     private long id;
     private String serviceName;
+    private List<Tariff> tariffs;
+
+    public List<Tariff> getTariffs() {
+        return tariffs;
+    }
+
+    public void setTariffs(List<Tariff> tariffs) {
+        this.tariffs = tariffs;
+    }
 
     public static class Builder {
         private final Service service;
@@ -18,6 +29,10 @@ public class Service {
 
         public Builder addServiceName(String serviceName) {
             service.setServiceName(serviceName);
+            return this;
+        }
+        public Builder addTariffs(List<Tariff> tariffs) {
+            service.setTariffs(tariffs);
             return this;
         }
 

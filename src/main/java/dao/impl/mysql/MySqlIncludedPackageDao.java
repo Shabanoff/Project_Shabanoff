@@ -4,8 +4,10 @@ import dao.abstraction.IncludedPackageDao;
 import dao.impl.mysql.converter.DtoConverter;
 import dao.impl.mysql.converter.IncludedPackageDtoConverter;
 import entity.IncludedPackage;
+import entity.Tariff;
 
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,28 +26,32 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
                     "JOIN included_options_to_tariff ON tariff.id = included_options_to_tariff.tariff_id " +
                     "JOIN included_option ON included_option.id = included_options_to_tariff.included_option_id ";
     private final static String WHERE_ID =
-            "included_package.id = ? ";
+            "WHERE included_package.id = ? ";
+    private final static String WHERE_SERVICE_ID =
+            "WHERE included_package.service_id = ? ";
 
     private final static String WHERE_USER_ID =
             "WHERE included_package.user_id = ? ";
-    private final static String WHERE_DATE=
-            "included_package.subscription_date = ? ";
+    private final static String GROUP_BY=
+            "GROUP BY tariff.id ";
 
     private final static String INSERT =
             "INSERT into included_package (subscription_date, user_id, service_id," +
                     "tariff_id)" +
-                    "VALUES(?, ?, ?, ?, ?) ";
+                    "VALUES(?, ?, ?, ?) ";
 
     private final static String UPDATE =
             "UPDATE included_package SET " +
                     "subscription_date = ?, " +
-                    "user_id = ?" +
-                    "service_id = ?, " +
-                    "tariff_id = ?, ";
+                    "tariff_id = ?, "+
+                    "service_id = ? ";
 
 
     private final static String DELETE =
-            "DELETE FROM included_package";
+            "DELETE FROM included_package ";
+
+    private static final String WHERE_TARIFF_ID =
+            "WHERE included_package.tariff_id = ? ";;
 
 
     private final DefaultDaoImpl<IncludedPackage> defaultDao;
@@ -72,9 +78,12 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
     public IncludedPackage insert(IncludedPackage obj) {
         Objects.requireNonNull(obj);
 
-        int id = (int) defaultDao.executeInsertWithGeneratedPrimaryKey(
+        long id = defaultDao.executeInsertWithGeneratedPrimaryKey(
                 INSERT,
+
                 obj.getSubscriptionDate(),
+                obj.getUserId(),
+
                 obj.getService().getId(),
                 obj.getTariff().getId()
         );
@@ -85,13 +94,19 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
 
     @Override
     public void update(IncludedPackage obj) {
+
+    }
+
+
+    public void updateIncludedPackage (IncludedPackage obj, Tariff tariff) {
         Objects.requireNonNull(obj);
 
         defaultDao.executeUpdate(
                 UPDATE + WHERE_ID,
-                obj.getSubscriptionDate(),
-                obj.getService().getId(),
-                obj.getTariff().getId()
+                LocalDate.now(),
+                tariff.getId(),
+                tariff.getService().getId(),
+                obj.getId()
         );
 
     }
@@ -115,6 +130,15 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
 
     @Override
     public List<IncludedPackage> findByUser(long userId) {
-        return defaultDao.findAll(SELECT_ALL + WHERE_USER_ID,userId);
+        return defaultDao.findAll(SELECT_ALL + WHERE_USER_ID + GROUP_BY,userId);
+    }
+    @Override
+    public Optional<IncludedPackage> findByService(long serviceId) {
+        return defaultDao.findOne(SELECT_ALL + WHERE_SERVICE_ID,serviceId);
+    }
+
+    @Override
+    public Optional<IncludedPackage> findByTariff(long tariffId) {
+        return defaultDao.findOne(SELECT_ALL + WHERE_TARIFF_ID,tariffId);
     }
 }

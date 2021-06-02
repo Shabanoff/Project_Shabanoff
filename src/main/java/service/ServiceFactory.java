@@ -35,8 +35,8 @@ public class ServiceFactory {
         return TariffService.getInstance();
     }
 
-    public static ServiceService getServiceService() {
-        return ServiceService.getInstance();
+    public static ServiceForService getServiceService() {
+        return ServiceForService.getInstance();
     }
 
     public static IncludedOptionService getIncludedOptionService() {

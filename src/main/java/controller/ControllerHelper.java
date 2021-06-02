@@ -4,9 +4,8 @@ import controller.command.DefaultCommand;
 import controller.command.HomeCommand;
 import controller.command.ICommand;
 import controller.command.authorization.*;
-import controller.command.user.AccountCommand;
-import controller.command.user.GetReplenishCommand;
-import controller.command.user.GetServiceCommand;
+import controller.command.manager.*;
+import controller.command.user.*;
 import controller.util.constants.Views;
 
 import java.util.HashMap;
@@ -33,16 +32,29 @@ public class ControllerHelper {
                 new GetLoginCommand());
         commands.put(buildKey(bundle.getString("login.path"), "login.post"),
                 new PostLoginCommand());
-        commands.put(buildKey(bundle.getString("signup.path"), "signup.post"),
-                new PostSignupCommand());
         commands.put(buildKey(bundle.getString("logout.path"), "logout"),
                 new LogoutCommand());
-        commands.put(buildKey(bundle.getString("replenish.path"), "replenish"),
+        commands.put(buildKey(bundle.getString("replenish.path"), null),
                 new GetReplenishCommand());
         commands.put(buildKey(bundle.getString("service.path"), null),
                 new GetServiceCommand());
         commands.put(buildKey(bundle.getString("account.path"), null),
-                new AccountCommand());
+                new GetAccountCommand());
+        commands.put(buildKey(bundle.getString("service.path"), "plug"),
+                new PostServiceCommand());
+        commands.put(buildKey(bundle.getString("account.path"), "delete"),
+                new PostAccountCommand());
+        commands.put(buildKey(bundle.getString("replenish.path"), "replenish.post"),
+                new PostReplenishCommand());
+        commands.put(buildKey(bundle.getString("manager.users"), null),
+                new GetManagerCommand());
+        commands.put(buildKey(bundle.getString("createUser.path"), "post"),
+                new PostCreateUserCommand());
+        commands.put(buildKey(bundle.getString("manager.users"), "block"),
+                new PostBlockCommand());
+        commands.put(buildKey(bundle.getString("manager.users"), "unblock"),
+                new PostUnblockCommand());
+
     }
 
     public ICommand getCommand(String path, String command) {

@@ -1,12 +1,20 @@
 package service;
 
+import controller.util.Util;
+import controller.util.validator.LoginValidator;
+import controller.util.validator.PasswordValidator;
 import dao.abstraction.UserDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 import dao.util.PasswordStorage;
+import entity.IncludedPackage;
+import entity.Tariff;
 import entity.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,6 +60,10 @@ public class UserService {
         if (user.getRole() == null) {
             user.setDefaultRole();
         }
+        if (user.getStatus() == null) {
+            user.setDefaultStatus();
+        }
+
 
         String hash = PasswordStorage.getSecurePassword(
                 user.getPassword());
@@ -79,14 +91,14 @@ public class UserService {
             userDao.increaseBalance(user, amount);
             connection.commit();
         }
+
     }
-    public void decreaseUserBalance(User user, BigDecimal amount) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            connection.startSerializableTransaction();
+
+    public void decreaseUserBalance(User user, BigDecimal amount,DaoConnection connection ) {
+
             UserDao userDao = daoFactory.getUserDao(connection);
             userDao.decreaseBalance(user, amount);
-            connection.commit();
-        }
+
     }
     public boolean isCredentialsValid(String login, String password) {
         try (DaoConnection connection = daoFactory.getConnection()) {
@@ -105,6 +117,83 @@ public class UserService {
             UserDao userDao = daoFactory.getUserDao(connection);
             return userDao.exist(user.getId());
         }
+    }
+
+    private final IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
+
+    private final static String NOT_ENOUGH_MONEY = "no.money";
+    private final static String ALREADY_ADD = "already.add";
+    public List<String> addingTariff (User currentUser, Optional<Tariff> addingTariff){
+        List error = new ArrayList();
+        BigDecimal cost = addingTariff.get().getCost();
+
+            List<IncludedPackage> includedPackages =
+                    includedPackageService.findByUser(currentUser.getId());
+
+            Optional<IncludedPackage> existedPackagePackage =
+                    includedPackages.stream().filter(includedPackage ->
+                            includedPackage.getService().getId() ==
+                                    addingTariff.get().getService().getId()).findFirst();
+            if (existedPackagePackage.isPresent()  && existedPackagePackage.get().getTariff().equals(addingTariff.get())){
+                error.add(ALREADY_ADD);
+                return error;
+            }
+            if ( currentUser.getBalance().compareTo(addingTariff.get().getCost())<0){
+                error.add(NOT_ENOUGH_MONEY);
+                return error;
+            }
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            connection.startSerializableTransaction();
+            if (existedPackagePackage.isPresent()) {
+                        includedPackageService.updateIncludePackage(existedPackagePackage.get(),addingTariff.get(),connection);
+            } else {
+                    includedPackageService.createIncludedPackage(
+                            getDataFromRequest(currentUser, addingTariff.get()));
+            }
+                decreaseUserBalance(currentUser, cost, connection);
+            connection.commit();
+        }
+        return error;
+
+    }
+    private IncludedPackage getDataFromRequest(User user, Tariff tariff) {
+        return IncludedPackage.newBuilder()
+                .addSubscriptionDate(LocalDate.now())
+                .addUserId(user.getId())
+                .addTariff(tariff)
+                .addService(tariff.getService())
+                .build();
+    }
+    public List<String> createUser (String login, String password){
+        User userDto = getDataFromRequestCreating(login, password);
+        List<String> errors = validateData(userDto);
+        if (errors.isEmpty()){
+            userService.createUser(userDto);
+        }
+        return errors;
+    }
+    private User getDataFromRequestCreating(String login, String password) {
+        return User.newBuilder()
+                .addLogin(login)
+                .addPassword(password)
+                .addDefaultBalance()
+                .build();
+    }
+
+    public  final String USER_ALREADY_EXISTS = "user.exists";;
+    UserService userService = ServiceFactory.getUserService();
+    private List<String> validateData(User user) {
+        List<String> errors = new ArrayList<>();
+
+        Util.validateField(new LoginValidator(), user.getLogin(), errors);
+        Util.validateField(new PasswordValidator(), user.getPassword(), errors);
+
+
+        if(errors.isEmpty() && userService.isUserExists(user)) {
+            errors.add(USER_ALREADY_EXISTS);
+        }
+
+        return errors;
     }
 
 }

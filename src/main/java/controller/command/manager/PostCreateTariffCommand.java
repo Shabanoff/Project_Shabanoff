@@ -1,8 +1,7 @@
-package controller.command.user;
+package controller.command.manager;
 
 import controller.command.ICommand;
 import controller.util.constants.Attributes;
-import controller.util.constants.Views;
 import entity.Service;
 import service.ServiceFactory;
 import service.ServiceForService;
@@ -13,16 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class GetServiceCommand implements ICommand {
-
-    private final ServiceForService serviceService = ServiceFactory.getServiceService();
-
+public class PostCreateTariffCommand implements ICommand {
+    ServiceForService serviceService = ServiceFactory.getServiceService();
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Service> services = serviceService.findAllService();
         request.setAttribute(Attributes.SERVICES, services);
-
-        return Views.SERVICE_VIEW;
+        return null;
     }
 }

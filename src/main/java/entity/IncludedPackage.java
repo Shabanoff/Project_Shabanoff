@@ -6,6 +6,7 @@ import java.util.List;
 
 public class IncludedPackage {
     private long id;
+    private long userId;
     private LocalDate subscriptionDate;
     private Service service;
     private Tariff tariff;
@@ -29,6 +30,14 @@ public class IncludedPackage {
         this.tariff = tariff;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
     public static class Builder {
         private final IncludedPackage includedPackage;
 
@@ -44,7 +53,10 @@ public class IncludedPackage {
             includedPackage.setSubscriptionDate(date);
             return this;
         }
-
+        public IncludedPackage.Builder addUserId(long userId) {
+            includedPackage.setUserId(userId);
+            return this;
+        }
 
 
         public IncludedPackage.Builder addService(Service service) {
@@ -76,7 +88,7 @@ public class IncludedPackage {
 
 
     public LocalDate getSubscriptionDate() {
-        return subscriptionDate;
+        return LocalDate.now();
     }
 
     public void setSubscriptionDate(LocalDate subscriptionDate) {

@@ -10,4 +10,8 @@ public interface Views {
     String INFO_VIEW = FOLDER + "infoPage.jsp";
     String REPLENISH_VIEW = FOLDER + "replenish.jsp";
     String SERVICE_VIEW = FOLDER + "service.jsp";
+    String MANAGER_VIEW = FOLDER + "manager.jsp";
+    String CREATE_USER_VIEW = FOLDER + "createUser.jsp";
+    String CREATE_TARIFF_VIEW = FOLDER + "createTariff.jsp";
+
 }

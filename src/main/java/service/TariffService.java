@@ -36,7 +36,7 @@ public class TariffService {
         }
     }
 
-    public Optional<Tariff> findTariffByNumber(long TariffId) {
+    public Optional<Tariff> findTariffById(long TariffId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             TariffDao tariffDao = daoFactory.getTariffDao(connection);
             return tariffDao.findOne(TariffId);

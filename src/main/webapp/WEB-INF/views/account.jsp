@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="/WEB-INF/views/snippets/navbar.jsp"/>
 
-<c:if test="${not empty sessionScope.user and sessionScope.user.isUser}">
+<c:if test="${not empty sessionScope.user }">
     <c:forEach var="includedPackage" items="${requestScope.includedPackages}">
         <div class="jumbotron">
             <div class="container">
@@ -40,38 +40,21 @@
                 </td>
                 <td><c:out value="${includedPackage.tariff.cost}"/></td>
                 <td><c:out value="${includedPackage.subscriptionDate}"/></td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/site/account" method="post" >
+                <input type="hidden" name="command" value="delete"/>
+                <input type="hidden" name="includedPackageId"
+                       value="${includedPackage.id}"/>
+                <button type="submit" class="btn btn-info"><fmt:message
+                        key="disable"/></button>
+                     </form>
+                </td>
             </tr>
         </tbody>
     </table>
     </c:forEach>
 </c:if>
-<c:if test="${ sessionScope.user.isManager()}">
 
-        <div class="jumbotron">
-            <div class="container">
-                <h1><fmt:message key="users"/></h1>
-            </div>
-        </div>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col"><fmt:message key="user.login"/></th>
-                <th scope="col"><fmt:message key="user.balance"/></th>
-                <th scope="col"><fmt:message key="user.status"/></th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="user" items="${requestScope.users}">
-            <tr>
-                <td><c:out value="${user.login}"/></td>
-                <td><c:out value="${user.balance}"/></td>
-                <td><c:out value="${user.staus}"/></td>
-            </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-
-</c:if>
 <jsp:include page="/WEB-INF/views/snippets/footer.jsp"/>
 </body>
 </html>
