@@ -5,11 +5,13 @@ import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 import entity.IncludedOption;
 import entity.IncludedOptionToTariff;
-import entity.Service;
 import entity.Tariff;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 /**
  * Intermediate layer between command layer and dao layer.
  * Implements operations of finding, creating, deleting entities.
@@ -18,13 +20,13 @@ import java.util.Optional;
  * @author Shabanoff
  */
 public class TariffService {
+    private final static String ADDED_BY_USER = "added.by.user";
+    private static IncludedOptionToTariffService includedOptionToTariffService =
+            ServiceFactory.getIncludedOptionToTariffService();
     private final DaoFactory daoFactory = DaoFactory.getInstance();
+    IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
 
     private TariffService() {
-    }
-
-    private static class Singleton {
-        private final static TariffService INSTANCE = new TariffService();
     }
 
     public static TariffService getInstance() {
@@ -52,15 +54,12 @@ public class TariffService {
         }
     }
 
-    private static IncludedOptionToTariffService includedOptionToTariffService =
-            ServiceFactory.getIncludedOptionToTariffService();
-
     public void createTariff(Tariff tariff) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
             TariffDao tariffDao = daoFactory.getTariffDao(connection);
             tariffDao.insert(tariff);
-            for (IncludedOption includedOption: tariff.getIncludedOptions()) {
+            for (IncludedOption includedOption : tariff.getIncludedOptions()) {
                 includedOptionToTariffService.createIncludedOptionToTariff(
                         createIncludedOptionToTariffEntity(tariff, includedOption.getId()), connection);
             }
@@ -68,6 +67,7 @@ public class TariffService {
 
         }
     }
+
     public IncludedOptionToTariff createIncludedOptionToTariffEntity(Tariff tariff, long optionId) {
         return IncludedOptionToTariff.newBuilder()
                 .addTariffId(tariff.getId())
@@ -83,20 +83,30 @@ public class TariffService {
             connection.commit();
         }
     }
-    public void deleteTariff(long tariffId) {
+
+    public List<String> deleteTariff(long tariffId) {
+        List<String> erorrs = new ArrayList<>();
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
-            includedOptionToTariffService.deleteIncludedOptionToTariff(tariffId, connection);
-            TariffDao TariffDao = daoFactory.getTariffDao(connection);
-            TariffDao.delete(tariffId);
-            connection.commit();
+            if (includedPackageService.findIncludedPackageByTariff(tariffId, connection).isPresent()) {
+                erorrs.add(ADDED_BY_USER);
+                return erorrs;
+            }
+                includedOptionToTariffService.deleteIncludedOptionToTariff(tariffId, connection);
+                TariffDao TariffDao = daoFactory.getTariffDao(connection);
+                TariffDao.delete(tariffId);
+                connection.commit();
+
         }
+        return erorrs;
     }
+
     public void deleteTariffForService(long tariffId, DaoConnection connection) {
-            includedOptionToTariffService.deleteIncludedOptionToTariff(tariffId, connection);
-            TariffDao TariffDao = daoFactory.getTariffDao(connection);
-            TariffDao.delete(tariffId);
+        includedOptionToTariffService.deleteIncludedOptionToTariff(tariffId, connection);
+        TariffDao TariffDao = daoFactory.getTariffDao(connection);
+        TariffDao.delete(tariffId);
     }
+
     public void changeCost(Tariff tariff, BigDecimal cost) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
@@ -104,5 +114,9 @@ public class TariffService {
             tariffDao.changeCost(tariff, cost);
             connection.commit();
         }
+    }
+
+    private static class Singleton {
+        private final static TariffService INSTANCE = new TariffService();
     }
 }

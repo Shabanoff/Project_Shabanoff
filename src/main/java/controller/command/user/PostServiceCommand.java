@@ -20,7 +20,7 @@ import static controller.util.constants.Views.SERVICE_VIEW;
 
 public class PostServiceCommand implements ICommand {
     private final static Logger logger = LogManager.getLogger(PostServiceCommand.class);
-    String TARIFF_ID_PARAM = "tariffId";
+    private final String TARIFF_ID_PARAM = "tariffId";
 
     private final TariffService tariffService = ServiceFactory.getTariffService();
     private final UserService userService = ServiceFactory.getUserService();

@@ -14,14 +14,9 @@
 
 <c:if test="${not empty sessionScope.user }">
 
-  <div class="jumbotron">
-    <div class="container">
-      <h1><fmt:message key="users"/></h1>
-    </div>
-  </div>
   <table class="table">
     <thead>
-    <tr><h1><fmt:message key="users"/></h1></tr>
+    <tr><h1><fmt:message key="manager.users"/></h1></tr>
     <tr>
       <th scope="col"><fmt:message key="user.login"/></th>
       <th scope="col"><fmt:message key="user.balance"/></th>

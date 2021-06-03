@@ -43,18 +43,17 @@ public class IncludedPackageService {
         }
     }
 
-    public Optional<IncludedPackage> findIncludedPackageByService(long serviceId) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
+    public Optional<IncludedPackage> findIncludedPackageByService(long serviceId, DaoConnection connection) {
+
             IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
             return includedPackage.findByService(serviceId);
-        }
+
     }
 
-    public Optional<IncludedPackage> findIncludedPackageByTariff(long tariffId) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
+    public Optional<IncludedPackage> findIncludedPackageByTariff(long tariffId, DaoConnection connection) {
+
             IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
             return includedPackage.findByTariff(tariffId);
-        }
     }
 
     public IncludedPackage createIncludedPackage(IncludedPackage includedPackage) {

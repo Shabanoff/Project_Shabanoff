@@ -6,6 +6,7 @@ import dao.factory.connection.DaoConnection;
 import entity.Service;
 import entity.Tariff;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,8 +64,16 @@ public class ServiceForService {
             return inserted;
         }
     }
-    public void deleteService(long serviceId) {
+    IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
+    private final static String ADDED_BY_USER = "added.by.user";
+    public List<String> deleteService(long serviceId) {
+        List<String> erorrs = new ArrayList<>();
+
         try (DaoConnection connection = daoFactory.getConnection()) {
+            if (includedPackageService.findIncludedPackageByService(serviceId, connection).isPresent()){
+                erorrs.add(ADDED_BY_USER);
+                return erorrs;
+            }
             connection.startSerializableTransaction();
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             List<Tariff> tariffs = tariffService.findByService(serviceId);
@@ -72,6 +81,7 @@ public class ServiceForService {
             serviceDao.delete(serviceId);
             connection.commit();
         }
+        return erorrs;
     }
 
     public void updateService(Service service) {

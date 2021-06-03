@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PostCreateTariffCommand implements ICommand {
     private final ServiceForService serviceService = ServiceFactory.getServiceService();
@@ -40,10 +42,12 @@ public class PostCreateTariffCommand implements ICommand {
         String tariffName = request.getParameter(TARIFF_NAME_PARAM);
         BigDecimal cost = new BigDecimal(request.getParameter(COST_PARAM));
         long serviceId = Long.parseLong(request.getParameter(SERVICE_ID_PARAM));
-        long optionId = Long.parseLong(request.getParameter(OPTION_ID_PARAM));
-
+        String[] optionsId=request.getParameterValues(OPTION_ID_PARAM);
         List<IncludedOption> includedOptions= new ArrayList<>();
-        includedOptions.add(includedOptionService.findIncludedOptionByNumber(optionId).get());
+        for (String optionId: optionsId) {
+            includedOptions.add(includedOptionService.findIncludedOptionByNumber(Long.parseLong(optionId)).get());
+        }
+
 
         return Tariff.newBuilder()
                 .addTariffName(tariffName)

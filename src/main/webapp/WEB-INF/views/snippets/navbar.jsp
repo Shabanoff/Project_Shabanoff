@@ -20,7 +20,12 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container-fluid">
+        <c:if test="${ sessionScope.user.manager}">
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/site/manager/users">Internet Provider</a>
+        </c:if>
+<c:if test="${sessionScope.user.user}">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/site/account">Internet Provider</a>
+</c:if>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

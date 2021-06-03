@@ -17,15 +17,13 @@
     </c:forEach>
   </div>
 </c:if>
-
-
-
-
     <table class="table">
       <c:forEach var="service" items="${requestScope.services}">
         <tbody>
       <tr><div class="container">
         <th><h1>${service.serviceName}</h1></th>
+
+        <c:if test="${sessionScope.user.manager}">
         <th><form action="${pageContext.request.contextPath}/site/service" method="post" >
           <input type="hidden" name="command" value="delete.service"/>
           <input type="hidden" name="serviceId"
@@ -33,13 +31,16 @@
           <button type="submit" class="btn btn-danger"><fmt:message
                   key="service.delete"/></button>
         </form></th>
+        </c:if>
       </div></tr>
       <tr>
         <th scope="col"><fmt:message key="tariff.name"/></th>
         <th scope="col"><fmt:message key="tariff.description"/></th>
         <th scope="col"><fmt:message key="tariff.cost"/></th>
+        <c:if test="${sessionScope.user.manager}">
+        <th scope="col"><fmt:message key="change.cost"/></th>
+                </c:if>
       </tr>
-
 
     <c:forEach var="tariff" items="${service.tariffs}">
       <tr>
@@ -52,7 +53,25 @@
           </ul>
         </td>
         <td><c:out value="${tariff.cost}"/></td>
-        <c:if test="${not empty sessionScope.user}">
+        <c:if test="${sessionScope.user.manager}">
+        <td>
+          <table>
+            <tr>
+          <form class="form-inline" action="${pageContext.request.contextPath}/site/service" method="post">
+            <input type="hidden" name="command" value="change.cost"/>
+            <div class="form-group mx-sm-3 mb-2">
+              <td><label for="newCost" class="sr-only"><fmt:message key="amount"/></label></td>
+              <td><input type="password" class="form-control" name="newCost" id="newCost" placeholder=<fmt:message key="amount"/>>
+                  <input type="hidden" name="tariffId"
+                       value="${tariff.id}"/></td>
+            </div>
+            <td><button type="submit" class="btn btn-primary mb-2"><fmt:message key="change"/></button></td>
+          </form>
+            </tr>
+          </table>
+        </td>
+        </c:if>
+        <c:if test="${not empty sessionScope.user and sessionScope.user.user}">
         <td><form action="${pageContext.request.contextPath}/site/service" method="post" >
           <input type="hidden" name="command" value="plug"/>
           <input type="hidden" name="tariffId"

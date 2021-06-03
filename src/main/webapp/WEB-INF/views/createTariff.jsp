@@ -49,13 +49,14 @@
       </div>
 
     </div>
-    <div>
-      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"  name="optionId" id="optionId" >
-        <option selected><fmt:message key="definition"/></option>
-        <c:forEach items="${requestScope.options}" var="option">
-          <option name="optionId" value=${option.id} >${option.definition}</option>
+      <c:forEach items="${requestScope.options}" var="option">
+      <div class="form-check">
+        <input class="form-check-input" name="optionId" type="checkbox" value=${option.id} id=${option.id}>
+        <label class="form-check-label" for=${option.id}>
+            ${option.definition}
+        </label>
+      </div>
         </c:forEach>
-      </select>
     </div>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="tariff.create" /></button>

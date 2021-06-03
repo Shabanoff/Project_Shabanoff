@@ -76,6 +76,8 @@ public class ControllerHelper {
                 new PostDeleteTariffCommand());
         commands.put(buildKey(bundle.getString("service.path"), "delete.service"),
                 new PostDeleteServiceCommand());
+        commands.put(buildKey(bundle.getString("service.path"), "change.cost"),
+                new PostChangeTariffCostCommand());
 
 
     }
