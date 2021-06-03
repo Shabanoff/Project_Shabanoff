@@ -9,7 +9,7 @@ public class Status extends Designation {
 
     public enum StatusIdentifier {
 
-        ACTIVE_STATUS(1), BLOCKED_STATUS(5);
+        ACTIVE_STATUS(1), BLOCKED_STATUS(2);
 
         private final int id;
 

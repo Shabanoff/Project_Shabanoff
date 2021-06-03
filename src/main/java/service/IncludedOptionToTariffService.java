@@ -56,12 +56,12 @@ public class IncludedOptionToTariffService {
     }
 
 
-    public IncludedOptionToTariff createIncludedOptionToTariff(IncludedOptionToTariff includedOptionToTariff) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
+    public IncludedOptionToTariff createIncludedOptionToTariff(IncludedOptionToTariff includedOptionToTariff, DaoConnection connection) {
+
             IncludedOptionToTariffDao includedOptionToTariffDao = daoFactory.getIncludedOptionToTariffDao(connection);
             IncludedOptionToTariff inserted = includedOptionToTariffDao.insert(includedOptionToTariff);
             return inserted;
-        }
+
     }
 
     public void updateIncludedOptionToTariff(IncludedOptionToTariff includedOptionToTariff) {
@@ -71,5 +71,12 @@ public class IncludedOptionToTariffService {
            includedOptionToTariffDao.update(includedOptionToTariff);
             connection.commit();
         }
+    }
+    public void deleteIncludedOptionToTariff(long tariffId, DaoConnection connection) {
+
+        IncludedOptionToTariffDao includedOptionToTariffDao = daoFactory.getIncludedOptionToTariffDao(connection);
+        includedOptionToTariffDao.delete(tariffId);
+
+
     }
 }

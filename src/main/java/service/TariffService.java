@@ -3,6 +3,8 @@ package service;
 import dao.abstraction.TariffDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
+import entity.IncludedOption;
+import entity.IncludedOptionToTariff;
 import entity.Service;
 import entity.Tariff;
 import java.math.BigDecimal;
@@ -43,19 +45,34 @@ public class TariffService {
         }
     }
 
-    public List<Tariff> findByService(Service service) {
+    public List<Tariff> findByService(long serviceId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             TariffDao tariffDao = daoFactory.getTariffDao(connection);
-            return tariffDao.findByService(service);
+            return tariffDao.findByService(serviceId);
         }
     }
 
+    private static IncludedOptionToTariffService includedOptionToTariffService =
+            ServiceFactory.getIncludedOptionToTariffService();
 
-    public Tariff createTariff(Tariff tariff) {
+    public void createTariff(Tariff tariff) {
         try (DaoConnection connection = daoFactory.getConnection()) {
+            connection.startSerializableTransaction();
             TariffDao tariffDao = daoFactory.getTariffDao(connection);
-            return tariffDao.insert(tariff);
+            tariffDao.insert(tariff);
+            for (IncludedOption includedOption: tariff.getIncludedOptions()) {
+                includedOptionToTariffService.createIncludedOptionToTariff(
+                        createIncludedOptionToTariffEntity(tariff, includedOption.getId()), connection);
+            }
+            connection.commit();
+
         }
+    }
+    public IncludedOptionToTariff createIncludedOptionToTariffEntity(Tariff tariff, long optionId) {
+        return IncludedOptionToTariff.newBuilder()
+                .addTariffId(tariff.getId())
+                .addOptionId(optionId)
+                .build();
     }
 
     public void updateTariff(Tariff tariff) {
@@ -65,6 +82,20 @@ public class TariffService {
             TariffDao.update(tariff);
             connection.commit();
         }
+    }
+    public void deleteTariff(long tariffId) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            connection.startSerializableTransaction();
+            includedOptionToTariffService.deleteIncludedOptionToTariff(tariffId, connection);
+            TariffDao TariffDao = daoFactory.getTariffDao(connection);
+            TariffDao.delete(tariffId);
+            connection.commit();
+        }
+    }
+    public void deleteTariffForService(long tariffId, DaoConnection connection) {
+            includedOptionToTariffService.deleteIncludedOptionToTariff(tariffId, connection);
+            TariffDao TariffDao = daoFactory.getTariffDao(connection);
+            TariffDao.delete(tariffId);
     }
     public void changeCost(Tariff tariff, BigDecimal cost) {
         try (DaoConnection connection = daoFactory.getConnection()) {

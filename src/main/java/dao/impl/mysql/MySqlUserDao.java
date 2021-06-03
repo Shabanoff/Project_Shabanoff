@@ -132,10 +132,6 @@ public class MySqlUserDao implements UserDao {
         return defaultDao.findOne(SELECT_ALL + WHERE_LOGIN, login);
     }
 
-    @Override
-    public boolean existByLogin(String login) {
-        return findOneByLogin(login).isPresent();
-    }
 
     @Override
     public void increaseBalance(User user, BigDecimal amount) {

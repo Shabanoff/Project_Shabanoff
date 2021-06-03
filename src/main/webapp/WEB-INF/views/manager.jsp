@@ -29,7 +29,7 @@
     </thead>
     <tbody>
     <c:forEach var="user" items="${requestScope.users}">
-      <c:if test="${not user.manager}">
+      <c:if test="${user.user}">
       <tr>
         <td><c:out value="${user.login}"/></td>
         <td><c:out value="${user.balance}"/><fmt:message key="currency"/></td>
@@ -43,7 +43,7 @@
         </form>
         </td>
       </c:if>
-        <c:if test="${not user.active}">
+        <c:if test="${user.blocked}">
           <td><form action="${pageContext.request.contextPath}/site/manager/users" method="post" >
             <input type="hidden" name="command" value="unblock"/>
             <input type="hidden" name="userId"

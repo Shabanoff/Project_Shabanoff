@@ -4,7 +4,7 @@ public class Role extends Designation{
 
     public enum RoleIdentifier{
 
-        MANAGER_ROLE (2), USER_ROLE (10);
+        MANAGER_ROLE (1), USER_ROLE (2);
 
         private final int id;
         RoleIdentifier(int id) {

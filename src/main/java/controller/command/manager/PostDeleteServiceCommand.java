@@ -1,4 +1,4 @@
-package controller.command.user;
+package controller.command.manager;
 
 import controller.command.ICommand;
 import controller.util.constants.Attributes;
@@ -11,13 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GetServiceCommand implements ICommand {
-
-    private final ServiceForService serviceService = ServiceFactory.getServiceService();
-
+public class PostDeleteServiceCommand implements ICommand {
+    ServiceForService serviceService = ServiceFactory.getServiceService();
+    private final String SERVICE_ID_PARAM = "serviceId";
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        serviceService.deleteService(Long.parseLong(request.getParameter(SERVICE_ID_PARAM)));
         request.setAttribute(Attributes.SERVICES, serviceService.findAllService());
         return Views.SERVICE_VIEW;
     }

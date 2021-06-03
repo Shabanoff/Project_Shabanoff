@@ -34,9 +34,9 @@ public class MySqlTariffDao implements TariffDao {
             "WHERE tariff.service_id = ? ";
 
     private final static String INSERT =
-            "INSERT into tariff (login, password, balance," +
-                    "status_id, role_id)" +
-                    "VALUES(?, ?, ?, ?, ?) ";
+            "INSERT into tariff (name, cost, " +
+                    "service_id )" +
+                    "VALUES(?, ?, ?) ";
 
 
     private final static String UPDATE =
@@ -91,7 +91,7 @@ public class MySqlTariffDao implements TariffDao {
                 INSERT,
                 obj.getTariffName(),
                 obj.getCost(),
-                obj.getService()
+                obj.getService().getId()
 
         );
 
@@ -118,8 +118,8 @@ public class MySqlTariffDao implements TariffDao {
     }
 
     @Override
-    public List<Tariff> findByService(Service service) {
-        return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE_ID+ GROUP_BY, service.getId());
+    public List<Tariff> findByService(long serviceId) {
+        return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE_ID+ GROUP_BY, serviceId);
     }
 
     @Override

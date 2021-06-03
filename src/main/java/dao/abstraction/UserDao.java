@@ -15,13 +15,6 @@ public interface UserDao extends GenericDao<User, Long>{
      */
     Optional<User> findOneByLogin(String login);
 
-    /**
-     * Check if user exists in database.
-     *
-     * @param login user's identifier
-     * @return {@code true} if exists else {@code false}
-     */
-    boolean existByLogin(String login);
 
     /**
      * increase balance of certain amount.

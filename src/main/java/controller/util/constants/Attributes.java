@@ -12,4 +12,5 @@ public interface Attributes {
     String TARIFFS = "tariffs";
     String USERS = "users";
     String SERVICES = "services";
+    String OPTIONS = "options";
 }

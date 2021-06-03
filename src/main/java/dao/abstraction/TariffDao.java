@@ -10,10 +10,10 @@ import java.util.Optional;
 public interface TariffDao extends GenericDao<Tariff, Long>{
     /**
      * Retrieve tariff from database identified by name.
-     * @param service identifier of tariff
+     * @param serviceId identifier of tariff
      * @return optional, which contains retrieved object or null
      */
-    List<Tariff> findByService(Service service);
+    List<Tariff> findByService(long serviceId);
 
     /**
      * increase cost of certain amount.

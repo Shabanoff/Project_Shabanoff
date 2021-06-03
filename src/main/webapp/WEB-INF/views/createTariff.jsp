@@ -22,25 +22,41 @@
 
   <form class="form-signin" method="post">
     <input type="hidden" name="command" value="post"/>
-    <div class="dropdown-menu" aria-labelledby="dropdown03">
+    <div>
+    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="serviceId" id="serviceId" >
+      <option selected><fmt:message key="services"/></option>
       <c:forEach items="${requestScope.services}" var="service">
-        <li><a class="dropdown-item" href="?service=${service}">${service.serviceName}</a></li>
+
+      <option  value=${service.id} >${service.serviceName}</option>
       </c:forEach>
-    </div>
-    <div class="form-floating">
-      <input type="email" class="form-control" name="login" id="tariff.name" placeholder="<fmt:message key="enter.name"/>">
-      <label for="tariff.name"><fmt:message key="enter.name"/></label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" name="password" id="cost" placeholder="<fmt:message key="enter.password"/>" >
-      <label for="cost"><fmt:message key="enter.description"/></label>
+    </select>
     </div>
 
-    <div class="form-floating">
-      <input type="password" class="form-control" name="password" id="description" placeholder="<fmt:message key="enter.password"/>" >
-      <label for="description"><fmt:message key="enter.description"/></label>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1"><fmt:message key="enter.name"/></span>
+      </div>
+      <input type="text" class="form-control" name="tariffName" id="tariff.name" placeholder="<fmt:message key="enter.name"/>" aria-label="Username" aria-describedby="basic-addon1">
     </div>
 
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><fmt:message key="enter.cost"/></span>
+      </div>
+      <input type="text" class="form-control" name="cost" id="cost" aria-label="Amount (to the nearest dollar)">
+      <div class="input-group-append">
+        <span class="input-group-text">.00 <fmt:message key="currency"/></span>
+      </div>
+
+    </div>
+    <div>
+      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"  name="optionId" id="optionId" >
+        <option selected><fmt:message key="definition"/></option>
+        <c:forEach items="${requestScope.options}" var="option">
+          <option name="optionId" value=${option.id} >${option.definition}</option>
+        </c:forEach>
+      </select>
+    </div>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="tariff.create" /></button>
   </form>

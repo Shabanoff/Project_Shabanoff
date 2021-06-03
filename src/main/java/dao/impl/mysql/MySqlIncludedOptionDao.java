@@ -13,7 +13,7 @@ import java.util.Optional;
 public class MySqlIncludedOptionDao implements IncludedOptionDao {
     private final static String SELECT_ALL =
             "SELECT included_option.*" +
-                    "FROM included_option";
+                    "FROM included_option ";
     private final static String WHERE_ID =
             "WHERE included_option.id = ? ";
 
@@ -27,7 +27,7 @@ public class MySqlIncludedOptionDao implements IncludedOptionDao {
 
 
     private final static String DELETE =
-            "DELETE FROM included_option";
+            "DELETE FROM included_option ";
 
     private final DefaultDaoImpl<IncludedOption> defaultDao;
 

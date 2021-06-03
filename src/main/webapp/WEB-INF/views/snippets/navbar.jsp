@@ -6,10 +6,13 @@
 <fmt:setLocale value='${sessionScope.locale}'/>
 <fmt:setBundle basename="i18n.lang"/>
 
-<c:set var="loginPage" scope="page" value="/WEB-INF/views/login.jsp"/>
-<c:set var="signUpPage" scope="page" value="/WEB-INF/views/signup.jsp"/>
-<c:set var="replenishPage" scope="page" value="/WEB-INF/views/replenish.jsp"/>
-<c:set var="usersListPage" scope="page" value="/WEB-INF/views/users.jsp"/>
+<c:set var="servicePage" scope="page" value="/WEB-INF/views/service.jsp"/>
+<c:set var="managerPage" scope="page" value="/WEB-INF/views/manager.jsp"/>
+<c:set var="includedOptionPage" scope="page" value="/WEB-INF/views/includedOption.jsp"/>
+<c:set var="createOptionPage" scope="page" value="/WEB-INF/views/createOption.jsp"/>
+<c:set var="createTariffPage" scope="page" value="/WEB-INF/views/createTariff.jsp"/>
+<c:set var="createUserPage" scope="page" value="/WEB-INF/views/createUser.jsp"/>
+<c:set var="createServicePage" scope="page" value="/WEB-INF/views/createService.jsp"/>
 
 <c:set var="currPage" scope="page">
     <customTag:currPage/>
@@ -23,18 +26,81 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
+
+                <c:if test="${ sessionScope.user.manager}">
+                    <li class="nav-item">
+                    <c:choose>
+                        <c:when test="${not managerPage.equals(currPage)}">
+                            <a class="btn btn-success" href="${pageContext.request.contextPath}/site/manager/users" role="button"><fmt:message key="manager.users"/></a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/manager/users" role="button"><fmt:message key="manager.users"/></a>
+                        </c:otherwise>
+                    </c:choose>
+                    </li>
+                    <li class="nav-item">
+                        <c:choose>
+                            <c:when test="${not createUserPage.equals(currPage)}">
+                                <a class="btn btn-success" href="${pageContext.request.contextPath}/site/manager/create_user" role="button"><fmt:message key="create.user"/></a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/manager/create_user" role="button"><fmt:message key="create.user"/></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                </c:if>
                 <li class="nav-item">
-                    <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/service" role="button"><fmt:message key="service"/></a>
+                    <c:choose>
+                        <c:when test="${not servicePage.equals(currPage)}">
+                            <a class="btn btn-success" href="${pageContext.request.contextPath}/site/service" role="button"><fmt:message key="service"/></a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/service" role="button"><fmt:message key="service"/></a>
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+                <c:if test="${ sessionScope.user.manager}">
+                    <li class="nav-item">
+                        <c:choose>
+                            <c:when test="${not createServicePage.equals(currPage)}">
+                                <a class="btn btn-success" href="${pageContext.request.contextPath}/site/manager/service" role="button"><fmt:message key="manager.create.service"/></a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/manager/service" role="button"><fmt:message key="manager.create.service"/></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                    <li class="nav-item">
+                        <c:choose>
+                            <c:when test="${not createTariffPage.equals(currPage)}">
+                                <a class="btn btn-success" href="${pageContext.request.contextPath}/site/manager/create_tariff" role="button"><fmt:message key="create.tariff"/></a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/manager/create_tariff" role="button"><fmt:message key="create.tariff"/></a>
+                            </c:otherwise>
+                        </c:choose>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/manager/users" role="button"><fmt:message key="manager.users"/></a>
+                    <c:choose>
+                        <c:when test="${not includedOptionPage.equals(currPage)}">
+                            <a class="btn btn-success" href="${pageContext.request.contextPath}/site/manager/included_option" role="button"><fmt:message key="option"/></a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/manager/included_option" role="button"><fmt:message key="option"/></a>
+                        </c:otherwise>
+                    </c:choose>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/manager/create_user" role="button"><fmt:message key="create.user"/></a>
+                    <c:choose>
+                        <c:when test="${not createOptionPage.equals(currPage)}">
+                            <a class="btn btn-success" href="${pageContext.request.contextPath}/site/manager/create_option" role="button"><fmt:message key="create.option"/></a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/manager/create_option" role="button"><fmt:message key="create.option"/></a>
+                        </c:otherwise>
+                    </c:choose>
                 </li>
-                <li class="nav-item">
-                    <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/manager/create_tariff" role="button"><fmt:message key="create.tariff"/></a>
-                </li>
+                </c:if>
             </ul>
         </div>
         <div class="collapse navbar-collapse" id="navbarCollapse2">
@@ -54,20 +120,13 @@
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
             <c:if test="${empty sessionScope.user}">
-                <c:choose>
-                    <c:when test="${loginPage.equals(currPage)}">
-                        <li class="active">
-                    </c:when>
-                    <c:otherwise>
-                        <li>
-                    </c:otherwise>
-                </c:choose>
-                <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/site/login" role="button"><fmt:message key="login"/></a>
+                <li>
+                <a class="btn btn-success" href="${pageContext.request.contextPath}/site/login" role="button"><fmt:message key="login"/></a>
                 </li>
             </c:if>
             <c:if test="${not empty sessionScope.user}">
                 <li>
-                    <a class="btn btn-outline-danger" href="${pageContext.request.contextPath}/site/logout?command=logout" role="button"><fmt:message key="logout"/></a>
+                    <a class="btn btn-danger" href="${pageContext.request.contextPath}/site/logout?command=logout" role="button"><fmt:message key="logout"/></a>
                 </li>
             </c:if>
         </ul>

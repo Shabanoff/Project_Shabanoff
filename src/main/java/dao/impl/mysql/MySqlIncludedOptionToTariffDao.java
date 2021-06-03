@@ -24,12 +24,12 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
                     "AND included_option_id = ?";
 
     private final static String WHERE_TARIFF =
-            "WHERE tariff.id = ? ";
+            "WHERE tariff_id = ? ";
 
 
     private final static String INSERT =
             "INSERT into included_options_to_tariff (tariff_id, " +
-                    "included_option_id" +
+                    "included_option_id )" +
                     "VALUES(?, ?) ";
 
 
@@ -74,7 +74,7 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
     public IncludedOptionToTariff insert(IncludedOptionToTariff obj) {
         Objects.requireNonNull(obj);
 
-        int id = (int) defaultDao.executeInsertWithGeneratedPrimaryKey(
+         defaultDao.executeInsert(
                 INSERT,
                 obj.getTariffId(),
                 obj.getOptionId()

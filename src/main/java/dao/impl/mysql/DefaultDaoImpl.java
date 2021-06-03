@@ -108,6 +108,28 @@ public class DefaultDaoImpl <T> {
             throw new DaoException(e);
         }
     }
+    /**
+     * Performs insertion for entities with generated primary key field.
+     * For entities, which doesn't have auto-generated fields -
+     * use {@link #executeUpdate(String, Object...)} method
+     * to properly persist data.
+     *
+     * @param query sql-based string, which specify details of insertion operation
+     * @param params parameters to substitute wildcards in query
+     */
+    public void executeInsert(String query, Object... params) {
+        try (PreparedStatement statement = connection
+                .prepareStatement(query)) {
+
+            setParamsToStatement(statement, params);
+            statement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+    }
 
     /**
      * Sets all parameters to statement.

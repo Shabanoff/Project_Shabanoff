@@ -17,21 +17,30 @@
     </c:forEach>
   </div>
 </c:if>
-  <c:forEach var="service" items="${requestScope.services}">
-    <div class="jumbotron">
-      <div class="container">
-        <h1>${service.serviceName}</h1>
-      </div>
-    </div>
+
+
+
+
     <table class="table">
-      <thead>
+      <c:forEach var="service" items="${requestScope.services}">
+        <tbody>
+      <tr><div class="container">
+        <th><h1>${service.serviceName}</h1></th>
+        <th><form action="${pageContext.request.contextPath}/site/service" method="post" >
+          <input type="hidden" name="command" value="delete.service"/>
+          <input type="hidden" name="serviceId"
+                 value="${service.id}"/>
+          <button type="submit" class="btn btn-danger"><fmt:message
+                  key="service.delete"/></button>
+        </form></th>
+      </div></tr>
       <tr>
         <th scope="col"><fmt:message key="tariff.name"/></th>
         <th scope="col"><fmt:message key="tariff.description"/></th>
         <th scope="col"><fmt:message key="tariff.cost"/></th>
       </tr>
-      </thead>
-      <tbody>
+
+
     <c:forEach var="tariff" items="${service.tariffs}">
       <tr>
         <td><c:out value="${tariff.tariffName}"/></td>
@@ -53,11 +62,22 @@
         </form>
         </td>
         </c:if>
+        <c:if test="${sessionScope.user.manager}">
+          <td><form action="${pageContext.request.contextPath}/site/service" method="post" >
+            <input type="hidden" name="command" value="delete.tariff"/>
+            <input type="hidden" name="tariffId"
+                   value="${tariff.id}"/>
+            <button type="submit" class="btn btn-warning"><fmt:message
+                    key="tariff.delete"/></button>
+          </form>
+          </td>
+        </c:if>
       </tr>
     </c:forEach>
       </tbody>
+      </c:forEach>
     </table>
-  </c:forEach>
+
 
 
 <jsp:include page="/WEB-INF/views/snippets/footer.jsp"/>

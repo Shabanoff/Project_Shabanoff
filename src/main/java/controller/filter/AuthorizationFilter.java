@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class AuthorizationFilter implements Filter {
-    public final static int MANAGER_ROLE_ID = 2;
-    public final static int USER_ROLE_ID = 10;
+    public final static int MANAGER_ROLE_ID = 1;
+    public final static int USER_ROLE_ID = 2;
     private final static Logger logger = LogManager.getLogger(AuthorizationFilter.class);
     private final static String ACCESS_DENIED = "Access denied for page: ";
     private static final String SITE_PREFIX = "site.prefix";

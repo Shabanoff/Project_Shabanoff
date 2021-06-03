@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class ControllerHelper {
     private final static String DELIMITER = ":";
     private final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
-    private Map<String, ICommand> commands = new HashMap<>();
+    private final Map<String, ICommand> commands = new HashMap<>();
     private static final ResourceBundle bundle = ResourceBundle.
             getBundle(Views.PAGES_BUNDLE);
 
@@ -42,6 +42,10 @@ public class ControllerHelper {
                 new GetAccountCommand());
         commands.put(buildKey(bundle.getString("service.path"), "plug"),
                 new PostServiceCommand());
+        commands.put(buildKey(bundle.getString("create.service.path"), "post"),
+                new PostCreateServiceCommand());
+        commands.put(buildKey(bundle.getString("create.service.path"), null),
+                new GetCreateServiceCommand());
         commands.put(buildKey(bundle.getString("account.path"), "delete"),
                 new PostAccountCommand());
         commands.put(buildKey(bundle.getString("replenish.path"), "replenish.post"),
@@ -50,10 +54,29 @@ public class ControllerHelper {
                 new GetManagerCommand());
         commands.put(buildKey(bundle.getString("createUser.path"), "post"),
                 new PostCreateUserCommand());
+        commands.put(buildKey(bundle.getString("createUser.path"), null),
+                new GetCreateUserCommand());
         commands.put(buildKey(bundle.getString("manager.users"), "block"),
                 new PostBlockCommand());
         commands.put(buildKey(bundle.getString("manager.users"), "unblock"),
                 new PostUnblockCommand());
+        commands.put(buildKey(bundle.getString("manager.includedOption.path"), null),
+                new GetIncludedOptionCommand());
+        commands.put(buildKey(bundle.getString("manager.includedOption.path"), "post"),
+                new PostDeleteOption());
+        commands.put(buildKey(bundle.getString("manager.createOption.path"), "post"),
+                new PostCreateOptionCommand());
+        commands.put(buildKey(bundle.getString("manager.createOption.path"), null),
+                new GetCreateOptionCommand());
+        commands.put(buildKey(bundle.getString("manager.create.tariff"), null),
+                new GetCreateTariffCommand());
+        commands.put(buildKey(bundle.getString("manager.create.tariff"), "post"),
+                new PostCreateTariffCommand());
+        commands.put(buildKey(bundle.getString("service.path"), "delete.tariff"),
+                new PostDeleteTariffCommand());
+        commands.put(buildKey(bundle.getString("service.path"), "delete.service"),
+                new PostDeleteServiceCommand());
+
 
     }
 

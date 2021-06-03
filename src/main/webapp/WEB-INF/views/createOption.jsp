@@ -23,13 +23,8 @@
     <form class="form-signin" method="post">
         <input type="hidden" name="command" value="post"/>
         <div class="form-floating">
-            <input type="email" class="form-control" name="login" id="login" placeholder="<fmt:message key="enter.login"/>">
-            <label for="login"><fmt:message key="enter.login"/></label>
-        </div>
-
-        <div class="form-floating">
-            <input type="password" class="form-control" name="password" id="password" placeholder="<fmt:message key="enter.password"/>" required>
-            <label for="password"><fmt:message key="enter.password"/></label>
+            <input  class="form-control" name="definition" id="definition" placeholder="<fmt:message key="enter.description"/>">
+            <label for="definition"><fmt:message key="enter.description"/></label>
         </div>
 
         <button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="create" /></button>

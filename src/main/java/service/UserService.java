@@ -168,7 +168,7 @@ public class UserService {
         User userDto = getDataFromRequestCreating(login, password);
         List<String> errors = validateData(userDto);
         if (errors.isEmpty()){
-            userService.createUser(userDto);
+            createUser(userDto);
         }
         return errors;
     }
@@ -180,8 +180,7 @@ public class UserService {
                 .build();
     }
 
-    public  final String USER_ALREADY_EXISTS = "user.exists";;
-    UserService userService = ServiceFactory.getUserService();
+    public  final String USER_ALREADY_EXISTS = "user.exists";
     private List<String> validateData(User user) {
         List<String> errors = new ArrayList<>();
 
@@ -189,7 +188,7 @@ public class UserService {
         Util.validateField(new PasswordValidator(), user.getPassword(), errors);
 
 
-        if(errors.isEmpty() && userService.isUserExists(user)) {
+        if(errors.isEmpty() && isUserExists(user)) {
             errors.add(USER_ALREADY_EXISTS);
         }
 
