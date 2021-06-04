@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static dao.util.Constants.ADDED_BY_USER;
+
 /**
  * Intermediate layer between command layer and dao layer.
  * Implements operations of finding, creating, deleting entities.
@@ -20,7 +22,7 @@ import java.util.Optional;
  * @author Shabanoff
  */
 public class TariffService {
-    private final static String ADDED_BY_USER = "added.by.user";
+
     private static IncludedOptionToTariffService includedOptionToTariffService =
             ServiceFactory.getIncludedOptionToTariffService();
     private final DaoFactory daoFactory = DaoFactory.getInstance();

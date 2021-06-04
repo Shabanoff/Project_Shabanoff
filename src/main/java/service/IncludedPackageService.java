@@ -1,12 +1,10 @@
 package service;
 
 import dao.abstraction.IncludedPackageDao;
-import dao.abstraction.UserDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 import entity.IncludedPackage;
 import entity.Tariff;
-import entity.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +20,6 @@ public class IncludedPackageService {
     private final DaoFactory daoFactory = DaoFactory.getInstance();
 
     private IncludedPackageService() {
-    }
-    private static class Singleton {
-        private final static IncludedPackageService INSTANCE = new IncludedPackageService();
     }
 
     public static IncludedPackageService getInstance() {
@@ -47,15 +42,15 @@ public class IncludedPackageService {
 
     public Optional<IncludedPackage> findIncludedPackageByService(long serviceId, DaoConnection connection) {
 
-            IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
-            return includedPackage.findByService(serviceId);
+        IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
+        return includedPackage.findByService(serviceId);
 
     }
 
     public Optional<IncludedPackage> findIncludedPackageByTariff(long tariffId, DaoConnection connection) {
 
-            IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
-            return includedPackage.findByTariff(tariffId);
+        IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
+        return includedPackage.findByTariff(tariffId);
     }
 
     public IncludedPackage createIncludedPackage(IncludedPackage includedPackage) {
@@ -77,8 +72,9 @@ public class IncludedPackageService {
         IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
         includedPackageDao.updateIncludedPackage(includedPackage, tariff);
     }
+
     public boolean isIncludedPackageExistsByService(long serviceId, DaoConnection connection) {
-        IncludedPackageDao includedPackageDao= daoFactory.getIncludedPackageDao(connection);
+        IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
         return includedPackageDao.existByService(serviceId);
     }
 
@@ -86,7 +82,7 @@ public class IncludedPackageService {
             IncludedPackageDao includedPackageDao= daoFactory.getIncludedPackageDao(connection);
             return includedPackageDao.existByTariff(tariffId);
     }*/
-    public void deleteIncludedPackage(long id){
+    public void deleteIncludedPackage(long id) {
         try (DaoConnection connection = daoFactory.getConnection()) {
 
             IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
@@ -94,6 +90,10 @@ public class IncludedPackageService {
 
         }
 
+    }
+
+    private static class Singleton {
+        private final static IncludedPackageService INSTANCE = new IncludedPackageService();
     }
 
 

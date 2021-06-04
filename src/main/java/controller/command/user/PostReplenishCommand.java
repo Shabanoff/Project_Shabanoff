@@ -1,7 +1,6 @@
 package controller.command.user;
 
 import controller.command.ICommand;
-import controller.command.authorization.PostLoginCommand;
 import controller.util.Util;
 import controller.util.constants.Attributes;
 import controller.util.constants.Views;

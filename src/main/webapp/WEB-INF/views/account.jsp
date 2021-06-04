@@ -13,6 +13,13 @@
 <jsp:include page="/WEB-INF/views/snippets/navbar.jsp"/>
 
 <c:if test="${not empty sessionScope.user }">
+    <c:if test="${sessionScope.user.user }">
+    <div class="jumbotron">
+        <div class="container">
+            <h1><fmt:message key="user.balance"/>${sessionScope.user.balance}<fmt:message key="currency"/></h1>
+        </div>
+    </div>
+    </c:if>
     <c:forEach var="includedPackage" items="${requestScope.includedPackages}">
         <div class="jumbotron">
             <div class="container">

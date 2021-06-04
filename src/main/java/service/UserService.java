@@ -53,7 +53,6 @@ public class UserService {
         }
     }
 
-
     public User createUser(User user) {
         Objects.requireNonNull(user);
 
@@ -193,6 +192,11 @@ public class UserService {
         }
 
         return errors;
+    }
+
+    private static class Singleton {
+
+        private final static UserService INSTANCE = new UserService();
     }
 
 }

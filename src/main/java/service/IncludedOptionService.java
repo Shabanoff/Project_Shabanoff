@@ -4,10 +4,10 @@ import dao.abstraction.IncludedOptionDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 import entity.IncludedOption;
-import entity.User;
 
 import java.util.List;
 import java.util.Optional;
+
 /**
  * Intermediate layer between command layer and dao layer.
  * Implements operations of finding, creating, deleting entities.
@@ -19,10 +19,6 @@ public class IncludedOptionService {
     private final DaoFactory daoFactory = DaoFactory.getInstance();
 
     private IncludedOptionService() {
-    }
-
-    private static class Singleton {
-        private final static IncludedOptionService INSTANCE = new IncludedOptionService();
     }
 
     public static IncludedOptionService getInstance() {
@@ -42,13 +38,13 @@ public class IncludedOptionService {
             return includedOptionDao.findOne(includedOptionId);
         }
     }
+
     public void deleteIncludedOptionByNumber(long includedOptionId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             IncludedOptionDao includedOptionDao = daoFactory.getIncludedOptionDao(connection);
             includedOptionDao.delete(includedOptionId);
         }
     }
-
 
     public IncludedOption createIncludedOption(String definition) {
         try (DaoConnection connection = daoFactory.getConnection()) {
@@ -65,9 +61,14 @@ public class IncludedOptionService {
             connection.commit();
         }
     }
+
     private IncludedOption getDataFromRequestCreating(String definition) {
         return IncludedOption.newBuilder()
                 .addDefinition(definition)
                 .build();
+    }
+
+    private static class Singleton {
+        private final static IncludedOptionService INSTANCE = new IncludedOptionService();
     }
 }

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static dao.util.Constants.ADDED_BY_USER;
+
 /**
  * Intermediate layer between command layer and dao layer.
  * Implements operations of finding, creating, deleting entities.
@@ -19,33 +21,32 @@ import java.util.Optional;
  */
 public class ServiceForService {
     private final DaoFactory daoFactory = DaoFactory.getInstance();
+    IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
     private TariffService tariffService = ServiceFactory.getTariffService();
 
-
     private ServiceForService() {
-    }
-    private static class Singleton {
-        private final static ServiceForService INSTANCE = new ServiceForService();
     }
 
     public static ServiceForService getInstance() {
         return Singleton.INSTANCE;
     }
+
     public List<Service> findAllService() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             List<Service> services = serviceDao.findAll();
-            for (Service service: services) {
+            for (Service service : services) {
                 service.setTariffs(tariffService.findByService(service.getId()));
             }
             return services;
         }
     }
+
     public List<Service> findLimitService(int offset, int noOfRecords) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             List<Service> services = serviceDao.findLimit(offset, noOfRecords);
-            for (Service service: services) {
+            for (Service service : services) {
                 service.setTariffs(tariffService.findByService(service.getId()));
             }
             return services;
@@ -66,7 +67,6 @@ public class ServiceForService {
         }
     }
 
-
     public Service createService(String name) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
@@ -74,8 +74,7 @@ public class ServiceForService {
             return inserted;
         }
     }
-    IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
-    private final static String ADDED_BY_USER = "added.by.user";
+
     public List<String> deleteService(long serviceId) {
         List<String> erorrs = new ArrayList<>();
         try (DaoConnection connection = daoFactory.getConnection()) {
@@ -101,9 +100,14 @@ public class ServiceForService {
             connection.commit();
         }
     }
+
     private Service getDataFromRequestCreating(String name) {
         return Service.newBuilder()
                 .addServiceName(name)
                 .build();
+    }
+
+    private static class Singleton {
+        private final static ServiceForService INSTANCE = new ServiceForService();
     }
 }

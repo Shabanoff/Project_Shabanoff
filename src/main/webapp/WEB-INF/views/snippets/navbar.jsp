@@ -110,7 +110,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarCollapse2">
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-            <c:if test="${not empty sessionScope.user}">
+            <c:if test="${not empty sessionScope.user.user}">
                 <li>
                     <a class="nav-link" href="#"><fmt:message key="welcome"/> </a>
                 </li>
