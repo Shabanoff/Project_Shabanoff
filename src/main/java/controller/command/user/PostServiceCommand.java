@@ -19,11 +19,11 @@ import java.util.Optional;
 import static controller.util.constants.Views.SERVICE_VIEW;
 
 public class PostServiceCommand implements ICommand {
-    private final static Logger logger = LogManager.getLogger(PostServiceCommand.class);
-    private final String TARIFF_ID_PARAM = "tariffId";
+    private static final Logger logger = LogManager.getLogger(PostServiceCommand.class);
+    private static final String TARIFF_ID_PARAM = "tariffId";
 
-    private final TariffService tariffService = ServiceFactory.getTariffService();
-    private final UserService userService = ServiceFactory.getUserService();
+    private static final TariffService tariffService = ServiceFactory.getTariffService();
+    private static final UserService userService = ServiceFactory.getUserService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -32,6 +32,8 @@ public class PostServiceCommand implements ICommand {
         Optional<Tariff> addingTariff = getTariff(request);
         List<String> errors = userService.addingTariff(currentUser, addingTariff);
         request.setAttribute(Attributes.SERVICES, ServiceFactory.getServiceService().findAllService());
+        //request.setAttribute("noOfPages", noOfPages);
+        //request.setAttribute("currentPage", page);
         if(!errors.isEmpty()){
             request.setAttribute(Attributes.ERRORS, errors);
             logger.info("Adding tariff HAS ERRORS!");

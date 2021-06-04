@@ -52,6 +52,7 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
 
     private static final String WHERE_TARIFF_ID =
             "WHERE included_package.tariff_id = ? ";
+    public static final String EXIST_BY_SERVICE = "SELECT included_package.id FROM included_package WHERE included_package.service_id = ?";
 
 
     private final DefaultDaoImpl<IncludedPackage> defaultDao;
@@ -132,6 +133,7 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
     public List<IncludedPackage> findByUser(long userId) {
         return defaultDao.findAll(SELECT_ALL + WHERE_USER_ID + GROUP_BY,userId);
     }
+
     @Override
     public Optional<IncludedPackage> findByService(long serviceId) {
         return defaultDao.findOne(SELECT_ALL + WHERE_SERVICE_ID,serviceId);
@@ -140,5 +142,8 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
     @Override
     public Optional<IncludedPackage> findByTariff(long tariffId) {
         return defaultDao.findOne(SELECT_ALL + WHERE_TARIFF_ID,tariffId);
+    }
+    public boolean existByService (long serviceId){
+        return defaultDao.exist(EXIST_BY_SERVICE,serviceId);
     }
 }

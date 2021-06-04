@@ -11,7 +11,7 @@ public class EncodingFilter implements Filter {
     private final Logger logger = LogManager.getLogger(EncodingFilter.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     logger.info("I`m a LOGGER!");
     }
 

@@ -25,7 +25,7 @@
             <form class="form-signin" method="post">
                 <input type="hidden" name="command" value="replenish.post"/>
                 <div class="form-floating">
-                    <input type="increase" class="form-control" name="balance" id="amount" placeholder="<fmt:message key="enter.amount"/>">
+                    <input type="increase" class="form-control" name="amount" id="amount" placeholder="<fmt:message key="enter.amount"/>">
                     <label for="amount"><fmt:message key="amount"/></label>
                 </div>
                 <button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="replenish" /></button>

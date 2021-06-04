@@ -2,6 +2,7 @@ package dao.abstraction;
 
 import entity.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ServiceDao extends GenericDao<Service, Long>{
@@ -11,4 +12,6 @@ public interface ServiceDao extends GenericDao<Service, Long>{
      * @return optional, which contains retrieved object or null
      */
     Optional<Service> findOneByName(String name);
+
+    List<Service> findLimit(int offset, int noOfRecords);
 }

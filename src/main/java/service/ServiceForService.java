@@ -41,6 +41,16 @@ public class ServiceForService {
             return services;
         }
     }
+    public List<Service> findLimitService(int offset, int noOfRecords) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
+            List<Service> services = serviceDao.findLimit(offset, noOfRecords);
+            for (Service service: services) {
+                service.setTariffs(tariffService.findByService(service.getId()));
+            }
+            return services;
+        }
+    }
 
     public Optional<Service> findServiceById(long serviceId) {
         try (DaoConnection connection = daoFactory.getConnection()) {

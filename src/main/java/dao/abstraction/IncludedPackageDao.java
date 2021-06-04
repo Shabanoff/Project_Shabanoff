@@ -31,4 +31,5 @@ public interface IncludedPackageDao extends GenericDao<IncludedPackage, Long>{
      * @return optional, which contains retrieved object or null
      */
     Optional<IncludedPackage> findByTariff(long tariffId);
+     boolean existByService (long serviceId);
 }

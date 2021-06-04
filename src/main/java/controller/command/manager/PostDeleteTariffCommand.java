@@ -17,10 +17,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class PostDeleteTariffCommand implements ICommand {
-    private final static Logger logger = LogManager.getLogger(PostDeleteTariffCommand.class);
-    ServiceForService serviceService = ServiceFactory.getServiceService();
-    TariffService tariffService = ServiceFactory.getTariffService();
-    private final String TARIFF_ID_PARAM = "tariffId";
+    private static final Logger logger = LogManager.getLogger(PostDeleteTariffCommand.class);
+    private static final ServiceForService serviceService = ServiceFactory.getServiceService();
+    private static final TariffService tariffService = ServiceFactory.getTariffService();
+    private static final String TARIFF_ID_PARAM = "tariffId";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

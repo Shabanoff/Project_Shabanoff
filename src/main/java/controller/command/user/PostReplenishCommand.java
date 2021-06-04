@@ -51,8 +51,8 @@ public class PostReplenishCommand implements ICommand {
     }
     private List<String> validateDataFromRequest(HttpServletRequest request) {
         List<String> errors = new ArrayList<>();
-       // Util.validateField(new AmountValidator(),
-              //  request.getParameter(Attributes.AMOUNT), errors);
+       Util.validateField(new AmountValidator(),
+                request.getParameter(Attributes.AMOUNT), errors);
         return errors;
     }
 

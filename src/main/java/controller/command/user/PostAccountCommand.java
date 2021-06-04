@@ -17,8 +17,8 @@ import java.util.List;
 import static controller.util.constants.Views.ACCOUNT_VIEW;
 
 public class PostAccountCommand implements ICommand {
-    private final IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
-    private final String INCLUDED_PACKAGE_ID = "includedPackageId";
+    private static final IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
+    private static final String INCLUDED_PACKAGE_ID = "includedPackageId";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User currentUser = getUserFromSession(request.getSession());

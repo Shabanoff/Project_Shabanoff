@@ -19,8 +19,8 @@ import java.util.List;
 public class PostCreateUserCommand implements ICommand {
     private final static Logger logger = LogManager.getLogger(PostCreateUserCommand.class);
 
-    private final static String LOGIN_PARAM = "login";
-    private final static String PASSWORD_PARAM = "password";
+    private static final String LOGIN_PARAM = "login";
+    private static final String PASSWORD_PARAM = "password";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter(LOGIN_PARAM);

@@ -11,11 +11,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class DefaultDaoImpl <T> {
-    private final static String ERROR_GENERATE_KEY =
+    private static final String ERROR_GENERATE_KEY =
             "Can't retrieve generated key";
-    private final static String SQL_LIMIT_ONE = " LIMIT 1";
+    private static final String SQL_LIMIT_ONE = " LIMIT 1";
 
-    private final Logger logger = LogManager.getLogger(DefaultDaoImpl.class);
+    private static final Logger logger = LogManager.getLogger(DefaultDaoImpl.class);
 
     /** Connection to database */
     private Connection connection;
@@ -77,6 +77,23 @@ public class DefaultDaoImpl <T> {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             setParamsToStatement(statement, params);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+    }
+
+    public boolean exist(String query, Object... params) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            setParamsToStatement(statement, params);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            } else {
+               return false;
+            }
+
         } catch (SQLException e) {
             logger.error(e);
             throw new DaoException(e);

@@ -1,10 +1,12 @@
 package service;
 
 import dao.abstraction.IncludedPackageDao;
+import dao.abstraction.UserDao;
 import dao.factory.DaoFactory;
 import dao.factory.connection.DaoConnection;
 import entity.IncludedPackage;
 import entity.Tariff;
+import entity.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -75,6 +77,15 @@ public class IncludedPackageService {
         IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
         includedPackageDao.updateIncludedPackage(includedPackage, tariff);
     }
+    public boolean isIncludedPackageExistsByService(long serviceId, DaoConnection connection) {
+        IncludedPackageDao includedPackageDao= daoFactory.getIncludedPackageDao(connection);
+        return includedPackageDao.existByService(serviceId);
+    }
+
+    /*public boolean isIncludedPackageExistsByTariff(long tariffId, DaoConnection connection) {
+            IncludedPackageDao includedPackageDao= daoFactory.getIncludedPackageDao(connection);
+            return includedPackageDao.existByTariff(tariffId);
+    }*/
     public void deleteIncludedPackage(long id){
         try (DaoConnection connection = daoFactory.getConnection()) {
 
