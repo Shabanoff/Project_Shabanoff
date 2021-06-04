@@ -4,6 +4,7 @@ import entity.Status;
 import entity.User;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends GenericDao<User, Long>{
@@ -39,4 +40,5 @@ public interface UserDao extends GenericDao<User, Long>{
      * @param statusId new status of user to update
      */
     void updateUserStatus(User user, int statusId);
+    List<User> findUsers(int noOfRecords , int offset);
 }

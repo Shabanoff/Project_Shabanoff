@@ -10,9 +10,11 @@ import dao.util.PasswordStorage;
 import entity.IncludedPackage;
 import entity.Tariff;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

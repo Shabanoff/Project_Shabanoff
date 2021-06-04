@@ -110,18 +110,18 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarCollapse2">
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-            <c:if test="${not empty sessionScope.user.user}">
+
                 <li>
                     <a class="nav-link" href="#"><fmt:message key="welcome"/> </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false"><c:out value="${sessionScope.user.getLogin()}"/></a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                    <c:if test="${ sessionScope.user.user}"><ul class="dropdown-menu" aria-labelledby="dropdown05">
                         <li><a class="btn btn-link" href="${pageContext.request.contextPath}/site/replenish" role="button"><fmt:message key="replenish"/></a></li>
-                    </ul>
+                    </ul></c:if>
                 </li>
 
-            </c:if>
+
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
             <c:if test="${empty sessionScope.user}">

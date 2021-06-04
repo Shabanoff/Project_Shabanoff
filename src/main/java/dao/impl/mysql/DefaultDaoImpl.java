@@ -2,10 +2,15 @@ package dao.impl.mysql;
 
 import dao.exception.DaoException;
 import dao.impl.mysql.converter.DtoConverter;
+import dao.impl.mysql.converter.UserDtoConverter;
+import entity.Role;
+import entity.Status;
+import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -81,6 +86,30 @@ public class DefaultDaoImpl <T> {
             logger.error(e);
             throw new DaoException(e);
         }
+    }
+    public List<User> findUsers(int noOfRecords , int offset)    {
+        String query = "select SQL_CALC_FOUND_ROWS * from user limit "
+                + noOfRecords + ", offset " + offset;
+        List<User> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                UserDtoConverter userDtoConverter = new UserDtoConverter();
+                list.add(userDtoConverter.convertToObject(resultSet));
+            }
+            resultSet.close();
+
+            resultSet = statement.executeQuery("SELECT FOUND_ROWS()");
+            if(resultSet.next())
+                this.noOfRecords = resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    private int noOfRecords;
+    public int getNoOfRecords() {
+        return noOfRecords;
     }
 
     public boolean exist(String query, Object... params) {

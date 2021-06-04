@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class MySqlUserDao implements UserDao {
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT user.id AS user_id,\n" +
                     "                    user.login, user.password, user.balance,\n" +
                     "                    user.status_id, user.role_id,\n" +
@@ -27,22 +27,22 @@ public class MySqlUserDao implements UserDao {
                     "                    JOIN status ON user.status_id = status.id\n" +
                     "                    JOIN role ON user.role_id = role.id\n";
 
-    private final static String WHERE_ID =
+    private static final String WHERE_ID =
             "WHERE user.id = ? ";
 
-    private final static String WHERE_LOGIN =
+    private static final String WHERE_LOGIN =
             "WHERE user.login = ? ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT into user (login, password, balance," +
                     "status_id, role_id)" +
                     "VALUES(?, ?, ?, ?, ?) ";
 
-    private final static String UPDATE_STATUS =
+    private static final String UPDATE_STATUS =
             "UPDATE user SET " +
                     "status_id = ? ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE user SET " +
                     "login = ?, " +
                     "password = ?" +
@@ -50,16 +50,18 @@ public class MySqlUserDao implements UserDao {
                     "status_id = ?, " +
                     "role_id = ?, ";
 
-    private final static String INCREASE_BALANCE =
+    private static final String INCREASE_BALANCE =
             "UPDATE user SET " +
                     "balance = balance + ? ";
 
-    private final static String DECREASE_BALANCE =
+    private static final String DECREASE_BALANCE =
             "UPDATE user SET " +
                     "balance = balance - ? ";
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM user ";
+
+    private static final String LIMIT = "SELECT * FROM countries LIMIT ?, ?";
 
 
     private final DefaultDaoImpl<User> defaultDao;
@@ -164,6 +166,12 @@ public class MySqlUserDao implements UserDao {
                 user.getId()
         );
     }
+
+    @Override
+    public List<User> findUsers(int noOfRecords , int offset) {
+        return defaultDao.findUsers(noOfRecords,offset );
+    }
+
     public static void main(String[] args) {
         DataSource dataSource = PooledConnection.getInstance();
         UserDao mySqlUserDao;

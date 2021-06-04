@@ -25,34 +25,41 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
                     "JOIN tariff ON included_package.tariff_id = tariff.id " +
                     "JOIN included_options_to_tariff ON tariff.id = included_options_to_tariff.tariff_id " +
                     "JOIN included_option ON included_option.id = included_options_to_tariff.included_option_id ";
-    private final static String WHERE_ID =
+    private static final String WHERE_ID =
             "WHERE included_package.id = ? ";
-    private final static String WHERE_SERVICE_ID =
+    private static final String WHERE_SERVICE_ID =
             "WHERE included_package.service_id = ? ";
 
-    private final static String WHERE_USER_ID =
+    private static final String WHERE_USER_ID =
             "WHERE included_package.user_id = ? ";
-    private final static String GROUP_BY=
+    private static final String GROUP_BY=
             "GROUP BY tariff.id ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT into included_package (subscription_date, user_id, service_id," +
                     "tariff_id)" +
                     "VALUES(?, ?, ?, ?) ";
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE included_package SET " +
                     "subscription_date = ?, " +
                     "tariff_id = ?, "+
                     "service_id = ? ";
 
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM included_package ";
 
     private static final String WHERE_TARIFF_ID =
             "WHERE included_package.tariff_id = ? ";
-    public static final String EXIST_BY_SERVICE = "SELECT included_package.id FROM included_package WHERE included_package.service_id = ?";
+
+    private static final String EXIST_BY_SERVICE =
+            "SELECT included_package.id FROM included_package" +
+                    " WHERE included_package.service_id = ?";
+
+    public static final String EXIST_BY_TARIFF =
+            "SELECT included_package.id FROM included_package" +
+                    " WHERE included_package.tariff_id = ?";
 
 
     private final DefaultDaoImpl<IncludedPackage> defaultDao;
@@ -145,5 +152,10 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
     }
     public boolean existByService (long serviceId){
         return defaultDao.exist(EXIST_BY_SERVICE,serviceId);
+    }
+
+    @Override
+    public boolean existByTariff(long tariffId) {
+        return defaultDao.exist(EXIST_BY_TARIFF,tariffId);
     }
 }

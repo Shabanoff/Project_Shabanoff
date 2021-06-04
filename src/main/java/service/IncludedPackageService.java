@@ -78,10 +78,10 @@ public class IncludedPackageService {
         return includedPackageDao.existByService(serviceId);
     }
 
-    /*public boolean isIncludedPackageExistsByTariff(long tariffId, DaoConnection connection) {
+    public boolean isIncludedPackageExistsByTariff(long tariffId, DaoConnection connection) {
             IncludedPackageDao includedPackageDao= daoFactory.getIncludedPackageDao(connection);
             return includedPackageDao.existByTariff(tariffId);
-    }*/
+    }
     public void deleteIncludedPackage(long id) {
         try (DaoConnection connection = daoFactory.getConnection()) {
 
