@@ -23,7 +23,7 @@
     <form class="form-signin" method="post">
         <input type="hidden" name="command" value="post"/>
         <div class="form-floating">
-            <input type="email" class="form-control" name="login" id="login" placeholder="<fmt:message key="enter.login"/>">
+            <input  class="form-control" name="login" id="login" placeholder="<fmt:message key="enter.login"/>">
             <label for="login"><fmt:message key="enter.login"/></label>
         </div>
 

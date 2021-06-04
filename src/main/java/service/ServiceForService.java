@@ -68,7 +68,6 @@ public class ServiceForService {
     private final static String ADDED_BY_USER = "added.by.user";
     public List<String> deleteService(long serviceId) {
         List<String> erorrs = new ArrayList<>();
-
         try (DaoConnection connection = daoFactory.getConnection()) {
             if (includedPackageService.findIncludedPackageByService(serviceId, connection).isPresent()){
                 erorrs.add(ADDED_BY_USER);

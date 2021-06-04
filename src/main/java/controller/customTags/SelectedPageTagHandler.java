@@ -7,7 +7,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 public class SelectedPageTagHandler extends SimpleTagSupport {
     @Override
-    public void doTag() throws JspException, IOException {
+    public void doTag() throws IOException {
         HttpServletRequest request = getRequest();
         sendViewUriToJsp(request);
     }

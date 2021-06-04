@@ -21,7 +21,7 @@
     <form class="form-signin" method="post">
         <input type="hidden" name="command" value="login.post"/>
         <div class="form-floating">
-            <input type="email" class="form-control" name="login" id="login" placeholder="<fmt:message key="enter.login"/>"
+            <input  class="form-control" name="login" id="login" placeholder="<fmt:message key="enter.login"/>"
                    value="<c:out value="${requestScope.user.getLogin()}" />" required autofocus>
             <label for="login"><fmt:message key="enter.login"/></label>
         </div>

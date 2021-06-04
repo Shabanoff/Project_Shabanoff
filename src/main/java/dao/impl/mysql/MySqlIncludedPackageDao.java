@@ -51,7 +51,7 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
             "DELETE FROM included_package ";
 
     private static final String WHERE_TARIFF_ID =
-            "WHERE included_package.tariff_id = ? ";;
+            "WHERE included_package.tariff_id = ? ";
 
 
     private final DefaultDaoImpl<IncludedPackage> defaultDao;

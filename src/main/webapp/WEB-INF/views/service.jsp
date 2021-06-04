@@ -61,7 +61,7 @@
             <input type="hidden" name="command" value="change.cost"/>
             <div class="form-group mx-sm-3 mb-2">
               <td><label for="newCost" class="sr-only"><fmt:message key="amount"/></label></td>
-              <td><input type="password" class="form-control" name="newCost" id="newCost" placeholder=<fmt:message key="amount"/>>
+              <td><input  class="form-control" name="newCost" id="newCost" placeholder=<fmt:message key="amount"/>>
                   <input type="hidden" name="tariffId"
                        value="${tariff.id}"/></td>
             </div>
@@ -71,7 +71,7 @@
           </table>
         </td>
         </c:if>
-        <c:if test="${not empty sessionScope.user and sessionScope.user.user}">
+        <c:if test="${not empty sessionScope.user and sessionScope.user.user and sessionScope.user.active}">
         <td><form action="${pageContext.request.contextPath}/site/service" method="post" >
           <input type="hidden" name="command" value="plug"/>
           <input type="hidden" name="tariffId"
