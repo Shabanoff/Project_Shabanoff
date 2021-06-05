@@ -17,7 +17,7 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
                     "included_option.definition AS definition " +
                     "FROM tariff " +
                     "JOIN included_options_to_tariff ON included_options_to_tariff.tariff_id = tariff.id " +
-                    "JOIN included_option ON included_options_to_tariff.included_option_id = included_option.id";
+                    "JOIN included_option ON included_options_to_tariff.included_option_id = included_option.id ";
 
     private final static String WHERE_TARIFF_OPTION =
             "WHERE tariff.id = ? " +
@@ -56,18 +56,22 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
         this.defaultDao = new DefaultDaoImpl<>(connection, converter);
     }
 
-    public Optional<IncludedOptionToTariff> findOne(Long tariffId, Long includedOptionId) {
+    public Optional<IncludedOptionToTariff> findOne(long tariffId, long includedOptionId) {
         return defaultDao.findOne(SELECT_ALL + WHERE_TARIFF_OPTION, tariffId, includedOptionId);
     }
 
     @Override
-    public Optional<IncludedOptionToTariff> findOne(Long tariffId) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_TARIFF, tariffId);
+    public Optional<IncludedOptionToTariff> findOne(Long aLong) {
+        return Optional.empty();
     }
 
     @Override
     public List<IncludedOptionToTariff> findAll() {
         return defaultDao.findAll(SELECT_ALL);
+    }
+    @Override
+    public List<IncludedOptionToTariff> findAllByTariff(long tariffId) {
+        return defaultDao.findAll(SELECT_ALL+WHERE_TARIFF, tariffId);
     }
 
     @Override

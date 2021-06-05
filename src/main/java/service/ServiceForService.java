@@ -42,16 +42,28 @@ public class ServiceForService {
         }
     }
 
-    public List<Service> findLimitService(int offset, int noOfRecords) {
+    public List<Service> ascByCostTariff() {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            List<Service> services = serviceDao.findLimit(offset, noOfRecords);
+            List<Service> services = serviceDao.findAll();
             for (Service service : services) {
-                service.setTariffs(tariffService.findByService(service.getId()));
+                service.setTariffs(tariffService.ascByCostTariff(service.getId()));
             }
             return services;
         }
     }
+
+    public List<Service> descByCostTariff() {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
+            List<Service> services = serviceDao.findAll();
+            for (Service service : services) {
+                service.setTariffs(tariffService.descByCostTariff(service.getId()));
+            }
+            return services;
+        }
+    }
+
 
     public Optional<Service> findServiceById(long serviceId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
@@ -60,12 +72,6 @@ public class ServiceForService {
         }
     }
 
-    public Optional<Service> findOneByName(String name) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            return serviceDao.findOneByName(name);
-        }
-    }
 
     public Service createService(String name) {
         try (DaoConnection connection = daoFactory.getConnection()) {
@@ -92,14 +98,6 @@ public class ServiceForService {
         return erorrs;
     }
 
-    public void updateService(Service service) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            connection.startSerializableTransaction();
-            ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            serviceDao.update(service);
-            connection.commit();
-        }
-    }
 
     private Service getDataFromRequestCreating(String name) {
         return Service.newBuilder()
@@ -110,4 +108,5 @@ public class ServiceForService {
     private static class Singleton {
         private final static ServiceForService INSTANCE = new ServiceForService();
     }
+
 }

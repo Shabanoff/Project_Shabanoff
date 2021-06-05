@@ -6,8 +6,6 @@ public interface Views {
     String HOME_VIEW = FOLDER + "index.jsp";
     String ACCOUNT_VIEW = FOLDER + "account.jsp";
     String LOGIN_VIEW = FOLDER + "login.jsp";
-    String SIGNUP_VIEW = FOLDER + "signup.jsp";
-    String INFO_VIEW = FOLDER + "infoPage.jsp";
     String REPLENISH_VIEW = FOLDER + "replenish.jsp";
     String SERVICE_VIEW = FOLDER + "service.jsp";
     String MANAGER_VIEW = FOLDER + "manager.jsp";
@@ -16,5 +14,6 @@ public interface Views {
     String CREATE_OPTION_VIEW = FOLDER + "createOption.jsp";
     String OPTION_VIEW = FOLDER + "includedOption.jsp";
     String CREATE_SERVICE_VIEW = FOLDER + "createService.jsp";
+    String USERS_VIEWS = FOLDER + "users.jsp";
 
 }

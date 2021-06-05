@@ -78,6 +78,14 @@ public class ControllerHelper {
                 new PostDeleteServiceCommand());
         commands.put(buildKey(bundle.getString("service.path"), "change.cost"),
                 new PostChangeTariffCostCommand());
+        commands.put(buildKey(bundle.getString("users.path"), null),
+                new getUsersCommand());
+        commands.put(buildKey(bundle.getString("service.path"), "asc"),
+                new PostAscTariffCommand());
+        commands.put(buildKey(bundle.getString("service.path"), "desc"),
+                new PostDescCostTariffCommand());
+        commands.put(buildKey(bundle.getString("service.path"), "print"),
+                new PostServicePdfCommand());
 
 
     }

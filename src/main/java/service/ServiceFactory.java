@@ -50,6 +50,9 @@ public class ServiceFactory {
     public static IncludedOptionToTariffService getIncludedOptionToTariffService() {
         return IncludedOptionToTariffService.getInstance();
     }
+    public static CreatePdfService getCreatePdfService(){
+        return CreatePdfService.getInstance();
+    }
 
 
 }

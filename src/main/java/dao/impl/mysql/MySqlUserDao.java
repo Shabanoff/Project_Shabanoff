@@ -171,6 +171,10 @@ public class MySqlUserDao implements UserDao {
     public List<User> findUsers(int noOfRecords , int offset) {
         return defaultDao.findUsers(noOfRecords,offset );
     }
+    @Override
+    public int getNoOfRecords() {
+        return defaultDao.getNoOfRecords();
+    }
 
     public static void main(String[] args) {
         DataSource dataSource = PooledConnection.getInstance();

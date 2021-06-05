@@ -55,6 +55,17 @@ public class TariffService {
             return tariffDao.findByService(serviceId);
         }
     }
+    public List<Tariff> ascByCostTariff(long serviceId) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            TariffDao tariffDao = daoFactory.getTariffDao(connection);
+            return tariffDao.ascByCostTariff(serviceId);
+        }
+    }public List<Tariff> descByCostTariff(long serviceId) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            TariffDao tariffDao = daoFactory.getTariffDao(connection);
+            return tariffDao.descByCostTariff(serviceId);
+        }
+    }
 
     public void createTariff(Tariff tariff) {
         try (DaoConnection connection = daoFactory.getConnection()) {

@@ -32,10 +32,10 @@ public class IncludedOptionToTariffService {
         }
     }
 
-    public Optional<IncludedOptionToTariff> findIncludedOptionToTariffByNumber(long IncludedOptionToTariffId) {
+    public List<IncludedOptionToTariff> findIncludedOptionToTariffByNumber(long IncludedOptionToTariffId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             IncludedOptionToTariffDao includedOptionToTariffDao = daoFactory.getIncludedOptionToTariffDao(connection);
-            return includedOptionToTariffDao.findOne(IncludedOptionToTariffId);
+            return includedOptionToTariffDao.findAllByTariff(IncludedOptionToTariffId);
         }
     }
 

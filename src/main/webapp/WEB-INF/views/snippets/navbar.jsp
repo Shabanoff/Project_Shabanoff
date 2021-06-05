@@ -7,12 +7,13 @@
 <fmt:setBundle basename="i18n.lang"/>
 
 <c:set var="servicePage" scope="page" value="/WEB-INF/views/service.jsp"/>
-<c:set var="managerPage" scope="page" value="/WEB-INF/views/manager.jsp"/>
+<c:set var="managerPage" scope="page" value="/WEB-INF/views/users.jsp"/>
 <c:set var="includedOptionPage" scope="page" value="/WEB-INF/views/includedOption.jsp"/>
 <c:set var="createOptionPage" scope="page" value="/WEB-INF/views/createOption.jsp"/>
 <c:set var="createTariffPage" scope="page" value="/WEB-INF/views/createTariff.jsp"/>
 <c:set var="createUserPage" scope="page" value="/WEB-INF/views/createUser.jsp"/>
 <c:set var="createServicePage" scope="page" value="/WEB-INF/views/createService.jsp"/>
+<c:set var="usersPage" scope="page" value="/WEB-INF/views/users.jsp"/>
 
 <c:set var="currPage" scope="page">
     <customTag:currPage/>
@@ -110,17 +111,23 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarCollapse2">
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-
+            <c:if test="${ not empty sessionScope.user}">
                 <li>
                     <a class="nav-link" href="#"><fmt:message key="welcome"/> </a>
                 </li>
+                <c:if test="${ sessionScope.user.user}">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false"><c:out value="${sessionScope.user.getLogin()}"/></a>
-                    <c:if test="${ sessionScope.user.user}"><ul class="dropdown-menu" aria-labelledby="dropdown05">
-                        <li><a class="btn btn-link" href="${pageContext.request.contextPath}/site/replenish" role="button"><fmt:message key="replenish"/></a></li>
-                    </ul></c:if>
-                </li>
-
+                   <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                        <li><a class="btn btn-link" href="${pageContext.request.contextPath}/site/user/replenish" role="button"><fmt:message key="replenish"/></a></li>
+                    </ul>
+                </li></c:if>
+                <c:if test="${not sessionScope.user.user}">
+                    <li>
+                        <h3><p class="text-success"><c:out value="${sessionScope.user.getLogin()}"/></p></h3></li>
+                    </li>
+                </c:if>
+            </c:if>
 
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">

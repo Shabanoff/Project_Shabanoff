@@ -17,6 +17,35 @@
     </c:forEach>
   </div>
 </c:if>
+<div class="position-relative">
+  <div class="position-absolute top-0 end-0">
+    <table>
+      <thead>
+      <th><h2><p class="text-primary"><fmt:message
+              key="sort"/></p></h2></th>
+      <th><div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <form action="${pageContext.request.contextPath}/site/service" method="post" >
+            <input type="hidden" name="command" value="asc"/>
+            <button type="submit" class="btn btn-info"><fmt:message
+                    key="asc.sort"/></button>
+          </form>
+        </div>
+      </div></th>
+      <th><div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <form action="${pageContext.request.contextPath}/site/service" method="post" >
+            <input type="hidden" name="command" value="desc"/>
+            <button type="submit" class="btn btn-info"><fmt:message
+                    key="desc.sort"/></button>
+          </form>
+        </div>
+      </div></th>
+      </thead>
+    </table>
+  </div>
+</div>
+
     <table class="table">
       <c:forEach var="service" items="${requestScope.services}">
         <tbody>
@@ -32,7 +61,6 @@
                   key="service.delete"/></button>
         </form></th>
         </c:if>
-      </div></tr>
       <tr>
         <th scope="col"><fmt:message key="tariff.name"/></th>
         <th scope="col"><fmt:message key="tariff.description"/></th>
@@ -96,7 +124,13 @@
       </tbody>
       </c:forEach>
     </table>
-
+<div class="d-grid gap-2">
+  <form action="${pageContext.request.contextPath}/site/service" method="post" >
+    <input type="hidden" name="command" value="print"/>
+    <button class="btn btn-primary" type="button"><fmt:message
+            key="save"/></button>
+  </form>
+</div>
 
 
 <jsp:include page="/WEB-INF/views/snippets/footer.jsp"/>

@@ -180,6 +180,10 @@ public class UserService {
                 .addDefaultBalance()
                 .build();
     }
+    private int noOfRecords;
+    public int getNoOfRecords() {
+        return noOfRecords;
+    }
 
     public  final String USER_ALREADY_EXISTS = "user.exists";
     private List<String> validateData(User user) {
@@ -194,6 +198,19 @@ public class UserService {
         }
 
         return errors;
+    }
+    public void userPagination(HttpServletRequest request){
+        int page = 1;
+        int recordsPerPage = 5;
+        if(request.getParameter("page") != null)
+            page = Integer.parseInt(request.getParameter("page"));
+        List<User> list = findUsers((page-1)*recordsPerPage,
+                recordsPerPage);
+        int noOfRecords = getNoOfRecords();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        request.setAttribute("users", list);
+        request.setAttribute("noOfPages", noOfPages);
+        request.setAttribute("currentPage", page);
     }
 
     private static class Singleton {

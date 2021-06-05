@@ -22,5 +22,8 @@ public interface TariffDao extends GenericDao<Tariff, Long>{
      * @param cost cost of increasing
      */
     void changeCost(Tariff tariff, BigDecimal cost);
+    List<Tariff> ascByCostTariff(long serviceId);
+    List<Tariff> descByCostTariff(long serviceId);
+
 
 }

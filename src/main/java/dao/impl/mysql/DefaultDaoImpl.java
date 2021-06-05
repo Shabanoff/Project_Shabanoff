@@ -1,6 +1,11 @@
 package dao.impl.mysql;
 
+import dao.abstraction.RoleDao;
+import dao.abstraction.StatusDao;
+import dao.abstraction.TariffDao;
 import dao.exception.DaoException;
+import dao.factory.DaoFactory;
+import dao.factory.connection.DaoConnection;
 import dao.impl.mysql.converter.DtoConverter;
 import dao.impl.mysql.converter.UserDtoConverter;
 import entity.Role;
@@ -87,21 +92,38 @@ public class DefaultDaoImpl <T> {
             throw new DaoException(e);
         }
     }
-    public List<User> findUsers(int noOfRecords , int offset)    {
+    private final static String ID_FIELD = "id";
+    private final static String LOGIN = "login";
+    private final static String PASSWORD = "password";
+    private final static String BALANCE = "balance";
+    private final static String STATUS_ID_FIELD = "status_id";
+    private final static String ROLE_ID_FIELD = "role_id";
+
+    public List<User> findUsers(int noOfRecords,int offset )    {
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        StatusDao statusDao= daoFactory.getStatusDao(daoFactory.getConnection());
+        RoleDao roleDao= daoFactory.getRoleDao(daoFactory.getConnection());
         String query = "select SQL_CALC_FOUND_ROWS * from user limit "
-                + noOfRecords + ", offset " + offset;
+                + offset + " offset " + noOfRecords;
         List<User> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(query)){
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                UserDtoConverter userDtoConverter = new UserDtoConverter();
-                list.add(userDtoConverter.convertToObject(resultSet));
+                User user = User.newBuilder()
+                        .addId(resultSet.getLong(ID_FIELD))
+                        .addLogin(resultSet.getString(LOGIN))
+                        .addPassword(resultSet.getString(PASSWORD))
+                        .addBalance(resultSet.getBigDecimal(BALANCE))
+                        .addStatus(statusDao.findOne(resultSet.getInt(STATUS_ID_FIELD)).get())
+                        .addRole(roleDao.findOne(resultSet.getInt(ROLE_ID_FIELD)).get())
+                        .build();
+                list.add(user);
             }
             resultSet.close();
 
             resultSet = statement.executeQuery("SELECT FOUND_ROWS()");
             if(resultSet.next())
-                this.noOfRecords = resultSet.getInt(1);
+                setNoOfRecords(resultSet.getInt(1));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -110,6 +132,9 @@ public class DefaultDaoImpl <T> {
     private int noOfRecords;
     public int getNoOfRecords() {
         return noOfRecords;
+    }
+    public void setNoOfRecords(int noOfRecords) {
+        this.noOfRecords =noOfRecords;
     }
 
     public boolean exist(String query, Object... params) {

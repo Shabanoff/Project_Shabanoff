@@ -53,8 +53,13 @@ public class PostLoginCommand implements ICommand {
             User user = loadUserFromDatabase(userDto.getLogin());
             addUserToContext(request.getSession(), user);
             addUserToSession(request.getSession(), user);
-            Util.redirectTo(request, response, bundle.
-                    getString("account.path"));
+            if (user.isManager()) {
+                Util.redirectTo(request, response, bundle.
+                        getString("users.path"));
+            }else {
+                Util.redirectTo(request, response, bundle.
+                        getString("account.path"));
+            }
 
             return REDIRECTED;
         }

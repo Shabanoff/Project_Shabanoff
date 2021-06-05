@@ -41,4 +41,6 @@ public interface UserDao extends GenericDao<User, Long>{
      */
     void updateUserStatus(User user, int statusId);
     List<User> findUsers(int noOfRecords , int offset);
+
+    int getNoOfRecords();
 }

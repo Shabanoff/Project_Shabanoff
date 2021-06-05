@@ -29,6 +29,13 @@ public class MySqlTariffDao implements TariffDao {
             "WHERE tariff.id = ? ";
     private final static String GROUP_BY=
             "GROUP BY tariff.id ";
+    private final static String ASC_BY_COST=
+            "ORDER BY " +
+                    "tariff_cost ASC";
+    private final static String DESC_BY_COST=
+            "ORDER BY " +
+                    "tariff_cost DESC";
+
 
     private final static String WHERE_SERVICE_ID =
             "WHERE tariff.service_id = ? ";
@@ -131,5 +138,15 @@ public class MySqlTariffDao implements TariffDao {
                 CHANGE_COST + WHERE_ID,
                 cost, tariff.getId()
         );
+    }
+
+    @Override
+    public List<Tariff> ascByCostTariff(long serviceId) {
+        return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE_ID+ GROUP_BY+ASC_BY_COST, serviceId);
+    }
+
+    @Override
+    public List<Tariff> descByCostTariff(long serviceId) {
+        return defaultDao.findAll(SELECT_ALL + WHERE_SERVICE_ID+ GROUP_BY+DESC_BY_COST, serviceId);
     }
 }
