@@ -27,8 +27,7 @@ public class IncludedPackageService {
     public void createIncludedPackage(IncludedPackage includedPackage) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
-            IncludedPackage inserted = includedPackageDao.insert(includedPackage);
-            return inserted;
+            includedPackageDao.insert(includedPackage);
         }
     }
 

@@ -31,11 +31,9 @@ public class IncludedOptionToTariffService {
         }
     }
 
-    public IncludedOptionToTariff createIncludedOptionToTariff(IncludedOptionToTariff includedOptionToTariff, DaoConnection connection) {
-
-            IncludedOptionToTariffDao includedOptionToTariffDao = daoFactory.getIncludedOptionToTariffDao(connection);
-            IncludedOptionToTariff inserted = includedOptionToTariffDao.insert(includedOptionToTariff);
-            return inserted;
+    public void createIncludedOptionToTariff(IncludedOptionToTariff includedOptionToTariff, DaoConnection connection) {
+        IncludedOptionToTariffDao includedOptionToTariffDao = daoFactory.getIncludedOptionToTariffDao(connection);
+        includedOptionToTariffDao.insert(includedOptionToTariff);
 
     }
 

@@ -25,7 +25,7 @@ public class PostAccountCommand implements ICommand {
 
         List<IncludedPackage> includedPackages = includedPackageService.findByUser(currentUser.getId());
         currentUser.setIncludedPackages(includedPackages);
-        includedPackageService.deleteIncludedPackage(Long.valueOf(request.getParameter(INCLUDED_PACKAGE_ID)));
+        includedPackageService.deleteIncludedPackage(Long.parseLong(request.getParameter(INCLUDED_PACKAGE_ID)));
         request.setAttribute(Attributes.INCLUDED_PACKAGES, includedPackages);
 
 

@@ -14,11 +14,9 @@ public class IncludedOptionToTariffDtoConverter implements DtoConverter<Included
 
     @Override
     public IncludedOptionToTariff convertToObject(ResultSet resultSet) throws SQLException {
-        IncludedOptionToTariff includedOptionToTariffDao =IncludedOptionToTariff.newBuilder()
-                .addId(resultSet.getLong(ID_FIELD))
+        return IncludedOptionToTariff.newBuilder()
                 .addOptionId(resultSet.getLong(OPTION_ID))
                 .addTariffId(resultSet.getLong(TARIFF_ID))
                 .build();
-        return includedOptionToTariffDao;
     }
 }

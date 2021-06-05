@@ -15,9 +15,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class PostDeleteServiceCommand implements ICommand {
-    private final static Logger logger = LogManager.getLogger(PostDeleteServiceCommand.class);
-    private final String SERVICE_ID_PARAM = "serviceId";
-    ServiceForService serviceService = ServiceFactory.getServiceService();
+    private static final Logger logger = LogManager.getLogger(PostDeleteServiceCommand.class);
+    private static final String SERVICE_ID_PARAM = "serviceId";
+    private static final ServiceForService serviceService = ServiceFactory.getServiceService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

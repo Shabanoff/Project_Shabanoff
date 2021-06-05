@@ -17,8 +17,8 @@ import java.util.Optional;
 
 public class PostChangeTariffCostCommand implements ICommand {
     ServiceForService serviceService = ServiceFactory.getServiceService();
-    private final String COST_PARAM = "newCost";
-    private final String TARIFF_ID_PARAM = "tariffId";
+    private static final String COST_PARAM = "newCost";
+    private static final String TARIFF_ID_PARAM = "tariffId";
 
     TariffService tariffService = ServiceFactory.getTariffService();
     @Override

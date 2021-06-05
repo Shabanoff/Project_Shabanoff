@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostCreateUserCommand implements ICommand {
-    private final static Logger logger = LogManager.getLogger(PostCreateUserCommand.class);
+    private static final Logger logger = LogManager.getLogger(PostCreateUserCommand.class);
 
     private static final String LOGIN_PARAM = "login";
     private static final String PASSWORD_PARAM = "password";

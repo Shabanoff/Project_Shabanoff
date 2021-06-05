@@ -12,10 +12,9 @@ public class IncludedOptionDtoConverter implements DtoConverter<IncludedOption> 
     @Override
     public IncludedOption convertToObject(ResultSet resultSet) throws SQLException {
 
-        IncludedOption includedOption = IncludedOption.newBuilder()
+        return IncludedOption.newBuilder()
                 .addId(resultSet.getLong(ID_FIELD))
                 .addDefinition(resultSet.getString(DEFINITION))
                 .build();
-        return includedOption;
     }
 }

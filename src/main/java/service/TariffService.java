@@ -82,36 +82,27 @@ public class TariffService {
                 .build();
     }
 
-    public void updateTariff(Tariff tariff) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            connection.startSerializableTransaction();
-            TariffDao TariffDao = daoFactory.getTariffDao(connection);
-            TariffDao.update(tariff);
-            connection.commit();
-        }
-    }
-
     public List<String> deleteTariff(long tariffId) {
-        List<String> erorrs = new ArrayList<>();
+        List<String> errors = new ArrayList<>();
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
-            if (includedPackageService.findIncludedPackageByTariff(tariffId, connection).isPresent()) {
-                erorrs.add(ADDED_BY_USER);
-                return erorrs;
+            if (includedPackageService.isIncludedPackageExistsByTariff(tariffId, connection)) {
+                errors.add(ADDED_BY_USER);
+                return errors;
             }
-                includedOptionToTariffService.deleteIncludedOptionToTariff(tariffId, connection);
-                TariffDao TariffDao = daoFactory.getTariffDao(connection);
-                TariffDao.delete(tariffId);
-                connection.commit();
+            includedOptionToTariffService.deleteIncludedOptionToTariff(tariffId, connection);
+            TariffDao tariffDao = daoFactory.getTariffDao(connection);
+            tariffDao.delete(tariffId);
+            connection.commit();
 
         }
-        return erorrs;
+        return errors;
     }
 
     public void deleteTariffForService(long tariffId, DaoConnection connection) {
         includedOptionToTariffService.deleteIncludedOptionToTariff(tariffId, connection);
-        TariffDao TariffDao = daoFactory.getTariffDao(connection);
-        TariffDao.delete(tariffId);
+        TariffDao tariffDao = daoFactory.getTariffDao(connection);
+        tariffDao.delete(tariffId);
     }
 
     public void changeCost(Tariff tariff, BigDecimal cost) {
@@ -124,6 +115,6 @@ public class TariffService {
     }
 
     private static class Singleton {
-        private final static TariffService INSTANCE = new TariffService();
+        private static final TariffService INSTANCE = new TariffService();
     }
 }

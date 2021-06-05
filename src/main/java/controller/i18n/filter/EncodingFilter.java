@@ -1,6 +1,5 @@
 package controller.i18n.filter;
 
-import controller.listener.UniquenessCheckSessionListener;
 import javax.servlet.*;
 import java.io.IOException;
 import org.apache.logging.log4j.LogManager;

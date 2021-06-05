@@ -20,12 +20,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class PostCreateTariffCommand implements ICommand {
-    private final ServiceForService serviceService = ServiceFactory.getServiceService();
-    private final IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
-    private final static String TARIFF_NAME_PARAM = "tariffName";
-    private final static String COST_PARAM = "cost";
-    private final static String SERVICE_ID_PARAM = "serviceId";
-    private final static String OPTION_ID_PARAM = "optionId";
+    private static final ServiceForService serviceService = ServiceFactory.getServiceService();
+    private static final IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
+    private static final String TARIFF_NAME_PARAM = "tariffName";
+    private static final String COST_PARAM = "cost";
+    private static final String SERVICE_ID_PARAM = "serviceId";
+    private static final String OPTION_ID_PARAM = "optionId";
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TariffService tariffService = ServiceFactory.getTariffService();

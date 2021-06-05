@@ -25,10 +25,10 @@ import java.util.List;
 import static controller.util.constants.Views.ACCOUNT_VIEW;
 
 public class PostReplenishCommand implements ICommand {
-    private final String AMOUNT = "balance";
-    private final IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
-    private final UserService userService = ServiceFactory.getUserService();
-    private final static Logger logger = LogManager.getLogger(PostReplenishCommand.class);
+    private static final String AMOUNT = "amount";
+    private static final IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
+    private static final UserService userService = ServiceFactory.getUserService();
+    private static final Logger logger = LogManager.getLogger(PostReplenishCommand.class);
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User currentUser = getUserFromSession(request.getSession());

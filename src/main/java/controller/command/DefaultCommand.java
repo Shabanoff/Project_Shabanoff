@@ -13,9 +13,9 @@ public class DefaultCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Util.redirectTo(request, response, ResourceBundle.
-                getBundle(Views.PAGES_BUNDLE).
-                getString("home.path"));
+        Util.redirectTo(request, response, ResourceBundle
+                .getBundle(Views.PAGES_BUNDLE)
+                .getString("home.path"));
         return REDIRECTED;
     }
 }

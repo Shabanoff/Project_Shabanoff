@@ -19,20 +19,25 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static dao.util.Constants.*;
+
 /**
- * Intermediate layer between command layer and dao layer.
- * Implements operations of finding, creating, deleting entities.
- * Account dao layer.
+ * Intermediate layer between command layer and dao layer. Implements operations of finding,
+ * creating, deleting entities. Account dao layer.
  *
  * @author Shabanoff
  */
 public class UserService {
-    private final DaoFactory daoFactory = DaoFactory.getInstance();
-    private UserService(){}
-    private static class Singleton {
-        private final static UserService INSTANCE = new UserService();
+    private static final DaoFactory daoFactory = DaoFactory.getInstance();
+    private static final IncludedPackageService includedPackageService = ServiceFactory
+            .getIncludedPackageService();
+
+    private UserService() {
     }
- public static UserService getInstance(){return Singleton.INSTANCE;}
+
+    public static UserService getInstance() {
+        return Singleton.INSTANCE;
+    }
 
     public List<User> findAllUser() {
         try (DaoConnection connection = daoFactory.getConnection()) {
@@ -40,12 +45,14 @@ public class UserService {
             return userDao.findAll();
         }
     }
+
     public Optional<User> findUserByNumber(long userId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
             return userDao.findOne(userId);
         }
     }
+
     public Optional<User> findByLogin(String login) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
@@ -62,7 +69,6 @@ public class UserService {
         if (user.getStatus() == null) {
             user.setDefaultStatus();
         }
-
 
         String hash = PasswordStorage.getSecurePassword(
                 user.getPassword());
@@ -82,6 +88,7 @@ public class UserService {
             connection.commit();
         }
     }
+
     public void increaseUserBalance(User user, BigDecimal amount) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
@@ -92,12 +99,18 @@ public class UserService {
 
     }
 
-    public void decreaseUserBalance(User user, BigDecimal amount,DaoConnection connection ) {
-
-            UserDao userDao = daoFactory.getUserDao(connection);
-            userDao.decreaseBalance(user, amount);
+    public void decreaseUserBalance(User user, BigDecimal amount, DaoConnection connection) {
+        UserDao userDao = daoFactory.getUserDao(connection);
+        userDao.decreaseBalance(user, amount);
+    }
+    public void decreaseUserBalanceScheduler(User user, BigDecimal amount) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+        UserDao userDao = daoFactory.getUserDao(connection);
+        userDao.decreaseBalance(user, amount);
+        }
 
     }
+
     public boolean isCredentialsValid(String login, String password) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
@@ -110,6 +123,7 @@ public class UserService {
         }
 
     }
+
     public boolean isUserExists(User user) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
@@ -117,44 +131,48 @@ public class UserService {
         }
     }
 
-    private final IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
+    public List<String> addingTariff(User currentUser, Tariff addingTariff) {
+        List<String> error = new ArrayList<>();
+        BigDecimal cost = addingTariff.getCost();
 
-    private final static String NOT_ENOUGH_MONEY = "no.money";
-    private final static String ALREADY_ADD = "already.add";
-    public List<String> addingTariff (User currentUser, Optional<Tariff> addingTariff){
-        List error = new ArrayList();
-        BigDecimal cost = addingTariff.get().getCost();
+        List<IncludedPackage> includedPackages =
+                includedPackageService.findByUser(currentUser.getId());
 
-            List<IncludedPackage> includedPackages =
-                    includedPackageService.findByUser(currentUser.getId());
+        Optional<IncludedPackage> existedIncludedPackage =
+                includedPackages.stream()
+                        .filter(includedPackage ->
+                                includedPackage.getService().getId() ==
+                                        addingTariff.getService().getId())
+                        .findFirst();
 
-            Optional<IncludedPackage> existedPackagePackage =
-                    includedPackages.stream().filter(includedPackage ->
-                            includedPackage.getService().getId() ==
-                                    addingTariff.get().getService().getId()).findFirst();
-            if (existedPackagePackage.isPresent()  && existedPackagePackage.get().getTariff().equals(addingTariff.get())){
-                error.add(ALREADY_ADD);
-                return error;
-            }
-            if ( currentUser.getBalance().compareTo(addingTariff.get().getCost())<0){
-                error.add(NOT_ENOUGH_MONEY);
-                return error;
-            }
+        if (existedIncludedPackage.isPresent() && existedIncludedPackage.get().getTariff()
+                .equals(addingTariff)) {
+            error.add(ALREADY_ADD);
+            return error;
+        }
+        if (currentUser.getBalance().compareTo(addingTariff.getCost()) < 0) {
+            error.add(NOT_ENOUGH_MONEY);
+            return error;
+        }
+
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.startSerializableTransaction();
-            if (existedPackagePackage.isPresent()) {
-                        includedPackageService.updateIncludePackage(existedPackagePackage.get(),addingTariff.get(),connection);
+            if (existedIncludedPackage.isPresent()) {
+                includedPackageService
+                        .updateIncludePackage(existedIncludedPackage.get(), addingTariff,
+                                connection);
             } else {
-                    includedPackageService.createIncludedPackage(
-                            getDataFromRequest(currentUser, addingTariff.get()));
+                includedPackageService.createIncludedPackage(
+                        collectIncludedPackage(currentUser, addingTariff));
             }
-                decreaseUserBalance(currentUser, cost, connection);
+            decreaseUserBalance(currentUser, cost, connection);
             connection.commit();
         }
         return error;
 
     }
-    private IncludedPackage getDataFromRequest(User user, Tariff tariff) {
+
+    private IncludedPackage collectIncludedPackage(User user, Tariff tariff) {
         return IncludedPackage.newBuilder()
                 .addSubscriptionDate(LocalDate.now())
                 .addUserId(user.getId())
@@ -162,14 +180,28 @@ public class UserService {
                 .addService(tariff.getService())
                 .build();
     }
-    public List<String> createUser (String login, String password){
+
+    public List<String> createUser(String login, String password) {
         User userDto = getDataFromRequestCreating(login, password);
         List<String> errors = validateData(userDto);
-        if (errors.isEmpty()){
+        if (errors.isEmpty()) {
             createUser(userDto);
         }
         return errors;
     }
+    List<User> users = new ArrayList<>();
+    public List<User> findUsers(int noOfRecords, int offset)  {
+
+
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            connection.startSerializableTransaction();
+            UserDao userDao = daoFactory.getUserDao(connection);
+            this.users = userDao.findUsers(noOfRecords, offset);
+            this.noOfRecords = userDao.getNoOfRecords();
+        }
+        return users;
+    }
+
     private User getDataFromRequestCreating(String login, String password) {
         return User.newBuilder()
                 .addLogin(login)
@@ -182,15 +214,13 @@ public class UserService {
         return noOfRecords;
     }
 
-    public  final String USER_ALREADY_EXISTS = "user.exists";
     private List<String> validateData(User user) {
         List<String> errors = new ArrayList<>();
 
         Util.validateField(new LoginValidator(), user.getLogin(), errors);
         Util.validateField(new PasswordValidator(), user.getPassword(), errors);
 
-
-        if(errors.isEmpty() && isUserExists(user)) {
+        if (errors.isEmpty() && isUserExists(user)) {
             errors.add(USER_ALREADY_EXISTS);
         }
 

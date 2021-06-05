@@ -38,7 +38,7 @@ public interface GenericDao <T, ID>{
      *
      * @param obj object to update
      */
-    @SuppressWarnings("unchecked")
+    /*@SuppressWarnings("unchecked")*///TODO:
     void update(T obj);
 
     /**

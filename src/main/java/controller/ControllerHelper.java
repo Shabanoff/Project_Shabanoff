@@ -102,7 +102,7 @@ public class ControllerHelper {
 
 
     public static class Singleton {
-        private final static ControllerHelper INSTANCE =
+        private static final ControllerHelper INSTANCE =
                 new ControllerHelper();
 
         public static ControllerHelper getInstance() {

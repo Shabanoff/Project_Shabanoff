@@ -13,7 +13,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class MySqlIncludedPackageDao implements IncludedPackageDao {
-    private final static String SELECT_ALL =
+    public static final String EXIST_BY_TARIFF =
+            "SELECT included_package.id FROM included_package" +
+                    " WHERE included_package.tariff_id = ?";
+    private static final String SELECT_ALL =
             "SELECT included_package.id, included_package.subscription_date, " +
                     "service.id AS service_id, " +
                     "service.name AS service_name, " +
@@ -103,17 +106,6 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
                 tariff.getId(),
                 tariff.getService().getId(),
                 obj.getId()
-        );
-
-    }
-    public void updateService(IncludedPackage obj) {
-        Objects.requireNonNull(obj);
-
-        defaultDao.executeUpdate(
-                UPDATE + WHERE_USER_ID,
-                obj.getSubscriptionDate(),
-                obj.getService(),
-                obj.getTariff()
         );
 
     }

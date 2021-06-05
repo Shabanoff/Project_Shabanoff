@@ -28,7 +28,6 @@ public class GetAccountCommand implements ICommand {
         currentUser.setIncludedPackages(includedPackages);
         request.setAttribute(Attributes.INCLUDED_PACKAGES, includedPackages);
 
-
         return ACCOUNT_VIEW;
     }
 

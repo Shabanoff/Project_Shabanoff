@@ -74,17 +74,16 @@ public class ServiceForService {
     public void createService(String name) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
-            Service inserted = serviceDao.insert(getDataFromRequestCreating(name));
-            return inserted;
+            serviceDao.insert(getDataFromRequestCreating(name));
         }
     }
 
     public List<String> deleteService(long serviceId) {
-        List<String> erorrs = new ArrayList<>();
+        List<String> errors = new ArrayList<>();
         try (DaoConnection connection = daoFactory.getConnection()) {
-            if (includedPackageService.findIncludedPackageByService(serviceId, connection).isPresent()){
-                erorrs.add(ADDED_BY_USER);
-                return erorrs;
+            if (includedPackageService.isIncludedPackageExistsByService(serviceId, connection)) {
+                errors.add(ADDED_BY_USER);
+                return errors;
             }
             connection.startSerializableTransaction();
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
@@ -93,7 +92,7 @@ public class ServiceForService {
             serviceDao.delete(serviceId);
             connection.commit();
         }
-        return erorrs;
+        return errors;
     }
 
     private Service getDataFromRequestCreating(String name) {

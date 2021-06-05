@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class PostUnblockCommand implements ICommand {
-    private final UserService userService = ServiceFactory.getUserService();
-    private final String USER_ID = "userId";
+    private static final UserService userService = ServiceFactory.getUserService();
+    private static final String USER_ID = "userId";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<User> currentUser = getTariff(request);
