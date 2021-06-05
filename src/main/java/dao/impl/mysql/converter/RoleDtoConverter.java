@@ -11,8 +11,8 @@ public class RoleDtoConverter implements DtoConverter<Role> {
 
     @Override
     public Role convertToObject(ResultSet resultSet) throws SQLException {
-        int roleId = resultSet.getInt( ID_FIELD);
+        int roleId = resultSet.getInt(ID_FIELD);
         String roleName = resultSet.getString(NAME_FIELD);
-        return new Role(roleId,roleName);
+        return new Role(roleId, roleName);
     }
 }

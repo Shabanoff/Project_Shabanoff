@@ -1,7 +1,8 @@
 package entity;
 
 public class Status extends Designation {
-    public Status() {}
+    public Status() {
+    }
 
     public Status(int id, String name) {
         super(id, name);

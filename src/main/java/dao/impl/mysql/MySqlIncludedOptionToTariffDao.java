@@ -26,20 +26,15 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
     private final static String WHERE_TARIFF =
             "WHERE tariff_id = ? ";
 
-
     private final static String INSERT =
             "INSERT into included_options_to_tariff (tariff_id, " +
                     "included_option_id )" +
                     "VALUES(?, ?) ";
 
-
     private final static String UPDATE =
             "UPDATE included_options_to_tariff SET " +
                     "tariff_id = ?, " +
                     "included_option.id = ?";
-
-
-
 
     private final static String DELETE =
             "DELETE FROM included_options_to_tariff ";
@@ -52,7 +47,7 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
     }
 
     public MySqlIncludedOptionToTariffDao(Connection connection,
-                                  DtoConverter<IncludedOptionToTariff> converter) {
+                                          DtoConverter<IncludedOptionToTariff> converter) {
         this.defaultDao = new DefaultDaoImpl<>(connection, converter);
     }
 
@@ -69,16 +64,17 @@ public class MySqlIncludedOptionToTariffDao implements IncludedOptionToTariffDao
     public List<IncludedOptionToTariff> findAll() {
         return defaultDao.findAll(SELECT_ALL);
     }
+
     @Override
     public List<IncludedOptionToTariff> findAllByTariff(long tariffId) {
-        return defaultDao.findAll(SELECT_ALL+WHERE_TARIFF, tariffId);
+        return defaultDao.findAll(SELECT_ALL + WHERE_TARIFF, tariffId);
     }
 
     @Override
     public IncludedOptionToTariff insert(IncludedOptionToTariff obj) {
         Objects.requireNonNull(obj);
 
-         defaultDao.executeInsert(
+        defaultDao.executeInsert(
                 INSERT,
                 obj.getTariffId(),
                 obj.getOptionId()

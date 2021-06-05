@@ -8,8 +8,6 @@ public interface Attributes {
     String USER = "user";
     String INCLUDED_PACKAGES = "includedPackages";
     String USER_LIST  ="activeUserList";
-    String REFILLABLE_USER = "refillableUser";
-    String TARIFFS = "tariffs";
     String USERS = "users";
     String SERVICES = "services";
     String OPTIONS = "options";

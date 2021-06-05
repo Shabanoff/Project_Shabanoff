@@ -12,22 +12,17 @@ import java.util.List;
 public class Util {
     /**
      * Add next page to redirect
-     *
-     * @param request
-     * @param response
-     * @param pageToRedirect
-     * @throws IOException
      */
     public static void redirectTo(HttpServletRequest request,
                                   HttpServletResponse response,
                                   String pageToRedirect) throws IOException {
-        response.sendRedirect(request.getContextPath()+
+        response.sendRedirect(request.getContextPath() +
                 request.getServletPath() + pageToRedirect);
     }
 
     /**
      * Check if the user is logged in
-     * @param session
+     *
      * @return {@code true} if logged in else {@code false}
      */
     public static boolean isAlreadyLoggedIn(HttpSession session) {
@@ -38,15 +33,12 @@ public class Util {
      * Performs validation of given field with provided validator.
      * If error occurs add error message to list of errors.
      *
-     * @param validator
-     * @param field
-     * @param errors
      * @param <T> type of field for validation
      */
     public static <T> void validateField(Validator<T> validator,
                                          T field,
                                          List<String> errors) {
-        if(!validator.isValid(field)) {
+        if (!validator.isValid(field)) {
             errors.add(validator.getErrorKey());
         }
     }

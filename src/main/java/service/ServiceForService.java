@@ -22,7 +22,7 @@ import static dao.util.Constants.ADDED_BY_USER;
 public class ServiceForService {
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
-    private TariffService tariffService = ServiceFactory.getTariffService();
+    private final TariffService tariffService = ServiceFactory.getTariffService();
 
     private ServiceForService() {
     }
@@ -64,7 +64,6 @@ public class ServiceForService {
         }
     }
 
-
     public Optional<Service> findServiceById(long serviceId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
@@ -72,8 +71,7 @@ public class ServiceForService {
         }
     }
 
-
-    public Service createService(String name) {
+    public void createService(String name) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             ServiceDao serviceDao = daoFactory.getServiceDao(connection);
             Service inserted = serviceDao.insert(getDataFromRequestCreating(name));
@@ -97,7 +95,6 @@ public class ServiceForService {
         }
         return erorrs;
     }
-
 
     private Service getDataFromRequestCreating(String name) {
         return Service.newBuilder()

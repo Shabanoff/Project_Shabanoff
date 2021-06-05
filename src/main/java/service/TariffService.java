@@ -23,10 +23,11 @@ import static dao.util.Constants.ADDED_BY_USER;
  */
 public class TariffService {
 
-    private static IncludedOptionToTariffService includedOptionToTariffService =
+    private static final IncludedOptionToTariffService includedOptionToTariffService =
             ServiceFactory.getIncludedOptionToTariffService();
     private final DaoFactory daoFactory = DaoFactory.getInstance();
-    IncludedPackageService includedPackageService = ServiceFactory.getIncludedPackageService();
+    private static final IncludedPackageService includedPackageService =
+            ServiceFactory.getIncludedPackageService();
 
     private TariffService() {
     }
@@ -35,17 +36,10 @@ public class TariffService {
         return Singleton.INSTANCE;
     }
 
-    public List<Tariff> findAllTariff() {
+    public Optional<Tariff> findTariffById(long tariffId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             TariffDao tariffDao = daoFactory.getTariffDao(connection);
-            return tariffDao.findAll();
-        }
-    }
-
-    public Optional<Tariff> findTariffById(long TariffId) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            TariffDao tariffDao = daoFactory.getTariffDao(connection);
-            return tariffDao.findOne(TariffId);
+            return tariffDao.findOne(tariffId);
         }
     }
 

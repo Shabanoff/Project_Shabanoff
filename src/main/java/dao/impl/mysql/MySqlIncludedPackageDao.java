@@ -17,7 +17,7 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
             "SELECT included_package.id, included_package.subscription_date, " +
                     "service.id AS service_id, " +
                     "service.name AS service_name, " +
-                    "tariff.id AS tariff_id, "+
+                    "tariff.id AS tariff_id, " +
                     "tariff.name AS tariff_name, tariff.cost AS tariff_cost, " +
                     "GROUP_CONCAT(included_option.definition) AS included_options " +
                     "FROM included_package " +
@@ -29,39 +29,26 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
             "WHERE included_package.id = ? ";
     private static final String WHERE_SERVICE_ID =
             "WHERE included_package.service_id = ? ";
-
     private static final String WHERE_USER_ID =
             "WHERE included_package.user_id = ? ";
-    private static final String GROUP_BY=
+    private static final String GROUP_BY =
             "GROUP BY tariff.id ";
-
     private static final String INSERT =
             "INSERT into included_package (subscription_date, user_id, service_id," +
                     "tariff_id)" +
                     "VALUES(?, ?, ?, ?) ";
-
     private static final String UPDATE =
             "UPDATE included_package SET " +
                     "subscription_date = ?, " +
-                    "tariff_id = ?, "+
+                    "tariff_id = ?, " +
                     "service_id = ? ";
-
-
     private static final String DELETE =
             "DELETE FROM included_package ";
-
     private static final String WHERE_TARIFF_ID =
             "WHERE included_package.tariff_id = ? ";
-
     private static final String EXIST_BY_SERVICE =
             "SELECT included_package.id FROM included_package" +
                     " WHERE included_package.service_id = ?";
-
-    public static final String EXIST_BY_TARIFF =
-            "SELECT included_package.id FROM included_package" +
-                    " WHERE included_package.tariff_id = ?";
-
-
     private final DefaultDaoImpl<IncludedPackage> defaultDao;
 
     public MySqlIncludedPackageDao(Connection connection) {
@@ -72,6 +59,7 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
                                    DtoConverter<IncludedPackage> converter) {
         this.defaultDao = new DefaultDaoImpl<>(connection, converter);
     }
+
     @Override
     public Optional<IncludedPackage> findOne(Long id) {
         return defaultDao.findOne(SELECT_ALL + WHERE_ID, id);
@@ -106,7 +94,7 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
     }
 
 
-    public void updateIncludedPackage (IncludedPackage obj, Tariff tariff) {
+    public void updateIncludedPackage(IncludedPackage obj, Tariff tariff) {
         Objects.requireNonNull(obj);
 
         defaultDao.executeUpdate(
@@ -138,24 +126,15 @@ public class MySqlIncludedPackageDao implements IncludedPackageDao {
 
     @Override
     public List<IncludedPackage> findByUser(long userId) {
-        return defaultDao.findAll(SELECT_ALL + WHERE_USER_ID + GROUP_BY,userId);
+        return defaultDao.findAll(SELECT_ALL + WHERE_USER_ID + GROUP_BY, userId);
     }
 
-    @Override
-    public Optional<IncludedPackage> findByService(long serviceId) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_SERVICE_ID,serviceId);
-    }
-
-    @Override
-    public Optional<IncludedPackage> findByTariff(long tariffId) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_TARIFF_ID,tariffId);
-    }
-    public boolean existByService (long serviceId){
-        return defaultDao.exist(EXIST_BY_SERVICE,serviceId);
+    public boolean existByService(long serviceId) {
+        return defaultDao.exist(EXIST_BY_SERVICE, serviceId);
     }
 
     @Override
     public boolean existByTariff(long tariffId) {
-        return defaultDao.exist(EXIST_BY_TARIFF,tariffId);
+        return defaultDao.exist(EXIST_BY_TARIFF, tariffId);
     }
 }

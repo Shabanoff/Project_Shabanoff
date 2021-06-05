@@ -22,9 +22,8 @@ public class PostDeleteServiceCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<String> errors = serviceService.deleteService(Long.parseLong(request.getParameter(SERVICE_ID_PARAM)));
-
         if (!errors.isEmpty()) {
-            logger.info("LOGGIN HAS ERRORS!");
+            logger.info("Service has already add to user");
             request.setAttribute(Attributes.ERRORS, errors);
         }
         request.setAttribute(Attributes.SERVICES, serviceService.findAllService());

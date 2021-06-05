@@ -25,7 +25,6 @@ public class MySqlIncludedOptionDao implements IncludedOptionDao {
             "UPDATE included_option SET " +
                     "definition = ?, ";
 
-
     private final static String DELETE =
             "DELETE FROM included_option ";
 

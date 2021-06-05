@@ -10,6 +10,10 @@ public class Tariff {
     private Service service;
     private List<IncludedOption> includedOptions;
 
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public List<IncludedOption> getIncludedOptions() {
         return includedOptions;
     }
@@ -25,44 +29,6 @@ public class Tariff {
     public void setService(Service service) {
         this.service = service;
     }
-
-    public static class Builder{
-        private final Tariff tariff;
-
-        public Builder(){tariff = new Tariff();}
-
-        public Builder addTariffId(long id) {
-            tariff.setId(id);
-            return this;
-        }
-
-        public Builder addTariffName(String tariffName) {
-            tariff.setTariffName(tariffName);
-            return this;
-        }
-        public Builder addIncludedOptions(List<IncludedOption> includedOptions) {
-            tariff.setIncludedOptions(includedOptions);
-            return this;
-        }
-
-        public Builder addCost(BigDecimal cost) {
-            tariff.setCost(cost);
-            return this;
-        }
-
-        public Builder addService(Service service) {
-            tariff.setService(service);
-            return this;
-        }
-
-        public Tariff build(){
-            return tariff;
-        }
-    }
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
 
     public long getId() {
         return id;
@@ -88,7 +54,6 @@ public class Tariff {
         this.cost = cost;
     }
 
-
     @Override
     public String toString() {
         return "Tariff{" +
@@ -101,11 +66,52 @@ public class Tariff {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || this.getClass() != o.getClass()) {return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
 
         Tariff tariff = (Tariff) o;
 
         return this.id == tariff.id;
+    }
+
+    public static class Builder {
+        private final Tariff tariff;
+
+        public Builder() {
+            tariff = new Tariff();
+        }
+
+        public Builder addTariffId(long id) {
+            tariff.setId(id);
+            return this;
+        }
+
+        public Builder addTariffName(String tariffName) {
+            tariff.setTariffName(tariffName);
+            return this;
+        }
+
+        public Builder addIncludedOptions(List<IncludedOption> includedOptions) {
+            tariff.setIncludedOptions(includedOptions);
+            return this;
+        }
+
+        public Builder addCost(BigDecimal cost) {
+            tariff.setCost(cost);
+            return this;
+        }
+
+        public Builder addService(Service service) {
+            tariff.setService(service);
+            return this;
+        }
+
+        public Tariff build() {
+            return tariff;
+        }
     }
 }

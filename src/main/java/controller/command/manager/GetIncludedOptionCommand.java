@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class GetIncludedOptionCommand implements ICommand {
-    IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
+    private static final IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -14,17 +14,19 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class PostBlockCommand implements ICommand {
-    private final UserService userService = ServiceFactory.getUserService();
-    private final String USER_ID = "userId";
+    private static final UserService userService = ServiceFactory.getUserService();
+    private static final String USER_ID = "userId";
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<User> currentUser = getTariff(request);
         currentUser.ifPresent(user -> userService.updateUserStatus(user, Status.StatusIdentifier.BLOCKED_STATUS.getId()));
 
         userService.userPagination(request);
-        return Views.USERS_VIEWS;
+        return Views.USERS_VIEW;
     }
-    private Optional<User> getTariff(HttpServletRequest request){
+
+    private Optional<User> getTariff(HttpServletRequest request) {
         return userService.findUserByNumber(
                 Long.parseLong(request.getParameter(USER_ID)));
     }

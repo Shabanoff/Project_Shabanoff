@@ -56,11 +56,6 @@ public class MySqlTariffDao implements TariffDao {
             "UPDATE tariff SET " +
                     "cost =  ? ";
 
-    private final static  String INSERT_DEFINITION =
-            "INSERT INTO included_options_to_tariff "+
-                    " (tariff_id, included_option_id)"+
-                    " VALUES (?,?)";
-
 
     private final static String DELETE =
             "DELETE FROM tariff ";

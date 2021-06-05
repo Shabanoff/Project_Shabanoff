@@ -56,7 +56,7 @@ public class PostLoginCommand implements ICommand {
             if (user.isManager()) {
                 Util.redirectTo(request, response, bundle.
                         getString("users.path"));
-            }else {
+            } else {
                 Util.redirectTo(request, response, bundle.
                         getString("account.path"));
             }

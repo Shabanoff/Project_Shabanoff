@@ -6,7 +6,9 @@ import entity.Tariff;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import service.*;
+import service.ServiceFactory;
+import service.TariffService;
+import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,22 +31,23 @@ public class PostServiceCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User currentUser = getUserFromSession(request.getSession());
-        Optional<Tariff> addingTariff = getTariff(request);
-        List<String> errors = userService.addingTariff(currentUser, addingTariff);
-        request.setAttribute(Attributes.SERVICES, ServiceFactory.getServiceService().findAllService());
-        //request.setAttribute("noOfPages", noOfPages);
-        //request.setAttribute("currentPage", page);
-        if(!errors.isEmpty()){
-            request.setAttribute(Attributes.ERRORS, errors);
-            logger.info("Adding tariff HAS ERRORS!");
+        Optional<Tariff> addedTariff = getTariff(request);
+        if (addedTariff.isPresent()) {
+            List<String> errors = userService.addingTariff(currentUser, addedTariff.get());
+            request.setAttribute(Attributes.SERVICES, ServiceFactory.getServiceService().findAllService());
+            if (!errors.isEmpty()) {
+                request.setAttribute(Attributes.ERRORS, errors);
+                logger.info("Adding tariff HAS ERRORS!");
+            }
         }
         return SERVICE_VIEW;
     }
+
     private User getUserFromSession(HttpSession session) {
         return (User) session.getAttribute(Attributes.USER);
     }
 
-    private Optional<Tariff> getTariff(HttpServletRequest request){
+    private Optional<Tariff> getTariff(HttpServletRequest request) {
         return tariffService.findTariffById(
                 Long.parseLong(request.getParameter(TARIFF_ID_PARAM)));
     }

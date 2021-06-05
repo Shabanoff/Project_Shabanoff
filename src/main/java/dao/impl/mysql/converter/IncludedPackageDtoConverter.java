@@ -10,7 +10,6 @@ import java.sql.SQLException;
 public class IncludedPackageDtoConverter implements DtoConverter<IncludedPackage> {
     private final static String ID_FIELD = "id";
     private final static String SUBSCRIPTION_DATE = "subscription_date";
-    private final static String USER_ID = "user_id";
     private final DtoConverter<Service> serviceConverter;
     private final DtoConverter<Tariff> tariffConverter;
 

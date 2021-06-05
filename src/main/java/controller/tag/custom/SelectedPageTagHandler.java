@@ -1,18 +1,10 @@
-package controller.customTags;
+package controller.tag.custom;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
+import javax.servlet.jsp.*;
+import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-/**
- * Business logic of my own custom tag.
- * Sends to jsp URI of requested view.
- *
- * @author Shabanoff
- */
 public class SelectedPageTagHandler extends SimpleTagSupport {
     @Override
     public void doTag() throws IOException {

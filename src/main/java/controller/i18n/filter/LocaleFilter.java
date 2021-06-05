@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.Locale;
 
 public class LocaleFilter implements Filter {
-    private final static String LANG = "lang";
-    private final static String LOCALE = "locale";
+    private static final String LANG = "lang";
+    private static final String LOCALE = "locale";
 
     @Override
     public void init(FilterConfig filterConfig) {

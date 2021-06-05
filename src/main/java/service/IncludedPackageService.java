@@ -7,7 +7,6 @@ import entity.IncludedPackage;
 import entity.Tariff;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Intermediate layer between command layer and dao layer.
@@ -19,41 +18,13 @@ import java.util.Optional;
 public class IncludedPackageService {
     private final DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private IncludedPackageService() {
-    }
+    private IncludedPackageService() {}
 
     public static IncludedPackageService getInstance() {
         return Singleton.INSTANCE;
     }
 
-    public List<IncludedPackage> findAllIncludedPackage() {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
-            return includedPackage.findAll();
-        }
-    }
-
-    public Optional<IncludedPackage> findIncludedPackageById(long includedPackageId) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
-            return includedPackage.findOne(includedPackageId);
-        }
-    }
-
-    public Optional<IncludedPackage> findIncludedPackageByService(long serviceId, DaoConnection connection) {
-
-        IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
-        return includedPackage.findByService(serviceId);
-
-    }
-
-    public Optional<IncludedPackage> findIncludedPackageByTariff(long tariffId, DaoConnection connection) {
-
-        IncludedPackageDao includedPackage = daoFactory.getIncludedPackageDao(connection);
-        return includedPackage.findByTariff(tariffId);
-    }
-
-    public IncludedPackage createIncludedPackage(IncludedPackage includedPackage) {
+    public void createIncludedPackage(IncludedPackage includedPackage) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
             IncludedPackage inserted = includedPackageDao.insert(includedPackage);
@@ -79,17 +50,15 @@ public class IncludedPackageService {
     }
 
     public boolean isIncludedPackageExistsByTariff(long tariffId, DaoConnection connection) {
-            IncludedPackageDao includedPackageDao= daoFactory.getIncludedPackageDao(connection);
-            return includedPackageDao.existByTariff(tariffId);
+        IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
+        return includedPackageDao.existByTariff(tariffId);
     }
+
     public void deleteIncludedPackage(long id) {
         try (DaoConnection connection = daoFactory.getConnection()) {
-
             IncludedPackageDao includedPackageDao = daoFactory.getIncludedPackageDao(connection);
             includedPackageDao.delete(id);
-
         }
-
     }
 
     private static class Singleton {

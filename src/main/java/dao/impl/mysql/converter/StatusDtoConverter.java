@@ -13,6 +13,6 @@ public class StatusDtoConverter implements DtoConverter<Status> {
     public Status convertToObject(ResultSet resultSet) throws SQLException {
         int statusId = resultSet.getInt(ID_FIELD);
         String statusName = resultSet.getString(NAME_FIELD);
-        return new Status(statusId,statusName);
+        return new Status(statusId, statusName);
     }
 }

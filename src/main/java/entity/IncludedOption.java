@@ -4,27 +4,6 @@ public class IncludedOption {
     private long id;
     private String definition;
 
-    public static class Builder{
-        private final IncludedOption includedOption;
-
-        public Builder() {
-            includedOption = new IncludedOption();
-        }
-
-        public Builder addId(long id) {
-            includedOption.setId(id);
-            return this;
-        }
-
-        public Builder addDefinition(String definition) {
-            includedOption.setDefinition(definition);
-            return this;
-        }
-
-        public IncludedOption build() {
-            return includedOption;
-        }
-    }
     public static Builder newBuilder() {
         return new Builder();
     }
@@ -61,5 +40,27 @@ public class IncludedOption {
         IncludedOption includedOption = (IncludedOption) o;
 
         return id == includedOption.id;
+    }
+
+    public static class Builder {
+        private final IncludedOption includedOption;
+
+        public Builder() {
+            includedOption = new IncludedOption();
+        }
+
+        public Builder addId(long id) {
+            includedOption.setId(id);
+            return this;
+        }
+
+        public Builder addDefinition(String definition) {
+            includedOption.setDefinition(definition);
+            return this;
+        }
+
+        public IncludedOption build() {
+            return includedOption;
+        }
     }
 }

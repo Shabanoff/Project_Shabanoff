@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class PostCreateOptionCommand implements ICommand {
-    private final String DEFINITION = "definition";
-    private final IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
+    private static final String DEFINITION = "definition";
+    private static final IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         includedOptionService.createIncludedOption(request.getParameter(DEFINITION));

@@ -38,15 +38,15 @@ public class CreatePdfService {
 
         //Set margins
 
-        PdfUnitConvertor unitCvtr = new PdfUnitConvertor();
+        PdfUnitConvertor unitConvertor = new PdfUnitConvertor();
 
         PdfMargins margin = new PdfMargins();
 
-        margin.setTop(unitCvtr.convertUnits(2.54f, PdfGraphicsUnit.Centimeter, PdfGraphicsUnit.Point));
+        margin.setTop(unitConvertor.convertUnits(2.54f, PdfGraphicsUnit.Centimeter, PdfGraphicsUnit.Point));
 
         margin.setBottom(margin.getTop());
 
-        margin.setLeft(unitCvtr.convertUnits(3.17f, PdfGraphicsUnit.Centimeter, PdfGraphicsUnit.Point));
+        margin.setLeft(unitConvertor.convertUnits(3.17f, PdfGraphicsUnit.Centimeter, PdfGraphicsUnit.Point));
 
         margin.setRight(margin.getLeft());
 
@@ -63,7 +63,7 @@ public class CreatePdfService {
 
             //Draw title
             PdfBrush brush = PdfBrushes.getBlack();
-            PdfTrueTypeFont tableFont= new PdfTrueTypeFont(new Font("Arial", 0, 10));
+            PdfTrueTypeFont tableFont= new PdfTrueTypeFont(new Font("Arial", Font.PLAIN, 10));
             PdfTrueTypeFont headerFont= new PdfTrueTypeFont(new Font("Arial", Font.BOLD, 11));
             PdfBrush brush1 = PdfBrushes.getBlack();
             PdfTrueTypeFont font1 = new PdfTrueTypeFont(new Font("Arial", Font.BOLD, 16));
@@ -139,7 +139,7 @@ public class CreatePdfService {
 
             PdfBrush brush2 = PdfBrushes.getGray();
 
-            PdfTrueTypeFont font2 = new PdfTrueTypeFont(new Font("Arial", 0, 9));
+            PdfTrueTypeFont font2 = new PdfTrueTypeFont(new Font("Arial", Font.PLAIN, 9));
 
             page.getCanvas().drawString(String.format("* %1$s countries in the list.", data.length - 1), font2, brush2, 5, y);
 

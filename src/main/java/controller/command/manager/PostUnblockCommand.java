@@ -22,7 +22,7 @@ public class PostUnblockCommand implements ICommand {
         currentUser.ifPresent(user -> userService.updateUserStatus(user, Status.StatusIdentifier.ACTIVE_STATUS.getId()));
 
         userService.userPagination(request);
-        return Views.USERS_VIEWS;
+        return Views.USERS_VIEW;
     }
     private Optional<User> getTariff(HttpServletRequest request){
         return userService.findUserByNumber(

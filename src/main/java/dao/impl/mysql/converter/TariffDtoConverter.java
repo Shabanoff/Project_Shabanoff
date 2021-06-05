@@ -14,10 +14,11 @@ public class TariffDtoConverter implements DtoConverter<Tariff> {
     private final static String ID_FIELD = "tariff_id";
     private final static String TARIFF_NAME = "tariff_name";
     private final static String COST = "tariff_cost";
-    private final DtoConverter<Service> serviceConverter;
     private final static String INCLUDED_OPTIONS = "included_options";
+    private final DtoConverter<Service> serviceConverter;
 
-    public TariffDtoConverter() {this(new ServiceDtoConverter());
+    public TariffDtoConverter() {
+        this(new ServiceDtoConverter());
     }
 
     public TariffDtoConverter(DtoConverter<Service> serviceConverter) {
@@ -35,7 +36,7 @@ public class TariffDtoConverter implements DtoConverter<Tariff> {
                 .build();
     }
 
-    private List<IncludedOption> getIncludedOptions(String concatIncludedOptions){
+    private List<IncludedOption> getIncludedOptions(String concatIncludedOptions) {
         return Stream.of(concatIncludedOptions.split(",")).map(split -> IncludedOption.newBuilder().addDefinition(split).build()).collect(Collectors.toList());
     }
 }

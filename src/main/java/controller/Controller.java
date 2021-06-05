@@ -2,6 +2,7 @@ package controller;
 
 import controller.command.ICommand;
 import controller.i18n.SupportedLocale;
+import controller.schedulers.SchedulerInit;
 import controller.util.constants.Attributes;
 import controller.util.constants.Views;
 import entity.User;
@@ -28,7 +29,7 @@ public class Controller extends HttpServlet {
                 SupportedLocale.getSupportedLanguages());
         getServletContext().setAttribute(Attributes.USER_LIST,
                 new ConcurrentHashMap<String, User>());
-        //SchedulerInit.getInstance();
+        SchedulerInit.getInstance();
     }
 
     @Override
@@ -59,7 +60,7 @@ public class Controller extends HttpServlet {
 
     private String getPath(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        return uri.replaceAll(request.getContextPath()+ ResourceBundle.
+        return uri.replaceAll(request.getContextPath() + ResourceBundle.
                 getBundle(Views.PAGES_BUNDLE).
                 getString("site.prefix"), "");
     }

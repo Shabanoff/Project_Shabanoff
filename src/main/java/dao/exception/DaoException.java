@@ -10,8 +10,4 @@ public class DaoException extends RuntimeException{
         super(source);
     }
 
-    public DaoException(String message, Throwable source) {
-        super(message,source);
-    }
-
 }

@@ -28,10 +28,6 @@ public class MySqlServiceDao implements ServiceDao {
     private final static String WHERE_ID =
             "WHERE id = ? ";
 
-    private final static String WHERE_NAME =
-            "WHERE name = ? ";
-    private final static String LIMIT = "LIMIT ";
-
 
     private final DefaultDaoImpl<Service> defaultDao;
 
@@ -57,10 +53,7 @@ public class MySqlServiceDao implements ServiceDao {
     public List<Service> findAll() {
         return defaultDao.findAll(SELECT_ALL);
     }
-    public List<Service> findLimit(int offset, int noOfRecords) {
 
-        return defaultDao.findAll(SELECT_ALL+LIMIT + offset + ", " + noOfRecords);
-    }
 
     @Override
     public Service insert(Service obj) {
@@ -68,7 +61,7 @@ public class MySqlServiceDao implements ServiceDao {
 
         int id = (int) defaultDao.executeInsertWithGeneratedPrimaryKey(
                 INSERT,
-               obj.getServiceName()
+                obj.getServiceName()
         );
 
         obj.setId(id);
@@ -93,8 +86,4 @@ public class MySqlServiceDao implements ServiceDao {
                 DELETE + WHERE_ID, id);
     }
 
-    @Override
-    public Optional<Service> findOneByName(String name) {
-        return defaultDao.findOne(SELECT_ALL + WHERE_NAME, name);
-    }
 }

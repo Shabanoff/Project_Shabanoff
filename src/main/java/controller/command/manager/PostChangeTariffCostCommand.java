@@ -25,10 +25,8 @@ public class PostChangeTariffCostCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<Tariff> tariff = tariffService.findTariffById(
                 Long.parseLong(request.getParameter(TARIFF_ID_PARAM)));
-        if(tariff.isPresent()) {
-            tariffService.changeCost(tariff.get(),
-                    new BigDecimal(request.getParameter(COST_PARAM)));
-        }
+        tariff.ifPresent(value -> tariffService.changeCost(value,
+                new BigDecimal(request.getParameter(COST_PARAM))));
         request.setAttribute(Attributes.SERVICES, serviceService.findAllService());
         return Views.SERVICE_VIEW;
     }

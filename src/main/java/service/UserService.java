@@ -10,11 +10,9 @@ import dao.util.PasswordStorage;
 import entity.IncludedPackage;
 import entity.Tariff;
 import entity.User;
-import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +53,7 @@ public class UserService {
         }
     }
 
-    public User createUser(User user) {
+    public void createUser(User user) {
         Objects.requireNonNull(user);
 
         if (user.getRole() == null) {
@@ -72,8 +70,7 @@ public class UserService {
 
         try (DaoConnection connection = daoFactory.getConnection()) {
             UserDao userDao = daoFactory.getUserDao(connection);
-            User inserted = userDao.insert(user);
-            return inserted;
+            userDao.insert(user);
         }
     }
 

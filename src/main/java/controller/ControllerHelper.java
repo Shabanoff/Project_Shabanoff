@@ -3,7 +3,9 @@ package controller;
 import controller.command.DefaultCommand;
 import controller.command.HomeCommand;
 import controller.command.ICommand;
-import controller.command.authorization.*;
+import controller.command.authorization.GetLoginCommand;
+import controller.command.authorization.LogoutCommand;
+import controller.command.authorization.PostLoginCommand;
 import controller.command.manager.*;
 import controller.command.user.*;
 import controller.util.constants.Views;
@@ -14,10 +16,10 @@ import java.util.ResourceBundle;
 
 public class ControllerHelper {
     private final static String DELIMITER = ":";
-    private final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
-    private final Map<String, ICommand> commands = new HashMap<>();
     private static final ResourceBundle bundle = ResourceBundle.
             getBundle(Views.PAGES_BUNDLE);
+    private final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
+    private final Map<String, ICommand> commands = new HashMap<>();
 
     private ControllerHelper() {
         init();
@@ -79,7 +81,7 @@ public class ControllerHelper {
         commands.put(buildKey(bundle.getString("service.path"), "change.cost"),
                 new PostChangeTariffCostCommand());
         commands.put(buildKey(bundle.getString("users.path"), null),
-                new getUsersCommand());
+                new GetUsersCommand());
         commands.put(buildKey(bundle.getString("service.path"), "asc"),
                 new PostAscTariffCommand());
         commands.put(buildKey(bundle.getString("service.path"), "desc"),

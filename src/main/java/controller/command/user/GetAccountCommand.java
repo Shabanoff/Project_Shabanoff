@@ -6,7 +6,6 @@ import entity.IncludedPackage;
 import entity.User;
 import service.IncludedPackageService;
 import service.ServiceFactory;
-import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static controller.util.constants.Views.ACCOUNT_VIEW;
-import static controller.util.constants.Views.HOME_VIEW;
 
 public class GetAccountCommand implements ICommand {
 

@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class GetCreateTariffCommand implements ICommand {
-    private final ServiceForService serviceService = ServiceFactory.getServiceService();
-    IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
+    private static final ServiceForService serviceService = ServiceFactory.getServiceService();
+    private static final IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

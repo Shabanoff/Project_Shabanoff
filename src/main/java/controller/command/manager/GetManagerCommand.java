@@ -14,11 +14,11 @@ import java.io.IOException;
 import java.util.List;
 
 public class GetManagerCommand implements ICommand {
-    UserService userService = ServiceFactory.getUserService();
+    private static final UserService userService = ServiceFactory.getUserService();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<User> users =  userService.findAllUser();
         request.setAttribute(Attributes.USERS, users);
-        return Views.MANAGER_VIEW;
+        return Views.USERS_VIEW;
     }
 }

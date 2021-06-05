@@ -1,6 +1,5 @@
 package controller.command.manager;
 
-import com.sun.xml.internal.ws.client.ClientSchemaValidationTube;
 import controller.command.ICommand;
 import controller.util.constants.Attributes;
 import controller.util.constants.Views;
@@ -24,10 +23,10 @@ public class PostDeleteTariffCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String>errors = tariffService.deleteTariff(
+        List<String> errors = tariffService.deleteTariff(
                 Long.parseLong(request.getParameter(TARIFF_ID_PARAM)));
         if (!errors.isEmpty()) {
-            logger.info("LOGGIN HAS ERRORS!");
+            logger.info("Tariff has already add to user");
             request.setAttribute(Attributes.ERRORS, errors);
         }
         request.setAttribute(Attributes.SERVICES, serviceService.findAllService());

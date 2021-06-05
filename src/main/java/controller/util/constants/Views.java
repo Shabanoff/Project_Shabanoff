@@ -8,12 +8,11 @@ public interface Views {
     String LOGIN_VIEW = FOLDER + "login.jsp";
     String REPLENISH_VIEW = FOLDER + "replenish.jsp";
     String SERVICE_VIEW = FOLDER + "service.jsp";
-    String MANAGER_VIEW = FOLDER + "manager.jsp";
     String CREATE_USER_VIEW = FOLDER + "createUser.jsp";
     String CREATE_TARIFF_VIEW = FOLDER + "createTariff.jsp";
     String CREATE_OPTION_VIEW = FOLDER + "createOption.jsp";
     String OPTION_VIEW = FOLDER + "includedOption.jsp";
     String CREATE_SERVICE_VIEW = FOLDER + "createService.jsp";
-    String USERS_VIEWS = FOLDER + "users.jsp";
+    String USERS_VIEW = FOLDER + "users.jsp";
 
 }

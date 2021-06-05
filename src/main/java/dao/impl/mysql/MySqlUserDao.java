@@ -61,7 +61,6 @@ public class MySqlUserDao implements UserDao {
     private static final String DELETE =
             "DELETE FROM user ";
 
-    private static final String LIMIT = "SELECT * FROM countries LIMIT ?, ?";
 
 
     private final DefaultDaoImpl<User> defaultDao;

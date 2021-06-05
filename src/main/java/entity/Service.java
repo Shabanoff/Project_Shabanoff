@@ -7,39 +7,16 @@ public class Service {
     private String serviceName;
     private List<Tariff> tariffs;
 
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public List<Tariff> getTariffs() {
         return tariffs;
     }
 
     public void setTariffs(List<Tariff> tariffs) {
         this.tariffs = tariffs;
-    }
-
-    public static class Builder {
-        private final Service service;
-
-        public Builder() {
-            service = new Service();
-        }
-
-        public Builder addId(long id) {
-            service.setId(id);
-            return this;
-        }
-
-        public Builder addServiceName(String serviceName) {
-            service.setServiceName(serviceName);
-            return this;
-        }
-        public Builder addTariffs(List<Tariff> tariffs) {
-            service.setTariffs(tariffs);
-            return this;
-        }
-
-        public Service build(){return service;}
-    }
-    public static Builder newBuilder() {
-        return new Builder();
     }
 
     public long getId() {
@@ -74,5 +51,32 @@ public class Service {
         Service service = (Service) o;
 
         return id == service.id;
+    }
+
+    public static class Builder {
+        private final Service service;
+
+        public Builder() {
+            service = new Service();
+        }
+
+        public Builder addId(long id) {
+            service.setId(id);
+            return this;
+        }
+
+        public Builder addServiceName(String serviceName) {
+            service.setServiceName(serviceName);
+            return this;
+        }
+
+        public Builder addTariffs(List<Tariff> tariffs) {
+            service.setTariffs(tariffs);
+            return this;
+        }
+
+        public Service build() {
+            return service;
+        }
     }
 }

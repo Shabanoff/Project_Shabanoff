@@ -46,19 +46,10 @@ public class IncludedOptionService {
         }
     }
 
-    public IncludedOption createIncludedOption(String definition) {
+    public void createIncludedOption(String definition) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             IncludedOptionDao includedOptionDao = daoFactory.getIncludedOptionDao(connection);
-            return includedOptionDao.insert(getDataFromRequestCreating(definition));
-        }
-    }
-
-    public void updateIncludedOption(IncludedOption includedOption) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            connection.startSerializableTransaction();
-            IncludedOptionDao includedOptionDao = daoFactory.getIncludedOptionDao(connection);
-            includedOptionDao.update(includedOption);
-            connection.commit();
+            includedOptionDao.insert(getDataFromRequestCreating(definition));
         }
     }
 

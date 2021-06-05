@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class PostCreateServiceCommand implements ICommand {
-    private final String SERVICE_NAME = "name";
-    private final ServiceForService serviceForService = ServiceFactory.getServiceService();
+    private static final  String SERVICE_NAME = "name";
+    private static final  ServiceForService serviceForService = ServiceFactory.getServiceService();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         serviceForService.createService(request.getParameter(SERVICE_NAME));

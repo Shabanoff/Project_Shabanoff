@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class getUsersCommand implements ICommand {
-    UserService userService = ServiceFactory.getUserService();
+public class GetUsersCommand implements ICommand {
+    private static final UserService userService = ServiceFactory.getUserService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         userService.userPagination(request);
-        return Views.USERS_VIEWS;
+        return Views.USERS_VIEW;
     }
 }

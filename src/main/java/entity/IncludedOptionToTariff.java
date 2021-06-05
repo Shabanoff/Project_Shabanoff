@@ -5,31 +5,9 @@ public class IncludedOptionToTariff {
     private long optionId;
     private long tariffId;
 
-    public static class Builder {
-        private final IncludedOptionToTariff includedOptionToTariff;
-
-        public Builder() {
-            includedOptionToTariff = new IncludedOptionToTariff();
-        }
-
-        public Builder addId(long id) {
-            includedOptionToTariff.setId(id);
-            return this;
-        }
-        public Builder addOptionId(long optionId) {
-            includedOptionToTariff.setOptionId(optionId);
-            return this;
-        }
-        public Builder addTariffId(long tariffId) {
-            includedOptionToTariff.setTariffId(tariffId);
-            return this;
-        }
-        public IncludedOptionToTariff build(){return includedOptionToTariff;}
-    }
     public static Builder newBuilder() {
         return new IncludedOptionToTariff.Builder();
     }
-
 
     public long getId() {
         return id;
@@ -59,7 +37,7 @@ public class IncludedOptionToTariff {
     public String toString() {
         return "IncludedPackage{" +
                 "id=" + id +
-                ", tariffId=" + tariffId+
+                ", tariffId=" + tariffId +
                 ", optionId=" + optionId +
                 '}';
     }
@@ -76,5 +54,32 @@ public class IncludedOptionToTariff {
         IncludedOptionToTariff includedOptionToTariff = (IncludedOptionToTariff) o;
 
         return this.id == includedOptionToTariff.id;
+    }
+
+    public static class Builder {
+        private final IncludedOptionToTariff includedOptionToTariff;
+
+        public Builder() {
+            includedOptionToTariff = new IncludedOptionToTariff();
+        }
+
+        public Builder addId(long id) {
+            includedOptionToTariff.setId(id);
+            return this;
+        }
+
+        public Builder addOptionId(long optionId) {
+            includedOptionToTariff.setOptionId(optionId);
+            return this;
+        }
+
+        public Builder addTariffId(long tariffId) {
+            includedOptionToTariff.setTariffId(tariffId);
+            return this;
+        }
+
+        public IncludedOptionToTariff build() {
+            return includedOptionToTariff;
+        }
     }
 }

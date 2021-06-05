@@ -4,7 +4,6 @@ import controller.command.ICommand;
 import controller.util.constants.Attributes;
 import controller.util.constants.Views;
 import entity.IncludedOption;
-import entity.Service;
 import entity.Tariff;
 import service.IncludedOptionService;
 import service.ServiceFactory;
@@ -17,9 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class PostCreateTariffCommand implements ICommand {
     private final ServiceForService serviceService = ServiceFactory.getServiceService();
@@ -30,7 +28,6 @@ public class PostCreateTariffCommand implements ICommand {
     private final static String OPTION_ID_PARAM = "optionId";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         TariffService tariffService = ServiceFactory.getTariffService();
         tariffService.createTariff(getDataFromRequestCreating(request));
 
@@ -42,10 +39,11 @@ public class PostCreateTariffCommand implements ICommand {
         String tariffName = request.getParameter(TARIFF_NAME_PARAM);
         BigDecimal cost = new BigDecimal(request.getParameter(COST_PARAM));
         long serviceId = Long.parseLong(request.getParameter(SERVICE_ID_PARAM));
-        String[] optionsId=request.getParameterValues(OPTION_ID_PARAM);
-        List<IncludedOption> includedOptions= new ArrayList<>();
-        for (String optionId: optionsId) {
-            includedOptions.add(includedOptionService.findIncludedOptionByNumber(Long.parseLong(optionId)).get());
+        String[] optionsId = request.getParameterValues(OPTION_ID_PARAM);
+        List<IncludedOption> includedOptions = new ArrayList<>();
+        for (String optionId : optionsId) {
+            Optional<IncludedOption> includedOption = includedOptionService.findIncludedOptionByNumber(Long.parseLong(optionId));
+            includedOption.ifPresent(includedOptions::add);
         }
 
 

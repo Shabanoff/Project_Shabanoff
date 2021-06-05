@@ -22,64 +22,6 @@ public class User {
     private Status status;
     private Role role;
 
-
-    public static class Builder{
-        private final User user;
-
-        public Builder() {
-            user = new User();
-        }
-
-        public Builder addId(long id) {
-            user.setId(id);
-            return this;
-        }
-
-        public Builder addLogin(String login) {
-            user.setLogin(login);
-            return this;
-        }
-
-        public Builder addPassword(String password) {
-            user.setPassword(password);
-            return this;
-        }
-
-        public Builder addStatus(Status status) {
-            user.setStatus(status);
-            return this;
-        }
-
-        public Builder addBalance(BigDecimal balance) {
-            user.setBalance(balance);
-            return this;
-        }
-        public Builder addDefaultBalance() {
-            user.setBalance(DEFAULT_BALANCE);
-            return this;
-        }
-
-        public Builder addRole(Role role) {
-            user.setRole(role);
-            return this;
-        }
-        public Builder addDefaultRole() {
-            user.setDefaultRole();
-            return this;
-        }
-        public Builder addDefaultStatus() {
-            user.setDefaultStatus();
-            return this;
-        }
-        public Builder addIncludedPackage(List<IncludedPackage> includedPackages) {
-            user.setIncludedPackages(includedPackages);
-            return this;
-        }
-
-        public User build() {
-            return user;
-        }
-    }
     public static Builder newBuilder() {
         return new Builder();
     }
@@ -116,11 +58,12 @@ public class User {
         this.balance = balance;
     }
 
+    public List<IncludedPackage> getIncludedPackages() {
+        return includedPackages;
+    }
+
     public void setIncludedPackages(List<IncludedPackage> includedPackages) {
         this.includedPackages = includedPackages;
-    }
-    public List<IncludedPackage> getIncludedPackages(){
-        return includedPackages;
     }
 
     public Status getStatus() {
@@ -163,10 +106,11 @@ public class User {
         this.status = new Status(DEFAULT_STATUS_ID, DEFAULT_STATUS);
     }
 
-    public void setDefaultBalance(){
+    public void setDefaultBalance() {
         this.balance = DEFAULT_BALANCE;
     }
-    public BigDecimal getDefaultBalance(){
+
+    public BigDecimal getDefaultBalance() {
         return DEFAULT_BALANCE;
     }
 
@@ -174,11 +118,11 @@ public class User {
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
-                ", password=" + password  +
+                ", password=" + password +
                 ", balance='" + balance + '\'' +
                 ", includedPackages='" + includedPackages + '\'' +
                 ", status=" + status +
-                ", role=" + role  +
+                ", role=" + role +
                 '}';
     }
 
@@ -190,6 +134,68 @@ public class User {
         User user = (User) o;
 
         return (login.equals(user.login));
+    }
+
+    public static class Builder {
+        private final User user;
+
+        public Builder() {
+            user = new User();
+        }
+
+        public Builder addId(long id) {
+            user.setId(id);
+            return this;
+        }
+
+        public Builder addLogin(String login) {
+            user.setLogin(login);
+            return this;
+        }
+
+        public Builder addPassword(String password) {
+            user.setPassword(password);
+            return this;
+        }
+
+        public Builder addStatus(Status status) {
+            user.setStatus(status);
+            return this;
+        }
+
+        public Builder addBalance(BigDecimal balance) {
+            user.setBalance(balance);
+            return this;
+        }
+
+        public Builder addDefaultBalance() {
+            user.setBalance(DEFAULT_BALANCE);
+            return this;
+        }
+
+        public Builder addRole(Role role) {
+            user.setRole(role);
+            return this;
+        }
+
+        public Builder addDefaultRole() {
+            user.setDefaultRole();
+            return this;
+        }
+
+        public Builder addDefaultStatus() {
+            user.setDefaultStatus();
+            return this;
+        }
+
+        public Builder addIncludedPackage(List<IncludedPackage> includedPackages) {
+            user.setIncludedPackages(includedPackages);
+            return this;
+        }
+
+        public User build() {
+            return user;
+        }
     }
 
 
