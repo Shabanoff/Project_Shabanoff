@@ -19,14 +19,14 @@ public class PostBlockCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Optional<User> currentUser = getTariff(request);
+        Optional<User> currentUser = getUser(request);
         currentUser.ifPresent(user -> userService.updateUserStatus(user, Status.StatusIdentifier.BLOCKED_STATUS.getId()));
 
         userService.userPagination(request);
         return Views.USERS_VIEW;
     }
 
-    private Optional<User> getTariff(HttpServletRequest request) {
+    private Optional<User> getUser(HttpServletRequest request) {
         return userService.findUserByNumber(
                 Long.parseLong(request.getParameter(USER_ID)));
     }

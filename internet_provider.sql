@@ -92,7 +92,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Internet_provider`.`package`
+-- Table `Internet_provider`.`included_package`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Internet_provider`.`included_package` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -123,7 +123,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Internet_provider`.`option`
+-- Table `Internet_provider`.`included_option`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Internet_provider`.`included_option` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -137,17 +137,17 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Internet_provider`.`included_options_to_tariff` (
   `tariff_id` bigint unsigned NOT NULL,
-  `included_service_id` bigint unsigned NOT NULL,
-  PRIMARY KEY (`tariff_id`, `included_service_id`),
-  INDEX `fk_included_service_to_tariif_tariff1_idx` (`tariff_id` ASC) VISIBLE,
-  INDEX `fk_included_service_to_tariif_included_service1_idx` (`included_service_id` ASC) VISIBLE,
-  CONSTRAINT `fk_included_service_to_tariif_tariff1`
+  `included_option_id` bigint unsigned NOT NULL,
+  PRIMARY KEY (`tariff_id`, `included_option_id`),
+  INDEX `fk_included_option_to_tariif_tariff1_idx` (`tariff_id` ASC) VISIBLE,
+  INDEX `fk_included_option_to_tariif_included_option_idx` (`included_option_id` ASC) VISIBLE,
+  CONSTRAINT `fk_included_option_to_tariif_tariff1`
     FOREIGN KEY (`tariff_id`)
     REFERENCES `Internet_provider`.`tariff` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_included_service_to_tariif_included_service1`
-    FOREIGN KEY (`included_service_id`)
+  CONSTRAINT `fk_included_service_to_tariif_included_option1`
+    FOREIGN KEY (`included_option_id`)
     REFERENCES `Internet_provider`.`included_option` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

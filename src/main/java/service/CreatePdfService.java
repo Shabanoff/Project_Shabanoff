@@ -1,5 +1,6 @@
 package service;
 
+import com.spire.pdf.FileFormat;
 import com.spire.pdf.PdfDocument;
 import com.spire.pdf.PdfPageBase;
 import com.spire.pdf.PdfPageSize;
@@ -13,6 +14,7 @@ import entity.Tariff;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +33,7 @@ public class CreatePdfService {
         private final static CreatePdfService INSTANCE = new CreatePdfService();
     }
 
-    public void createServiceInPdf() {
+    public void createServiceInPdf(OutputStream out) {
 //Create a PdfDocument instance
 
         PdfDocument doc = new PdfDocument();
@@ -145,7 +147,10 @@ public class CreatePdfService {
 
             //Save the file
         }
-        doc.saveToFile("output/Table.pdf");
+
+        //doc.saveToFile("output/Table.pdf");
+
+        doc.saveToStream(out);
 
     }
 

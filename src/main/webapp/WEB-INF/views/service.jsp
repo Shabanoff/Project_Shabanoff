@@ -127,8 +127,7 @@
 <div class="d-grid gap-2">
   <form action="${pageContext.request.contextPath}/site/service" method="post" >
     <input type="hidden" name="command" value="print"/>
-    <button class="btn btn-primary" type="button"><fmt:message
-            key="save"/></button>
+    <button class="btn btn-primary" type="submit"><fmt:message key="save"/></button>
   </form>
 </div>
 

@@ -22,7 +22,7 @@ import static controller.util.constants.Views.SERVICE_VIEW;
 
 public class PostServiceCommand implements ICommand {
     private static final Logger logger = LogManager.getLogger(PostServiceCommand.class);
-    private static final String TARIFF_ID_PARAM = "tariffId";
+
 
     private static final TariffService tariffService = ServiceFactory.getTariffService();
     private static final UserService userService = ServiceFactory.getUserService();
@@ -49,7 +49,7 @@ public class PostServiceCommand implements ICommand {
 
     private Optional<Tariff> getTariff(HttpServletRequest request) {
         return tariffService.findTariffById(
-                Long.parseLong(request.getParameter(TARIFF_ID_PARAM)));
+                Long.parseLong(request.getParameter(Attributes.TARIFF_ID)));
     }
 
 }

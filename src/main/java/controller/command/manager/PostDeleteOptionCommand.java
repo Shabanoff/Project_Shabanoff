@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class PostDeleteOption implements ICommand {
+public class PostDeleteOptionCommand implements ICommand {
     private static final String OPTION_ID = "optionId";
     private static final IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
     @Override

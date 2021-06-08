@@ -18,13 +18,13 @@ public class PostUnblockCommand implements ICommand {
     private static final String USER_ID = "userId";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Optional<User> currentUser = getTariff(request);
+        Optional<User> currentUser = getUser(request);
         currentUser.ifPresent(user -> userService.updateUserStatus(user, Status.StatusIdentifier.ACTIVE_STATUS.getId()));
 
         userService.userPagination(request);
         return Views.USERS_VIEW;
     }
-    private Optional<User> getTariff(HttpServletRequest request){
+    private Optional<User> getUser(HttpServletRequest request){
         return userService.findUserByNumber(
                 Long.parseLong(request.getParameter(USER_ID)));
     }

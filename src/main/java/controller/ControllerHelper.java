@@ -65,7 +65,7 @@ public class ControllerHelper {
         commands.put(buildKey(bundle.getString("manager.includedOption.path"), null),
                 new GetIncludedOptionCommand());
         commands.put(buildKey(bundle.getString("manager.includedOption.path"), "post"),
-                new PostDeleteOption());
+                new PostDeleteOptionCommand());
         commands.put(buildKey(bundle.getString("manager.createOption.path"), "post"),
                 new PostCreateOptionCommand());
         commands.put(buildKey(bundle.getString("manager.createOption.path"), null),

@@ -14,7 +14,7 @@ import java.util.Optional;
 
 
 public class MySqlTariffDao implements TariffDao {
-    private final static String SELECT_ALL =
+    private static final String SELECT_ALL =
             "SELECT tariff.id AS tariff_id ," +
                     "tariff.name AS tariff_name,tariff.cost AS tariff_cost , " +
                     "service.id AS service_id, " +
@@ -25,39 +25,39 @@ public class MySqlTariffDao implements TariffDao {
                     "JOIN included_options_to_tariff ON included_options_to_tariff.tariff_id = tariff.id " +
                     "JOIN included_option ON included_options_to_tariff.included_option_id = included_option.id ";
 
-    private final static String WHERE_ID =
+    private static final String WHERE_ID =
             "WHERE tariff.id = ? ";
-    private final static String GROUP_BY=
+    private static final String GROUP_BY=
             "GROUP BY tariff.id ";
-    private final static String ASC_BY_COST=
+    private static final String ASC_BY_COST=
             "ORDER BY " +
                     "tariff_cost ASC";
-    private final static String DESC_BY_COST=
+    private static final String DESC_BY_COST=
             "ORDER BY " +
                     "tariff_cost DESC";
 
 
-    private final static String WHERE_SERVICE_ID =
+    private static final String WHERE_SERVICE_ID =
             "WHERE tariff.service_id = ? ";
 
-    private final static String INSERT =
+    private static final String INSERT =
             "INSERT into tariff (name, cost, " +
                     "service_id )" +
                     "VALUES(?, ?, ?) ";
 
 
-    private final static String UPDATE =
+    private static final String UPDATE =
             "UPDATE tariff SET " +
                     "name = ?, " +
                     "cost = ?" +
                     "service_id = ?, ";
 
-    private final static String CHANGE_COST =
+    private static final String CHANGE_COST =
             "UPDATE tariff SET " +
                     "cost =  ? ";
 
 
-    private final static String DELETE =
+    private static final String DELETE =
             "DELETE FROM tariff ";
 
     private final DefaultDaoImpl<Tariff> defaultDao;

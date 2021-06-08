@@ -103,10 +103,11 @@ public class UserService {
         UserDao userDao = daoFactory.getUserDao(connection);
         userDao.decreaseBalance(user, amount);
     }
+
     public void decreaseUserBalanceScheduler(User user, BigDecimal amount) {
         try (DaoConnection connection = daoFactory.getConnection()) {
-        UserDao userDao = daoFactory.getUserDao(connection);
-        userDao.decreaseBalance(user, amount);
+            UserDao userDao = daoFactory.getUserDao(connection);
+            userDao.decreaseBalance(user, amount);
         }
 
     }
@@ -189,17 +190,19 @@ public class UserService {
         }
         return errors;
     }
-    List<User> users = new ArrayList<>();
-    public List<User> findUsers(int noOfRecords, int offset)  {
 
-
+    public List<User> findAll(int limit, int offset) {
         try (DaoConnection connection = daoFactory.getConnection()) {
-            connection.startSerializableTransaction();
             UserDao userDao = daoFactory.getUserDao(connection);
-            this.users = userDao.findUsers(noOfRecords, offset);
-            this.noOfRecords = userDao.getNoOfRecords();
+            return userDao.findAll(limit, offset);
         }
-        return users;
+    }
+
+    public int getNumberOfRows() {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            UserDao userDao = daoFactory.getUserDao(connection);
+            return userDao.getNumberOfRows();
+        }
     }
 
     private User getDataFromRequestCreating(String login, String password) {
@@ -208,10 +211,6 @@ public class UserService {
                 .addPassword(password)
                 .addDefaultBalance()
                 .build();
-    }
-    private int noOfRecords;
-    public int getNoOfRecords() {
-        return noOfRecords;
     }
 
     private List<String> validateData(User user) {
@@ -226,17 +225,17 @@ public class UserService {
 
         return errors;
     }
-    public void userPagination(HttpServletRequest request){
+
+    public void userPagination(HttpServletRequest request) {
         int page = 1;
         int recordsPerPage = 5;
-        if(request.getParameter("page") != null)
+        if (request.getParameter("page") != null)
             page = Integer.parseInt(request.getParameter("page"));
-        List<User> list = findUsers((page-1)*recordsPerPage,
-                recordsPerPage);
-        int noOfRecords = getNoOfRecords();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        List<User> list = findAll(recordsPerPage, (page - 1) * recordsPerPage);
+        int numberOfRows = getNumberOfRows();
+        int numberOfPages = (int) Math.ceil(numberOfRows * 1.0 / recordsPerPage);
         request.setAttribute("users", list);
-        request.setAttribute("noOfPages", noOfPages);
+        request.setAttribute("numberOfPages", numberOfPages);
         request.setAttribute("currentPage", page);
     }
 

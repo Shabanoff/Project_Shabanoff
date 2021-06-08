@@ -9,7 +9,7 @@
 
     <tag>
         <name>currPage</name>
-        <tag-class>controller.customTags.SelectedPageTagHandler</tag-class>
+        <tag-class>controller.tag.custom.SelectedPageTagHandler</tag-class>
         <body-content>empty</body-content>
     </tag>
 </taglib>
