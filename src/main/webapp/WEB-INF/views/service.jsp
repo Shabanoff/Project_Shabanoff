@@ -25,8 +25,8 @@
               key="sort"/></p></h4></th>
       <th><div class="row">
         <div class="col-md-4 col-md-offset-4">
-          <form action="${pageContext.request.contextPath}/site/tariff?sort=asc" method="post" >
-            <input type="hidden" name="typeSort" value="asc"/>
+          <form action="${pageContext.request.contextPath}/site/service" method="post" >
+            <input type="hidden" name="command" value="asc"/>
             <button type="submit" class="btn btn-info"><fmt:message
                     key="asc.sort"/></button>
           </form>
@@ -34,8 +34,8 @@
       </div></th>
       <th><div class="row">
         <div class="col-md-4 col-md-offset-4">
-          <form action="${pageContext.request.contextPath}/site/tariff" method="post" >
-            <input type="hidden" name="typeSort" value="desc"/>
+          <form action="${pageContext.request.contextPath}/site/service" method="post" >
+            <input type="hidden" name="command" value="desc"/>
             <button type="submit" class="btn btn-info"><fmt:message
                     key="desc.sort"/></button>
           </form>
@@ -61,7 +61,8 @@
     <tr><div class="container">
       <th class="text-center"><h1>${service.serviceName}</h1></th>
       <c:if test="${sessionScope.user.manager}">
-      <th><form action="${pageContext.request.contextPath}/site/service/delete" method="post" >
+      <th><form action="${pageContext.request.contextPath}/site/service" method="post" >
+        <input type="hidden" name="command" value="delete.service"/>
         <input type="hidden" name="serviceId"
                value="${service.id}"/>
         <button type="submit" class="btn btn-danger"><fmt:message
@@ -84,10 +85,11 @@
         <td class="col-2">
           <table>
             <tr>
-              <form class="form-inline" action="${pageContext.request.contextPath}/site/tariff/update" method="post">
+              <form class="form-inline" action="${pageContext.request.contextPath}/site/service" method="post">
+                <input type="hidden" name="command" value="change.cost"/>
                 <div class="form-group mx-sm-3 mb-2">
-                  <td><label for="cost" class="sr-only"><fmt:message key="amount"/></label></td>
-                  <td><input  class="form-control" name="cost" id="cost" placeholder=<fmt:message key="amount"/>>
+                  <td><label for="newCost" class="sr-only"><fmt:message key="amount"/></label></td>
+                  <td><input  class="form-control" name="newCost" id="newCost" placeholder=<fmt:message key="amount"/>>
                     <input type="hidden" name="tariffId"
                            value="${tariff.id}"/></td>
                 </div>
@@ -98,7 +100,8 @@
         </td>
       </c:if>
       <c:if test="${not empty sessionScope.user and sessionScope.user.user and sessionScope.user.active}">
-        <td class="col-1"><form action="${pageContext.request.contextPath}/site/service/update" method="post" >
+        <td class="col-1"><form action="${pageContext.request.contextPath}/site/service" method="post" >
+          <input type="hidden" name="command" value="plug"/>
           <input type="hidden" name="tariffId"
                  value="${tariff.id}"/>
           <button type="submit" class="btn btn-info"><fmt:message
@@ -107,7 +110,8 @@
         </td>
       </c:if>
       <c:if test="${sessionScope.user.manager}">
-        <td><form action="${pageContext.request.contextPath}/site/tariff/delete" method="post" >
+        <td><form action="${pageContext.request.contextPath}/site/service" method="post" >
+          <input type="hidden" name="command" value="delete.tariff"/>
           <input type="hidden" name="tariffId"
                  value="${tariff.id}"/>
           <button type="submit" class="btn btn-warning"><fmt:message
@@ -121,7 +125,8 @@
   </c:forEach>
 </table>
 <div class="d-grid gap-2">
-  <form action="${pageContext.request.contextPath}/site/downloadPdf" method="post" >
+  <form action="${pageContext.request.contextPath}/site/service" method="post" >
+    <input type="hidden" name="command" value="print"/>
     <button class="btn btn-primary" type="submit"><fmt:message key="save"/></button>
   </form>
 </div>

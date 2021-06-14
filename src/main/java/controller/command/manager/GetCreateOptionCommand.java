@@ -12,5 +12,6 @@ public class GetCreateOptionCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         return Views.CREATE_OPTION_VIEW;
+
     }
 }
