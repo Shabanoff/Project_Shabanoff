@@ -24,7 +24,7 @@ public class UniquenessCheckSessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent sessionEvent) {
         totalActiveSessions++;
-        sessionEvent.getSession().setMaxInactiveInterval(5*60);
+        sessionEvent.getSession().setMaxInactiveInterval(5 * 60);
         logger.debug("Created new session: " + sessionEvent.getSession().getId());
     }
 
@@ -34,10 +34,10 @@ public class UniquenessCheckSessionListener implements HttpSessionListener {
         ServletContext context = sessionEvent.getSession().getServletContext();
         User user = (User) sessionEvent.getSession().getAttribute(Attributes.USER);
         @SuppressWarnings("unchecked")
-        Map<String,User> activeUserList = (Map<String,User>)
+        Map<String, User> activeUserList = (Map<String, User>)
                 context.getAttribute(Attributes.USER_LIST);
-        logger.debug("Destroyed session: " + sessionEvent.getSession().getId()+
-                (Objects.nonNull(user)? "; User: "+user.getLogin()+";":";"));
+        logger.debug("Destroyed session: " + sessionEvent.getSession().getId() +
+                (Objects.nonNull(user) ? "; User: " + user.getLogin() + ";" : ";"));
         activeUserList.remove(user.getLogin());
     }
 }

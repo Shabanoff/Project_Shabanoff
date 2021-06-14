@@ -21,12 +21,12 @@
   <div class="position-absolute top-0 end-0">
     <table>
       <thead>
-      <th><h2><p class="text-primary"><fmt:message
-              key="sort"/></p></h2></th>
+      <th><h4><p class="text-primary"><fmt:message
+              key="sort"/></p></h4></th>
       <th><div class="row">
         <div class="col-md-4 col-md-offset-4">
-          <form action="${pageContext.request.contextPath}/site/service" method="post" >
-            <input type="hidden" name="command" value="asc"/>
+          <form action="${pageContext.request.contextPath}/site/tariff?sort=asc" method="post" >
+            <input type="hidden" name="typeSort" value="asc"/>
             <button type="submit" class="btn btn-info"><fmt:message
                     key="asc.sort"/></button>
           </form>
@@ -34,8 +34,8 @@
       </div></th>
       <th><div class="row">
         <div class="col-md-4 col-md-offset-4">
-          <form action="${pageContext.request.contextPath}/site/service" method="post" >
-            <input type="hidden" name="command" value="desc"/>
+          <form action="${pageContext.request.contextPath}/site/tariff" method="post" >
+            <input type="hidden" name="typeSort" value="desc"/>
             <button type="submit" class="btn btn-info"><fmt:message
                     key="desc.sort"/></button>
           </form>
@@ -45,88 +45,83 @@
     </table>
   </div>
 </div>
+<table class="table">
+  <thead>
+  <tr>
+    <th class="col-2" scope="col"><fmt:message key="tariff.name"/></th>
+    <th class="col-4" scope="col"><fmt:message key="tariff.description"/></th>
+    <th scope="col-2"><fmt:message key="tariff.cost"/></th>
+    <c:if test="${sessionScope.user.manager}">
+      <th class="col-1"scope="col"><fmt:message key="change.cost"/></th>
+    </c:if>
+  </tr>
+  </thead>
+  <c:forEach var="service" items="${requestScope.services}">
+    <tbody>
+    <tr><div class="container">
+      <th class="text-center"><h1>${service.serviceName}</h1></th>
+      <c:if test="${sessionScope.user.manager}">
+      <th><form action="${pageContext.request.contextPath}/site/service/delete" method="post" >
+        <input type="hidden" name="serviceId"
+               value="${service.id}"/>
+        <button type="submit" class="btn btn-danger"><fmt:message
+                key="service.delete"/></button>
+      </form></th>
+      </c:if>
 
-    <table class="table">
-      <c:forEach var="service" items="${requestScope.services}">
-        <tbody>
-      <tr><div class="container">
-        <th><h1>${service.serviceName}</h1></th>
-
-        <c:if test="${sessionScope.user.manager}">
-        <th><form action="${pageContext.request.contextPath}/site/service" method="post" >
-          <input type="hidden" name="command" value="delete.service"/>
-          <input type="hidden" name="serviceId"
-                 value="${service.id}"/>
-          <button type="submit" class="btn btn-danger"><fmt:message
-                  key="service.delete"/></button>
-        </form></th>
-        </c:if>
-      <tr>
-        <th scope="col"><fmt:message key="tariff.name"/></th>
-        <th scope="col"><fmt:message key="tariff.description"/></th>
-        <th scope="col"><fmt:message key="tariff.cost"/></th>
-        <c:if test="${sessionScope.user.manager}">
-        <th scope="col"><fmt:message key="change.cost"/></th>
-                </c:if>
-      </tr>
-
-    <c:forEach var="tariff" items="${service.tariffs}">
-      <tr>
-        <td><c:out value="${tariff.tariffName}"/></td>
-        <td>
-          <ul>
-            <c:forEach var="option" items="${tariff.includedOptions}">
-              <li><c:out value="${option.definition}"/></li>
-            </c:forEach>
-          </ul>
-        </td>
-        <td><c:out value="${tariff.cost}"/></td>
-        <c:if test="${sessionScope.user.manager}">
-        <td>
+      <c:forEach var="tariff" items="${service.tariffs}">
+    <tr>
+      <td class="col-2"><c:out value="${tariff.tariffName}"/></td>
+      <td class="col-4">
+        <ul>
+          <c:forEach var="option" items="${tariff.includedOptions}">
+            <li><c:out value="${option.definition}"/></li>
+          </c:forEach>
+        </ul>
+      </td>
+      <td><c:out value="${tariff.cost}"/></td>
+      <c:if test="${sessionScope.user.manager}">
+        <td class="col-2">
           <table>
             <tr>
-          <form class="form-inline" action="${pageContext.request.contextPath}/site/service" method="post">
-            <input type="hidden" name="command" value="change.cost"/>
-            <div class="form-group mx-sm-3 mb-2">
-              <td><label for="newCost" class="sr-only"><fmt:message key="amount"/></label></td>
-              <td><input  class="form-control" name="newCost" id="newCost" placeholder=<fmt:message key="amount"/>>
-                  <input type="hidden" name="tariffId"
-                       value="${tariff.id}"/></td>
-            </div>
-            <td><button type="submit" class="btn btn-primary mb-2"><fmt:message key="change"/></button></td>
-          </form>
+              <form class="form-inline" action="${pageContext.request.contextPath}/site/tariff/update" method="post">
+                <div class="form-group mx-sm-3 mb-2">
+                  <td><label for="cost" class="sr-only"><fmt:message key="amount"/></label></td>
+                  <td><input  class="form-control" name="cost" id="cost" placeholder=<fmt:message key="amount"/>>
+                    <input type="hidden" name="tariffId"
+                           value="${tariff.id}"/></td>
+                </div>
+                <td><button type="submit" class="btn btn-primary mb-2"><fmt:message key="change"/></button></td>
+              </form>
             </tr>
           </table>
         </td>
-        </c:if>
-        <c:if test="${not empty sessionScope.user and sessionScope.user.user and sessionScope.user.active}">
-        <td><form action="${pageContext.request.contextPath}/site/service" method="post" >
-          <input type="hidden" name="command" value="plug"/>
+      </c:if>
+      <c:if test="${not empty sessionScope.user and sessionScope.user.user and sessionScope.user.active}">
+        <td class="col-1"><form action="${pageContext.request.contextPath}/site/service/update" method="post" >
           <input type="hidden" name="tariffId"
                  value="${tariff.id}"/>
           <button type="submit" class="btn btn-info"><fmt:message
                   key="tariff.plug"/></button>
         </form>
         </td>
-        </c:if>
-        <c:if test="${sessionScope.user.manager}">
-          <td><form action="${pageContext.request.contextPath}/site/service" method="post" >
-            <input type="hidden" name="command" value="delete.tariff"/>
-            <input type="hidden" name="tariffId"
-                   value="${tariff.id}"/>
-            <button type="submit" class="btn btn-warning"><fmt:message
-                    key="tariff.delete"/></button>
-          </form>
-          </td>
-        </c:if>
-      </tr>
+      </c:if>
+      <c:if test="${sessionScope.user.manager}">
+        <td><form action="${pageContext.request.contextPath}/site/tariff/delete" method="post" >
+          <input type="hidden" name="tariffId"
+                 value="${tariff.id}"/>
+          <button type="submit" class="btn btn-warning"><fmt:message
+                  key="tariff.delete"/></button>
+        </form>
+        </td>
+      </c:if>
+    </tr>
     </c:forEach>
-      </tbody>
-      </c:forEach>
-    </table>
+    </tbody>
+  </c:forEach>
+</table>
 <div class="d-grid gap-2">
-  <form action="${pageContext.request.contextPath}/site/service" method="post" >
-    <input type="hidden" name="command" value="print"/>
+  <form action="${pageContext.request.contextPath}/site/downloadPdf" method="post" >
     <button class="btn btn-primary" type="submit"><fmt:message key="save"/></button>
   </form>
 </div>

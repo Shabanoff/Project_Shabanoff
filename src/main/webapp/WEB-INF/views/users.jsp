@@ -13,7 +13,6 @@
 <jsp:include page="/WEB-INF/views/snippets/navbar.jsp"/>
 
 <c:if test="${not empty sessionScope.user }">
-
     <table class="table">
         <thead>
         <tr><h1><fmt:message key="manager.users"/></h1></tr>
@@ -25,7 +24,7 @@
         </thead>
         <tbody>
         <c:forEach var="user" items="${requestScope.users}">
-            <c:if test="${user.user}">
+
                 <tr class="d-flex">
                     <td class="col-5"><c:out value="${user.login}"/></td>
                     <td class="col-3"><c:out value="${user.balance}"/><fmt:message key="currency"/></td>
@@ -50,13 +49,11 @@
                         </td>
                     </c:if>
                 </tr>
-            </c:if>
+
         </c:forEach>
         </tbody>
     </table>
-
 </c:if>
-
 
 <%--For displaying Previous link except for the 1st page --%>
 <div class="d-flex justify-content-center">

@@ -112,21 +112,22 @@
         <div class="collapse navbar-collapse" id="navbarCollapse2">
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
             <c:if test="${ not empty sessionScope.user}">
-                <li>
-                    <a class="nav-link" href="#"><fmt:message key="welcome"/> </a>
-                </li>
-                <c:if test="${ sessionScope.user.user}">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false"><c:out value="${sessionScope.user.getLogin()}"/></a>
-                   <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                        <li><a class="btn btn-link" href="${pageContext.request.contextPath}/site/user/replenish" role="button"><fmt:message key="replenish"/></a></li>
-                    </ul>
-                </li></c:if>
                 <c:if test="${not sessionScope.user.user}">
                     <li>
-                        <h3><p class="text-success"><c:out value="${sessionScope.user.getLogin()}"/></p></h3></li>
+                        <a class="nav-link" href="#"><fmt:message key="welcome"/> <c:out value="${sessionScope.user.getLogin()}"/></a>
                     </li>
                 </c:if>
+                <c:if test="${ sessionScope.user.user}">
+                    <li>
+                        <a class="nav-link" href="#"><fmt:message key="welcome"/> </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false"><c:out value="${sessionScope.user.getLogin()}"/></a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                            <li><a class="btn btn-link" href="${pageContext.request.contextPath}/site/user/replenish" role="button"><fmt:message key="replenish"/></a></li>
+                        </ul>
+                    </li></c:if>
+
             </c:if>
 
         </ul>

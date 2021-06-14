@@ -127,7 +127,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Internet_provider`.`included_option` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `defenition` MEDIUMTEXT NULL,
+  `definition` MEDIUMTEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

@@ -39,7 +39,7 @@ public class PostReplenishCommand implements ICommand {
             userService.increaseUserBalance(currentUser, amount);
             List<IncludedPackage> includedPackages = includedPackageService.findByUser(currentUser.getId());
             request.setAttribute(Attributes.INCLUDED_PACKAGES, includedPackages);
-            return ACCOUNT_VIEW;
+            return REDIRECTED;
         }
         logger.info("LOGGIN HAS ERRORS!");
         request.setAttribute(Attributes.ERRORS, errors);

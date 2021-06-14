@@ -94,6 +94,9 @@ public class UserService {
             connection.startSerializableTransaction();
             UserDao userDao = daoFactory.getUserDao(connection);
             userDao.increaseBalance(user, amount);
+            if (user.isBlocked()){
+                user.setDefaultStatus();
+            }
             connection.commit();
         }
 
