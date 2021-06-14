@@ -1,8 +1,12 @@
 package controller.command.manager;
 
 import controller.command.ICommand;
+import controller.util.Util;
 import controller.util.constants.Attributes;
 import controller.util.constants.Views;
+import controller.util.validator.AmountValidator;
+import controller.util.validator.ServiceIdValidator;
+import controller.util.validator.TariffNameValidator;
 import entity.IncludedOption;
 import entity.Tariff;
 import service.IncludedOptionService;
@@ -19,8 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static controller.util.constants.Attributes.SERVICES;
+import static controller.util.constants.Views.CREATE_TARIFF_VIEW;
+
 public class PostCreateTariffCommand implements ICommand {
     private static final ServiceForService serviceService = ServiceFactory.getServiceService();
+    private static final TariffService tariffService = ServiceFactory.getTariffService();
     private static final IncludedOptionService includedOptionService = ServiceFactory.getIncludedOptionService();
     private static final String TARIFF_NAME_PARAM = "tariffName";
     private static final String COST_PARAM = "cost";
@@ -29,10 +37,18 @@ public class PostCreateTariffCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        TariffService tariffService = ServiceFactory.getTariffService();
+        List<String> errors = new ArrayList<>();
+        for (String error : validateDataFromRequest(request)) {
+            errors.add(error);
+        }
+        if (!errors.isEmpty()) {
+            request.setAttribute(Attributes.ERRORS, errors);
+            request.setAttribute(Attributes.SERVICES, serviceService.findAllService());
+            request.setAttribute(Attributes.OPTIONS, includedOptionService.findAllIncludedOption());
+            return CREATE_TARIFF_VIEW;
+        }
         tariffService.createTariff(getDataFromRequestCreating(request));
-
-        request.setAttribute(Attributes.SERVICES, serviceService.findAllService());
+        request.setAttribute(SERVICES, serviceService.findAllService());
         return Views.SERVICE_VIEW;
     }
 
@@ -46,13 +62,22 @@ public class PostCreateTariffCommand implements ICommand {
             Optional<IncludedOption> includedOption = includedOptionService.findIncludedOptionByNumber(Long.parseLong(optionId));
             includedOption.ifPresent(includedOptions::add);
         }
-
-
         return Tariff.newBuilder()
                 .addTariffName(tariffName)
                 .addCost(cost)
                 .addService(serviceService.findServiceById(serviceId).get())
                 .addIncludedOptions(includedOptions)
                 .build();
+    }
+
+    private List<String> validateDataFromRequest(HttpServletRequest request) {
+        List<String> errors = new ArrayList<>();
+        Util.validateField(new AmountValidator(),
+                request.getParameter(COST_PARAM), errors);
+        Util.validateField(new ServiceIdValidator(),
+                request.getParameter(SERVICE_ID_PARAM), errors);
+        Util.validateField(new TariffNameValidator(),
+                request.getParameter(TARIFF_NAME_PARAM), errors);
+        return errors;
     }
 }

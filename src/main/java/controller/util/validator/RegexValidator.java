@@ -10,7 +10,7 @@ public class RegexValidator extends AbstractValidator<String> {
     public RegexValidator(String regex, int maxLength, String errorMessage) {
         super(errorMessage);
         this.maxLength = maxLength;
-        this.pattern = Pattern.compile(regex);
+        this.pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     }
 
     @Override
